@@ -1,12 +1,18 @@
 class Category
   include Mongoid::Document
 
+  ## Common things
   field :_id, type: String, default: ->{sw_id}
+  
+  
+  ## Seatwave api
   field :sw_id, type: String
   field :name
 
+
+  ## Obtain initial set of eventgroups
   def fetch_event_groups
-    Delayed::Job.enqueue EventGroupsFetcher.new(self), priority: 20
+    Delayed::Job.enqueue EventGroupsFetcher.new(id), priority: 100, queue: 'event_groups'
   end
   
   has_many :event_groups

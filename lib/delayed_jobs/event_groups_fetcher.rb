@@ -1,23 +1,26 @@
-class EventGroupsFetcher
-  include Traits::Initializer
+class EventGroupsFetcher < Struct.new(:category_id)
+  
+  def category
+    Category.find(category_id)
+  end
   
   def success(job)
-    parent.event_groups.each do |event_group|
+    category.event_groups.each do |event_group|
       event_group.fetch_events
     end
   end
   
   def perform
-    sw_api.get_eventgroups_for_category(parent.id).each do |eg|
-      eventgroup = EventGroup.create({
-        sw_id: eg['Id'],
-        name: eg['Name'],
-        sw_ticket_count: eg['TicketCount'],
-        sw_currency: eg['Currency'],
-        sw_min_price: eg['MinPrice'],
-        sw_url: eg['SwURL'],
-        sw_image_url: eg['ImageURL'],
-        category: parent
+    SeatWave.new.get_event_groups_for_category(category_id).each do |event_group|
+      EventGroup.create({
+        sw_id: event_group['Id'],
+        name: event_group['Name'],
+        sw_ticket_count: event_group['TicketCount'],
+        sw_currency: event_group['Currency'],
+        sw_min_price: event_group['MinPrice'],
+        sw_url: event_group['SwURL'],
+        sw_image_url: event_group['ImageURL'],
+        category: category
       })
     end
   end

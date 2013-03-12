@@ -1,17 +1,20 @@
-class TicketTypesFetcher
-  include Traits::Initializer
+class TicketTypesFetcher < Struct.new(:event_id)
+  
+  def event
+    Event.find(event_id)
+  end
   
   def perform
-    sw_api.get_tickettypes_for_event(parent.id).each do |tt|
-      tickettype = TicketType.create({
-        sw_id: tt['Id'],
-        name: tt['TicketTypeName'],
-        sw_ticket_count: tt['TicketCount'],
-        sw_face_value_currency: tt['FaceValueCurrency'],
-        sw_face_value: tt['FaceValue'],
-        sw_currency: tt['Currency'],
-        sw_min_price: tt['MinPrice'],
-        event: parent
+    SeatWave.new.get_ticket_types_for_event(event_id).each do |ticket_type|
+      TicketType.create({
+        sw_id: ticket_type['Id'],
+        name: ticket_type['TicketTypeName'],
+        sw_ticket_count: ticket_type['TicketCount'],
+        sw_face_value_currency: ticket_type['FaceValueCurrency'],
+        sw_face_value: ticket_type['FaceValue'],
+        sw_currency: ticket_type['Currency'],
+        sw_min_price: ticket_type['MinPrice'],
+        event: event
       })
     end
   end
