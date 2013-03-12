@@ -1,0 +1,5 @@
+%h3= "Total #{@total}"
+%h4= "Problems(#{@jobs.count}):"
+- @jobs.each do |job|
+  %p= job.inspect
+  %br

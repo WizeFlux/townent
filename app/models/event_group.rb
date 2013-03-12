@@ -10,6 +10,12 @@ class EventGroup
   field :sw_url, type: String
   field :sw_image_url, type: String
   
+  
+  def fetch_events
+    Delayed::Job.enqueue EventsFetcher.new(self), priority: 10
+  end
+  
+  
   has_many :events
   belongs_to :category
 end

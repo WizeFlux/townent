@@ -10,6 +10,11 @@ gem 'bson_ext'
 gem 'haml-rails'
 gem 'httparty'
 
+
+#delayed jobs handling
+gem 'daemons'
+gem 'delayed_job_mongoid'
+
 # Gems used only for assets and not required
 # in production environments by default.
 

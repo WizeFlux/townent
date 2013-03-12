@@ -49,7 +49,10 @@ class SeatWave
   
   def index_fetcher(type, &block)
     respond = block.call(1)
-    result, total_pages = respond[type], respond['Paging']['TotalPageCount']
+    result, total_pages, status = respond[type], respond['Paging']['TotalPageCount'], respond['Status']
+    
+    raise "SeatWave API error: #{status['Message']}" unless status['Code'].to_i == 0
+    
     (2..total_pages).inject(result) {|rezult, page| rezult += block.call(page)[type]}
   end
   
