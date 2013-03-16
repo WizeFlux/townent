@@ -5,7 +5,7 @@ preload_app true
 timeout 30
 working_directory rails_root
 
-listen "#{rails_root}/tmp/unicorn.sock", :backlog => 64
+listen "#{rails_root}/tmp/sock/unicorn.sock", :backlog => 64
 pid "#{rails_root}/tmp/pids/unicorn.pid"
 
 stderr_path "#{rails_root}/log/unicorn.stderr.log"

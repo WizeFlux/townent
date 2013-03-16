@@ -15,7 +15,7 @@ set :rvm_ruby_string, 'ruby-1.9.3-p327@global'
 set :rvm_type, :user
 
 set :scm, :git
-set :shared_children, %w(log tmp/pids)
+set :shared_children, %w(log tmp/pids tmp/sock)
 set :repository, "git@github.com:WizeFlux/townent.git"
 
 set :branch, 'stable'
