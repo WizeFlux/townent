@@ -1,15 +1,4 @@
 class EventGroupsFetcher < Struct.new(:category_id)
-  
-  def category
-    Category.find(category_id)
-  end
-  
-  def success(job)
-    category.event_groups.each do |event_group|
-      event_group.fetch_events
-    end
-  end
-  
   def perform
     SeatWave.new.get_event_groups_for_category(category_id).each do |event_group|
       EventGroup.create({
@@ -20,7 +9,7 @@ class EventGroupsFetcher < Struct.new(:category_id)
         sw_min_price: event_group['MinPrice'],
         sw_url: event_group['SwURL'],
         sw_image_url: event_group['ImageURL'],
-        category: category
+        category: Category.find(category_id)
       })
     end
   end

@@ -1,9 +1,4 @@
 class TicketGroupsFetcher < Struct.new(:event_id)
-  
-  def event
-    Event.find(event_id)
-  end
-  
   def perform
     SeatWave.new.get_ticket_groups_for_event(event_id).each do |ticket_group|
       TicketGroup.create({
@@ -19,7 +14,7 @@ class TicketGroupsFetcher < Struct.new(:event_id)
         sw_delivery_type: ticket_group['DeliveryType'],
         sw_block_id: ticket_group['BlockId'],
         sw_tickettype_id: ticket_group['TicketTypeID'],
-        event: event
+        event: Event.find(event_id)
       })
     end
   end

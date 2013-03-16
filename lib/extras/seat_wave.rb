@@ -1,8 +1,9 @@
 class SeatWave
-  BASE_URI = URI.parse('http://api-sandbox.seatwave.com/v2/discovery/')
-  JSON_PAGE_SIZE = 1000
-  API_KEY = 'b37a2410e14b42d3b05271a56e27c111'
-  API_SECRET = '0e33c2e557094234884fdd7290744731'
+  CONFIG = YAML.load_file("#{Rails.root}/config/seat_wave.yml")[Rails.env]
+  BASE_URI = URI.parse(CONFIG['base_url'])
+  JSON_PAGE_SIZE = CONFIG['page_size']
+  API_KEY = CONFIG['api_key']
+  API_SECRET = CONFIG['api_secret']
 
   ## Single items
   def get_layout_by_id(id)
@@ -76,6 +77,7 @@ class SeatWave
   def index_fetcher(type, &block)
     respond = block.call(1)
     raise "SeatWave API error: #{respond['Status']['Message']}" unless respond['Status']['Code'].to_i == 0
+    
     result, total_pages = respond[type], respond['Paging']['TotalPageCount']
     
     (2..total_pages).inject(result) {|rezult, page| rezult += block.call(page)[type]}

@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  def index
+  def show
     @jobs = Delayed::Job.all
   end
 end

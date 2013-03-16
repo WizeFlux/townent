@@ -1,5 +1,5 @@
 class EventGroupsUpdater
-  INTERVAL = 1.hour
+  INTERVAL = 5.minutes
   
   def success(job)
     Delayed::Job.enqueue EventGroupsUpdater.new, priority: 60, queue: 'event_groups_updates', run_at: INTERVAL.from_now
@@ -20,11 +20,13 @@ class EventGroupsUpdater
   
   def perform
     SeatWave.new.get_updated_event_groups(INTERVAL.ago).each do |event_group|
-      target_event_group = EventGroup.where(sw_id: event_group['Id'])
-      if target_event_group.exists?
-        target_event_group.first.update_attributes data_map(event_group)
+      target_event_group = EventGroup.where(sw_id: event_group['Id']).first
+      
+      
+      if target_event_group
+        target_event_group.update_attributes data_map(event_group)
       else
-        EventGroup.create data_map(event_group)
+        EventGroup.create(data_map(event_group))
       end
     end
   end

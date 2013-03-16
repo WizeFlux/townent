@@ -32,3 +32,4 @@ public/uploads/**/*
 .sass-cache/**/*
 public/stylesheets/**/*
 vendor/bundle/**/*
+public/assets/

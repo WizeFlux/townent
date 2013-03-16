@@ -7,7 +7,7 @@ class EventGroup
   
   ## Obtained from Seatwave API
   field :sw_id, type: String
-  field :name, type: String
+  field :sw_name, type: String
   field :sw_ticket_count, type: Integer
   field :sw_currency, type: String
   field :sw_min_price, type: Float
@@ -15,7 +15,7 @@ class EventGroup
   field :sw_image_url, type: String
   
   
-  ## Inittial set of events
+  ## Fetch all nested events
   def fetch_events
     Delayed::Job.enqueue EventsFetcher.new(id), priority: 90, queue: 'events'
   end

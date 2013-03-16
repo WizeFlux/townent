@@ -1,9 +1,4 @@
 class TicketTypesFetcher < Struct.new(:event_id)
-  
-  def event
-    Event.find(event_id)
-  end
-  
   def perform
     SeatWave.new.get_ticket_types_for_event(event_id).each do |ticket_type|
       TicketType.create({
@@ -14,7 +9,7 @@ class TicketTypesFetcher < Struct.new(:event_id)
         sw_face_value: ticket_type['FaceValue'],
         sw_currency: ticket_type['Currency'],
         sw_min_price: ticket_type['MinPrice'],
-        event: event
+        event: Event.find(event_id)
       })
     end
   end

@@ -7,7 +7,7 @@ class Category
   
   ## Seatwave api
   field :sw_id, type: String
-  field :name
+  field :sw_name
 
 
   ## Obtain initial set of eventgroups

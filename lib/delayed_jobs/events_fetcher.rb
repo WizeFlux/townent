@@ -1,16 +1,4 @@
 class EventsFetcher < Struct.new(:event_group_id)
-  
-  def event_group
-    EventGroup.find(event_group_id)
-  end
-
-  def success(job)
-    event_group.events.each do |event|
-      event.fetch_ticket_types
-      event.fetch_ticket_groups
-    end
-  end
-  
   def perform
     SeatWave.new.get_events_for_event_group(event_group_id).each do |event|
       Event.create({
@@ -23,7 +11,7 @@ class EventsFetcher < Struct.new(:event_group_id)
         sw_url: event['SwURL'],
         sw_currency: event['Currency'],
         sw_min_price: event['MinPrice'],
-        event_group: event_group
+        event_group: EventGroup.find(event_group_id)
       })
     end
   end
