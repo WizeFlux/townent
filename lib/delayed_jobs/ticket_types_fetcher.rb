@@ -3,7 +3,7 @@ class TicketTypesFetcher < Struct.new(:event_id)
     SeatWave.new.get_ticket_types_for_event(event_id).each do |ticket_type|
       TicketType.create({
         sw_id: ticket_type['Id'],
-        name: ticket_type['TicketTypeName'],
+        sw_name: ticket_type['TicketTypeName'],
         sw_ticket_count: ticket_type['TicketCount'],
         sw_face_value_currency: ticket_type['FaceValueCurrency'],
         sw_face_value: ticket_type['FaceValue'],

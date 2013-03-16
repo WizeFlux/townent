@@ -8,9 +8,9 @@ class EventsUpdater
   def data_map(params)
     {
       sw_id: params['Id'],
-      date: SeatWave.new.parse_date(params['Date']),
-      town: params['Town'],
-      country: params['Country'],
+      sw_date: SeatWave.new.parse_date(params['Date']),
+      sw_town: params['Town'],
+      sw_country: params['Country'],
       sw_venue_id: params['VenueId'],
       sw_layout_id: params['LayoutId'],
       sw_url: params['SwURL'],

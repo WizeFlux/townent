@@ -1,0 +1,8 @@
+.row
+  .large-12.columns
+    %ul.inline-list
+      - @genre.categories.each do |category|
+        %li
+          %a{href: genre_category_url(@genre, category)}
+            = category.sw_name
+            = "(#{category.event_groups.count})"

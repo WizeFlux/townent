@@ -3,7 +3,7 @@ class TicketType
 
   field :_id, type: String, default: ->{sw_id}
   field :sw_id, type: String
-  field :name, type: String
+  field :sw_name, type: String
   field :sw_ticket_count, type: Integer
   field :sw_face_value_currency, type: String 
   field :sw_face_value, type: Float

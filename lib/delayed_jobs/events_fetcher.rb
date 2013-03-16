@@ -3,9 +3,9 @@ class EventsFetcher < Struct.new(:event_group_id)
     SeatWave.new.get_events_for_event_group(event_group_id).each do |event|
       Event.create({
         sw_id: event['Id'],
-        date: SeatWave.new.parse_date(event['Date']),
-        town: event['Town'],
-        country: event['Country'],
+        sw_date: SeatWave.new.parse_date(event['Date']),
+        sw_town: event['Town'],
+        sw_country: event['Country'],
         sw_venue_id: event['VenueId'],
         sw_layout_id: event['LayoutId'],
         sw_url: event['SwURL'],

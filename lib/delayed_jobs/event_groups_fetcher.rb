@@ -3,7 +3,7 @@ class EventGroupsFetcher < Struct.new(:category_id)
     SeatWave.new.get_event_groups_for_category(category_id).each do |event_group|
       EventGroup.create({
         sw_id: event_group['Id'],
-        name: event_group['Name'],
+        sw_name: event_group['Name'],
         sw_ticket_count: event_group['TicketCount'],
         sw_currency: event_group['Currency'],
         sw_min_price: event_group['MinPrice'],

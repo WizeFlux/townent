@@ -14,7 +14,14 @@ gem 'httparty'
 #delayed jobs handling
 gem 'daemons'
 gem 'delayed_job_mongoid'
-# gem 'dj_mon'
+gem 'zurb-foundation'
+
+
+#deploy
+gem 'unicorn'
+gem 'capistrano'
+gem 'rvm-capistrano'
+gem 'capistrano-unicorn'
 
 # Gems used only for assets and not required
 # in production environments by default.

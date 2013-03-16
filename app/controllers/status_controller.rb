@@ -1,4 +1,4 @@
-class JobsController < ApplicationController
+class StatusController < ApplicationController
   def show
     @jobs = Delayed::Job.all
   end

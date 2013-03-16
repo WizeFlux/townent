@@ -19,7 +19,8 @@ class EventGroup
   def fetch_events
     Delayed::Job.enqueue EventsFetcher.new(id), priority: 90, queue: 'events'
   end
-  
+
+  after_create :fetch_events
 
   has_many :events
   belongs_to :category

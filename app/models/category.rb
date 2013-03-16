@@ -16,5 +16,6 @@ class Category
   end
   
   has_many :event_groups
+  has_many :events
   belongs_to :genre
 end

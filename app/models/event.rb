@@ -31,7 +31,15 @@ class Event
 
   after_save :fetch_ticket_types, :fetch_ticket_groups
   
+  belongs_to :category
   belongs_to :event_group
+  
+  
+  # after_save :assign_category
+  def assign_category
+    update_attribute(:category, event_group.category)
+  end
+  
   has_many :ticket_types
   has_many :ticket_groups
 end

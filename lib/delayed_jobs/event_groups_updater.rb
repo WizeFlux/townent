@@ -8,7 +8,7 @@ class EventGroupsUpdater
   def data_map(params)
     {
       sw_id: params['Id'],
-      name: params['Name'],
+      sw_name: params['Name'],
       sw_ticket_count: params['TicketCount'],
       sw_currency: params['Currency'],
       sw_min_price: params['MinPrice'],
