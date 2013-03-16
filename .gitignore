@@ -25,7 +25,6 @@ log/*!.gitignore
 ._*
 .svn
 .hg
-Gemfile.lock
 *.cache
 tmp/**/*
 public/uploads/**/*

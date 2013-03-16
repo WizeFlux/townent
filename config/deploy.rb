@@ -18,8 +18,6 @@ set :scm, :git
 set :shared_children, %w(log tmp/pids)
 set :repository, "git@github.com:WizeFlux/townent.git"
 
-set :ssh_options, {forward_agent: true}
-
 set :branch, 'stable'
 set :rails_env, 'production'
 set :unicorn_env, rails_env
