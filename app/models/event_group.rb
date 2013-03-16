@@ -15,6 +15,14 @@ class EventGroup
   field :sw_image_url, type: String
   
   
+  def image_url
+    if Rails.env == 'production'
+      "http://cdn2.seatwave.com/filestore" + sw_image_url
+    else
+      sw_image_url
+    end
+  end
+  
   ## Fetch all nested events
   def fetch_events
     Delayed::Job.enqueue EventsFetcher.new(id), priority: 90, queue: 'events'
