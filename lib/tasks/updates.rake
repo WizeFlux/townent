@@ -10,9 +10,4 @@ namespace :updates do
     Delayed::Job.where(:queue => 'events_updates').delete_all
     Delayed::Job.where(:queue => 'event_groups_updates').delete_all
   end
-
-  desc "TODO"
-  task :reset => :environment do
-  end
-
 end

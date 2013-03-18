@@ -9,4 +9,5 @@ class Genre
   field :sw_name, type: String
   
   has_many :categories
+  has_many :events
 end

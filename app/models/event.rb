@@ -18,28 +18,7 @@ class Event
   field :sw_min_price, type: Float
   
   
-  ## Fetch all belonged ticket groups
-  def fetch_ticket_groups
-    Delayed::Job.enqueue TicketGroupsFetcher.new(id), priority: 80, queue: 'ticket_groups'
-  end
-  
-  
-  ## Fetch all belonged ticket types
-  def fetch_ticket_types
-    Delayed::Job.enqueue TicketTypesFetcher.new(id), priority: 70, queue: 'ticket_types'
-  end
-
-  after_save :fetch_ticket_types, :fetch_ticket_groups
-  
   belongs_to :category
   belongs_to :event_group
-  
-  
-  # after_save :assign_category
-  def assign_category
-    update_attribute(:category, event_group.category)
-  end
-  
-  has_many :ticket_types
-  has_many :ticket_groups
+  belongs_to :genre
 end

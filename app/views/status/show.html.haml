@@ -1,55 +1,58 @@
-%h1 Stats
-%p
-  Jobs -->
-  total:
-  = @jobs.count
-  | problems:
-  = @jobs.where(:attempts.gt => 0).count
+.row
+  .large-12
+    %h3 Stats:
+    %ul.inline-list
+      %li Jobs -->
+      %li 
+        total:
+        = @jobs.count
+      %li
+        problems:
+        = @jobs.where(:attempts.gt => 0).count
 
-%p
-  Event groups -->
-  fetch jobs:
-  = @jobs.where(:queue => 'event_groups').count
-  | update jobs:
-  = @jobs.where(:queue => 'event_groups_updates').count
-  | records:
-  = EventGroup.all.count
-
-
-%p
-  Events -->
-  fetch jobs:
-  = @jobs.where(:queue => 'events').count
-  | update jobs:
-  = @jobs.where(:queue => 'events_updates').count
-  | records:
-  = Event.all.count
-  
-%p
-  Ticket groups -->
-  jobs:
-  = @jobs.where(:queue => 'ticket_groups').count
-  | records:
-  = TicketGroup.all.count
-  
-%p
-  Ticket types -->
-  jobs:
-  = @jobs.where(:queue => 'ticket_types').count
-  | records:
-  = TicketType.all.count
+    %ul.inline-list
+      %li Event groups -->
+      %li 
+        fetch jobs:
+        = @jobs.where(:queue => 'event_groups').count
+      %li
+        update jobs:
+        = @jobs.where(:queue => 'event_groups_updates').count
+      %li
+        records:
+        = EventGroup.all.count
+        
+    %ul.inline-list
+      %li Events -->
+      %li
+        fetch jobs:
+        = @jobs.where(:queue => 'events').count
+      %li
+        update jobs:
+        = @jobs.where(:queue => 'events_updates').count
+      %li
+        records:
+        = Event.all.count
 
 
-%h1 Updates
-- @jobs.where(:queue => 'events_updates').each do |job|
-  %p= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
-  %pre= job.last_error
-- @jobs.where(:queue => 'event_groups_updates').each do |job|
-  %p= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
-  %pre= job.last_error
+.row
+  .large-12
+    %h3 Updates
+    %ul.circle
+      - @jobs.where(:queue => 'events_updates').each do |job|
+        %li
+          %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
+          %pre= job.last_error
+      - @jobs.where(:queue => 'event_groups_updates').each do |job|
+        %li
+          %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
+          %pre= job.last_error
 
-%h1 Problems
-- @jobs.where(:attempts.gt => 0).each do |job|
-  %b= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
-  %pre
-    = job.last_error
+.row
+  .large-12
+    %h3 Problems
+    %ul.circle
+      - @jobs.where(:attempts.gt => 0).each do |job|
+        %li
+          %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
+          %pre= job.last_error

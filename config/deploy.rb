@@ -1,5 +1,6 @@
 set :application, "townent"
 server 'photo-mast.remote', :app, :web, :db
+
 set :user, 'deploy'
 set :use_sudo, false
 set :deploy_to, "/home/deploy/servers/townent"
@@ -7,6 +8,7 @@ set :deploy_to, "/home/deploy/servers/townent"
 require 'bundler/capistrano'
 require 'rvm/capistrano'
 require 'capistrano-unicorn'
+require 'delayed/recipes'
 
 load 'deploy/assets'
 
@@ -21,3 +23,5 @@ set :repository, "git@github.com:WizeFlux/townent.git"
 set :branch, 'stable'
 set :rails_env, 'production'
 set :unicorn_env, rails_env
+
+set :delayed_job_args, "-n 1"
