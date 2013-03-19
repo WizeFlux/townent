@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   # stream
   
-  before_filter :find_category, :find_genre
+  before_filter :find_category, :find_genre, :current_city
   helper_method :query_date_from, :query_date_to
   # before_filter :debugger
   
@@ -26,8 +26,6 @@ class EventsController < ApplicationController
   def find_genre
     @genre ||= params[:genre_id] ? Genre.find(params[:genre_id]) : nil
   end
-  
-  
   
   
   
