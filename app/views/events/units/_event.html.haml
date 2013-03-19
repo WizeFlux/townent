@@ -1,0 +1,21 @@
+.row
+  .large-3.columns
+    %img{src: event.cached_event_group_image_url}
+  .large-6.columns
+    %h5
+      = event.cached_event_group_sw_name
+      = '@ ' + event.cached_venue_sw_name
+    %p
+      %h5.subheader
+        = event.sw_date.strftime('%A, %B %-d, %Y, %I:%M %P')
+    %p
+      %span.label.round= event.cached_genre_sw_name
+      %span.label.round= event.cached_category_sw_name
+  .large-3.columns
+    %a.success.round.button.expand{href: event_path(event)} View tickets
+    %center
+      = event.sw_ticket_count
+      tickets from
+      = event.sw_min_price
+      = event.sw_currency
+%hr

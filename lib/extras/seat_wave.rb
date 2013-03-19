@@ -32,7 +32,6 @@ class SeatWave
 
 
 
-
   ## Indexes
   def get_genres
     index_fetcher('Genres') {|page| fetch_json("genres", params(page))}
