@@ -49,6 +49,7 @@ class Event
   scope :for_dates_range, ->(date_from, date_to){where(:sw_date.gte => date_from, :sw_date.lte => date_to)}
   
   
+  after_create :cache!
   def cache!
     update_attributes({
       cached_event_group_image_url: event_group.image_url,

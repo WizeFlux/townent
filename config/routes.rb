@@ -19,6 +19,5 @@ Townent::Application.routes.draw do
     end
   end
   
-  
-  root to: 'status#show'
+  root to: 'events#index'
 end
