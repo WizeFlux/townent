@@ -31,7 +31,7 @@
     %section.top-bar-section
       %ul.right
         %li
-          %a{href: cities_path}= "#{current_city.name}, #{current_city.country.name}" if controller_name != 'cities'
+          %a{href: cities_path}= "#{current_city.name}, #{current_city.country.name}" unless %w(cities status).include?(controller_name)
 
   = yield
 

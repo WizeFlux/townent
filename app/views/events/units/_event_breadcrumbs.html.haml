@@ -1,0 +1,12 @@
+.row
+  .large-12
+    .ul.breadcrumbs
+      %li
+        %a{href: '/'}= "#{current_city.name}, #{current_city.country.name}"
+      %li
+        %a{href: genre_events_path(event.genre)}= event.genre.sw_name
+      %li
+        %a{href: genre_category_events_path(event.genre, event.category)}= event.category.sw_name
+      %li.current
+        %a{href: '#'}= "#{event.event_group.sw_name} @ #{event.venue.sw_name}"
+%br

@@ -9,7 +9,8 @@ class Venue
   field :sw_lng, type: Float
   field :sw_url, type: String
   field :sw_image_url, type: String
-
+  field :sw_address, type: Hash
+  
   has_many :events
   has_many :layouts
 end

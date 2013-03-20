@@ -1,7 +1,7 @@
 Townent::Application.routes.draw do
   
   ## Server status
-  resource :status, only: %w(show)
+  resource :status, only: %w(show), controller: 'status'
   
   
   ## Events CRUD

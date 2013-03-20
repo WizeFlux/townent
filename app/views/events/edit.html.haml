@@ -1,0 +1,9 @@
+= render 'events/units/event_breadcrumbs', event: @event
+
+= form_for @event do |f|
+  .row
+    .large-12
+      = f.label :description
+      = f.text_area :description
+      = f.submit 'Save', class: 'button round'
+      %a.button.round{href: event_path(@event)} Cancel

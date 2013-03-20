@@ -7,6 +7,7 @@ development:
       options:
   options:
     preload_models: true
+    identity_map_enabled: true
 test:
   sessions:
     default:

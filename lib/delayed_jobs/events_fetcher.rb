@@ -28,7 +28,8 @@ class EventsFetcher < Struct.new(:event_group_id)
           sw_lat: venue_json['Lat'],
           sw_lng: venue_json['Long'],
           sw_url: venue_json['SwURL'],
-          sw_image_url: venue_json['ImageURL']
+          sw_image_url: venue_json['ImageURL'],
+          sw_address: venue_json['Address']
         }) 
       end
       
