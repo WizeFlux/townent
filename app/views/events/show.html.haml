@@ -17,11 +17,47 @@
 .row
   %hr
   .large-6.columns
+    %h4 Tickets
+    %table.large-12#tickets{style: 'display: none'}
+      %thead
+        %tr
+          %th Block
+          %th Row
+          %th Qty
+          %th Price
+          %th 
+      %tbody#tickets-entries
+  .large-6.columns
+    %h4 Layout
     - if @event.layout.sw_seat_map_url
       %img{src: @event.layout.sw_seat_map_url}
     - else
       %p There are no seatmap avaiable!
-  .large-6.columns
+    %h4 Map
     - venue = @event.venue
     - options = {center: "#{venue.sw_lat},#{venue.sw_lng}", zoom: 13, size: '470x355', markers: "color:blue|#{venue.sw_lat},#{venue.sw_lng}", sensor: false}
     %img{src: "http://maps.googleapis.com/maps/api/staticmap?#{options.to_query}"}
+
+
+
+:javascript
+  $(function(){
+    var ticket_groups_url = '#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&pgsize=1000&callback=?';
+    $.getJSON(ticket_groups_url, null, function(webResponse){
+      $.each(webResponse.TicketGroups, function () {
+        var tg_element = $(
+          '<tr>' +
+            '<td>' + this.Block + '</td>' +
+            '<td>' + this.Row + '</td>' +
+            '<td>' + this.Qty + '</td>' +
+            '<td>' + this.Price + ' ' + this.Currency + '</td>' +
+            '<td><a class="button small expand round" href="' + this.SwURL + '">Select</a></td>' +
+          '</tr>'
+        );
+        $('#tickets-entries').append(tg_element);
+      });
+      if (webResponse.TicketGroups.length > 0){
+        $('#tickets').show();
+      };
+    });
+  })

@@ -2,14 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mongoid'
 gem 'bson_ext'
 gem 'haml-rails'
 gem 'httparty'
-
 
 #delayed jobs handling
 gem 'daemons'

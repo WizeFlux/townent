@@ -16,7 +16,6 @@ class SeatWave
   
   
   
-  
   ## Updates
   def get_updated_event_groups(updated_since)
     index_fetcher('EventGroups') do |page|
@@ -65,7 +64,13 @@ class SeatWave
     DateTime.strptime("#{parsed_date[1].to_i/1000} #{parsed_date[2]}", '%s %z')
   end
   
+  def self.api_key
+    API_KEY 
+  end
   
+  def self.base_uri
+    BASE_URI
+  end
   
   private
   
