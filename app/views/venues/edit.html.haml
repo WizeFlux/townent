@@ -1,0 +1,13 @@
+- sample_event = @venue.events.sample
+
+= content_for :title, "#{@venue.sw_name} @ #{sample_event.city.name}, #{sample_event.country.name}"
+
+= render 'venues/units/breadcrumbs', venue: @venue, sample_event: sample_event
+
+= form_for @venue do |f|
+  .row
+    .large-12
+      = f.label :description
+      = f.text_area :description, style: 'resize: vertical'
+      = f.submit 'Save', class: 'button round'
+      %a.button.round{href: venue_path(@venue)} Cancel

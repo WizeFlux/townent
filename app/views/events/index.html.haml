@@ -43,11 +43,4 @@
       $('.datepicker').datepicker({dateFormat: 'd MM yy'});
         
 
-.row
-  .large-12
-    - previous_event_date = nil
-    - @events.each do |event|
-      - unless event.sw_date.to_date == previous_event_date
-        %h3= event.sw_date.strftime('%-d %B %Y')
-      - previous_event_date = event.sw_date.to_date
-      = render 'events/units/event', event: event
+= render 'events/units/events_list', events: @events

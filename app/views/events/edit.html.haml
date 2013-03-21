@@ -1,9 +1,11 @@
-= render 'events/units/event_breadcrumbs', event: @event
+= content_for :title, "#{@event.event_group.sw_name} @ #{@event.venue.sw_name}"
+
+= render 'events/units/breadcrumbs', event: @event
 
 = form_for @event do |f|
   .row
     .large-12
       = f.label :description
-      = f.text_area :description
+      = f.text_area :description, style: 'resize: vertical'
       = f.submit 'Save', class: 'button round'
       %a.button.round{href: event_path(@event)} Cancel

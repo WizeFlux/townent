@@ -5,11 +5,16 @@ Townent::Application.routes.draw do
   
   
   ## Events CRUD
-  resources :events
+  resources :events, except: %w(index)
+  
+  
+  ## Venues CRUD
+  resources :venues, except: %w(index)
   
   
   ## City selection interface
   resources :cities, only: %w(index show)
+  
   
   ## Events search interface
   resources :genres, only: %w() do
