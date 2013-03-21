@@ -5,7 +5,7 @@ Townent::Application.routes.draw do
   
   
   ## Events CRUD
-  resources :events, except: %w(index)
+  resources :events
   
   
   ## Venues CRUD
