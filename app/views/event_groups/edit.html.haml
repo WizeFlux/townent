@@ -1,0 +1,15 @@
+= content_for :title, "#{@event_group.sw_name}"
+
+= render 'event_groups/units/breadcrumbs', event_group: @event_group
+
+= form_for @event_group do |f|
+  .row
+    .large-12
+      = f.label :city_id
+      = f.select :city_id, options_from_collection_for_select(City.all.order_by([[:name, :asc]]), :id, :full_name, f.object.city.id), {:include_blank => true}
+  .row
+    .large-12
+      = f.label :description
+      = f.text_area :description, style: 'resize: vertical'
+      = f.submit 'Save', class: 'button round'
+      %a.button.round{href: event_group_path(@event_group)} Cancel

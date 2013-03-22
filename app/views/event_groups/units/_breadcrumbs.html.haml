@@ -1,0 +1,8 @@
+.row
+  .large-12
+    .ul.breadcrumbs
+      %li
+        %a{href: '/'}= "#{current_city.name}, #{current_city.country.name}"
+      %li.current
+        %a{href: '#'}= "#{@event_group.sw_name}"
+%br

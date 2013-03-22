@@ -3,6 +3,7 @@ class EventGroup
   
   ## Common things
   field :_id, type: String, default: ->{sw_id}
+  field :description, type: String
   
   
   ## Obtained from Seatwave API
@@ -34,6 +35,8 @@ class EventGroup
 
   has_many :events
   
+  belongs_to :country
+  belongs_to :city
   belongs_to :category
   belongs_to :genre
 end
