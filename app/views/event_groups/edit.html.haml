@@ -6,7 +6,7 @@
   .row
     .large-12
       = f.label :city_id
-      = f.select :city_id, options_from_collection_for_select(City.all.order_by([[:name, :asc]]), :id, :full_name, f.object.city.id if f.object.city), {:include_blank => true}
+      = f.select :city_id, options_from_collection_for_select(City.all.order_by([[:name, :asc]]), :id, :full_name, (f.object.city.id if f.object.city)), {:include_blank => true}
   .row
     .large-12
       = f.label :description
