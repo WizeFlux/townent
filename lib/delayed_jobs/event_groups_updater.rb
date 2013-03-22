@@ -1,5 +1,5 @@
 class EventGroupsUpdater
-  INTERVAL = 5.minutes
+  INTERVAL = 30.minutes
   
   def success(job)
     Delayed::Job.enqueue EventGroupsUpdater.new, priority: 60, queue: 'event_groups_updates', run_at: INTERVAL.from_now
