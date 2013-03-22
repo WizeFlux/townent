@@ -21,11 +21,11 @@ class Event
   
   
   ## Cached things
-  field :cached_event_group_sw_image_url, type: String, default: ->{event_group.sw_image_url}
-  field :cached_event_group_sw_name, type: String, default: ->{event_group.sw_name}
-  field :cached_venue_sw_name, type: String, default: ->{venue.sw_name}
-  field :cached_genre_sw_name, type: String, default: ->{genre.sw_name}
-  field :cached_category_sw_name, type: String, default: ->{category.sw_name}
+  # field :cached_event_group_sw_image_url, type: String, default: ->{event_group.sw_image_url}
+  # field :cached_event_group_sw_name, type: String, default: ->{event_group.sw_name}
+  # field :cached_venue_sw_name, type: String, default: ->{venue.sw_name}
+  # field :cached_genre_sw_name, type: String, default: ->{genre.sw_name}
+  # field :cached_category_sw_name, type: String, default: ->{category.sw_name}
   
   
   ## Relations

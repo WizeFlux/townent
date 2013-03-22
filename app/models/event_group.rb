@@ -23,7 +23,6 @@ class EventGroup
 
   after_create :fetch_events
 
-  
   ## Relations
   has_many :events
   

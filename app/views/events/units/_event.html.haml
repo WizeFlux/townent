@@ -1,16 +1,16 @@
 .row
   .large-3.columns
-    %img{src: event.cached_event_group_sw_image_url}
+    %img{src: event.event_group.sw_image_url}
   .large-6.columns
     %h5
-      = event.cached_event_group_sw_name
-      = '@ ' + event.cached_venue_sw_name
+      = event.event_group.sw_name
+      = '@ ' + event.venue.sw_name
     %p
       %h5.subheader
         = event.sw_date.strftime('%A, %B %-d, %Y, %I:%M %P')
     %p
-      %span.label.round= event.cached_genre_sw_name
-      %span.label.round= event.cached_category_sw_name
+      %span.label.round= event.genre.sw_name
+      %span.label.round= event.category.sw_name
   .large-3.columns
     %a.success.round.button.expand{href: event_path(event)} View tickets
     %center

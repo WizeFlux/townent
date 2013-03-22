@@ -1,12 +1,9 @@
 class EventsController < ApplicationController
-  # stream
-  
   before_filter :find_category, :find_genre, :current_city
   before_filter :find_event, except: %w(index)
   
+
   helper_method :query_date_from, :query_date_to
-  # before_filter :debugger
-  
 
 
   def query
@@ -28,7 +25,6 @@ class EventsController < ApplicationController
   def find_genre
     @genre ||= params[:genre_id] ? Genre.find(params[:genre_id]) : nil
   end
-  
 
   def find_event
     @event = Event.find params[:id]
@@ -53,7 +49,7 @@ class EventsController < ApplicationController
     if query && !query[:date_from].empty? && !query[:date_to].empty?
       @events = @events.for_dates_range(query_date_from.to_date, query_date_to.to_date)
     end
-    @events = @events.limit(100)
+    @events = @events.includes(:event_group, :venue, :category, :genre).limit(100)
     render stream: true
   end
 end
