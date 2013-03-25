@@ -12,7 +12,7 @@ class Category
 
   ## Obtain initial set of eventgroups
   def fetch_event_groups
-    Delayed::Job.enqueue EventGroupsFetcher.new(sw_id), priority: 100, queue: 'event_groups'
+    Delayed::Job.enqueue EventGroupsFetcher.new(sw_id), priority: 10, queue: 'event_groups'
   end
   
   has_many :event_groups

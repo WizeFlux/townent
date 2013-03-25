@@ -1,10 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :current_city
   before_filter :find_event, except: %w(index)
-  
-
   helper_method :query_date_from, :query_date_to
-
 
   def query
     params[:q] if params[:q]
@@ -40,16 +37,12 @@ class EventsController < ApplicationController
   
   
   def index
-    @events = Event.for_city(current_city)
-    if @category
-      @events = @events.for_category(@category)
-    else
-      @events = @events.for_genre(@genre) if @genre
-    end
-    if query && !query[:date_from].empty? && !query[:date_to].empty?
-      @events = @events.for_dates_range(query_date_from.to_date, query_date_to.to_date)
-    end
-    @events = @events.includes(:event_group, :venue, :category, :genre).limit(100)
-    render stream: true
+    @events = Event.
+      for_city(current_city).
+      from_date(query_date_from ? query_date_from : Date.today).
+      to_date(query_date_to).
+      for_category(@category).
+      for_genre(@genre).
+      includes(:event_group, :venue, :category, :genre).limit(100)
   end
 end

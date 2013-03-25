@@ -12,11 +12,9 @@ class EventGroupsController < ApplicationController
   
   def show 
     @events = case scope
-      when 'upcoming'
-        @event_group.events.for_dates_range(Time.now, 1.year.from_now)
-      when 'past'
-        @event_group.events.for_dates_range(1.year.ago, Time.now)        
-      end
+      when 'upcoming' then @event_group.events.from_date Time.now
+      when 'past' then @event_group.events.to_date Time.now
+    end
   end
   
   def update

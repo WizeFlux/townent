@@ -12,11 +12,9 @@ class VenuesController < ApplicationController
   
   def show 
     @events = case scope
-      when 'upcoming'
-        @venue.events.for_dates_range(Time.now, 1.year.from_now)
-      when 'past'
-        @venue.events.for_dates_range(1.year.ago, Time.now)        
-      end
+      when 'upcoming' then @venue.events.from_date Time.now
+      when 'past' then @venue.events.to_date Time.now
+    end
   end
   
   def update

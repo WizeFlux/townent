@@ -6,7 +6,7 @@ class EventGroupsUpdater
   end
   
   def success(job)
-    Delayed::Job.enqueue EventGroupsUpdater.new, priority: 60, queue: 'event_groups_updates', run_at: interval.from_now
+    Delayed::Job.enqueue EventGroupsUpdater.new, priority: 30, queue: 'event_groups_updates', run_at: interval.from_now
   end
   
   def perform

@@ -37,7 +37,7 @@ class EventGroup
   
   ## Fetch all nested events
   def fetch_events
-    Delayed::Job.enqueue EventsFetcher.new(id), priority: 90, queue: 'events'
+    Delayed::Job.enqueue EventsFetcher.new(id), priority: 20, queue: 'events'
   end
   
   def initialize_relations

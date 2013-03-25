@@ -36,11 +36,12 @@ class Event
   
   
   ## Named scopes
-  scope :for_date, ->(date){where(:sw_date.gte => date.beginning_of_day, :sw_date.lte => date.end_of_day)}
-  scope :for_city, ->(city){where(city: city)}
-  scope :for_genre, ->(genre){where(genre: genre)}
-  scope :for_category, ->(category){where(category: category)}
-  scope :for_dates_range, ->(date_from, date_to){where(:sw_date.gte => date_from, :sw_date.lte => date_to)}
+  scope :for_date, ->(date){  where(:sw_date.gte => date.beginning_of_day, :sw_date.lte => date.end_of_day)  }
+  scope :for_city, ->(city){  where(city: city)  }
+  scope :for_genre, ->(genre){  genre ? where(genre: genre) : all  }
+  scope :for_category, ->(category){  category ? where(category: category) : all  }
+  scope :from_date, ->(date_from){  date_from ? where(:sw_date.gte => date_from.to_date) : all  }
+  scope :to_date, ->(date_to){  date_to ? where(:sw_date.lte => date_to.to_date) : all  }
   
   
   ## Building relations
