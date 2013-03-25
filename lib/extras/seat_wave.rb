@@ -6,6 +6,14 @@ class SeatWave
   API_SECRET = CONFIG['api_secret']
 
   ## Single items
+  def get_event_by_id(id)
+    item_fetcher('Event', "event/#{id}")
+  end
+  
+  def get_event_group_by_id(id)
+    item_fetcher('EventGroup', "eventgroup/#{id}")
+  end
+  
   def get_layout_by_id(id)
     item_fetcher('Layout', "layout/#{id}")
   end

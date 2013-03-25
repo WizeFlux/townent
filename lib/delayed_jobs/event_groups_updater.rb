@@ -1,33 +1,23 @@
 class EventGroupsUpdater
-  INTERVAL = 30.minutes
+  include SeatWaveDataMap
+  
+  def interval
+    30.minutes
+  end
   
   def success(job)
-    Delayed::Job.enqueue EventGroupsUpdater.new, priority: 60, queue: 'event_groups_updates', run_at: INTERVAL.from_now
-  end
-
-  def data_map(params)
-    {
-      sw_id: params['Id'],
-      sw_name: params['Name'],
-      sw_ticket_count: params['TicketCount'],
-      sw_currency: params['Currency'],
-      sw_min_price: params['MinPrice'],
-      sw_url: params['SwURL'],
-      sw_image_url: params['ImageURL'],
-      category: Category.where(sw_id: params['CategoryId']).first
-    }
+    Delayed::Job.enqueue EventGroupsUpdater.new, priority: 60, queue: 'event_groups_updates', run_at: interval.from_now
   end
   
   def perform
-    SeatWave.new.get_updated_event_groups(INTERVAL.ago).each do |event_group|
-      target_event_group = EventGroup.where(sw_id: event_group['Id']).first
+    SeatWave.new.get_updated_event_groups(interval.ago).each do |event_group_json_respond|
       
-      
-      if target_event_group
-        target_event_group.update_attributes data_map(event_group)
+      if EventGroup.where(sw_id: event_group_json_respond['Id']).exists?
+        EventGroup.find_by(sw_id: event_group_json_respond['Id']).update_attributes event_group_dmap(event_group_json_respond)
       else
-        EventGroup.create(data_map(event_group))
+        EventGroup.create event_group_dmap(event_group_json_respond)
       end
+      
     end
   end
 end

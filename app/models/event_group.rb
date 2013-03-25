@@ -14,20 +14,41 @@ class EventGroup
   field :sw_min_price, type: Float
   field :sw_url, type: String
   field :sw_image_url, type: String
+  field :sw_category_id
+  
+
+  ## Relations
+  has_many :events
+  
+
+  ## Thats just for editing purposes
+  belongs_to :country
+  belongs_to :city
+  
+  
+  ## Real one
+  belongs_to :category
+  belongs_to :genre
+
+
+  ## Buiding relations
+  after_create :initialize_relations, :fetch_events
   
   
   ## Fetch all nested events
   def fetch_events
     Delayed::Job.enqueue EventsFetcher.new(id), priority: 90, queue: 'events'
   end
-
-  after_create :fetch_events
-
-  ## Relations
-  has_many :events
   
-  belongs_to :country
-  belongs_to :city
-  belongs_to :category
-  belongs_to :genre
+  def initialize_relations
+    update_attributes category: identify_category, genre: identify_genre
+  end
+
+  def identify_category
+    Category.find_by(sw_id: sw_category_id)
+  end
+  
+  def identify_genre
+    identify_category.genre
+  end
 end
