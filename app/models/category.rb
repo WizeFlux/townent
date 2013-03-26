@@ -2,7 +2,7 @@ class Category
   include Mongoid::Document
 
   ## Common things
-  field :_id, type: String, default: ->{sw_id}
+  field :_id, type: String, default: ->{sw_name.parameterize}
   
   
   ## Seatwave api

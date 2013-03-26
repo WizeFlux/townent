@@ -6,5 +6,5 @@
     - @countries.each do |country|
       %h3.subheader= "#{country.name}"
       - country.cities.each do |city|
-        %a.round.small.button.secondary{href: city_path(city)}= "#{city.name}"
+        %a.round.small.button.secondary{href: city_events_path(city)}= "#{city.name}"
         = raw '&nbsp'

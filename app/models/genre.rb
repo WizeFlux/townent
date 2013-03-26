@@ -1,7 +1,7 @@
 class Genre
   include Mongoid::Document
   
-  field :_id, type: String, default: ->{sw_id}
+  field :_id, type: String, default: ->{sw_name.parameterize}
   
   
   ## Fields obtained from seatwave

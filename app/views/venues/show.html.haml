@@ -7,24 +7,13 @@
 
 - ##Billboard
 .row
-  .large-4.columns
-    %img{src: @venue.sw_image_url}
-  .large-7.columns
+  .large-11.columns
     %h3= @venue.sw_name
+    %p= @venue.sw_address.values.join(', ')
     %p= @venue.description
   .large-1.columns
     %a.button.small.expand.round{href: edit_venue_url(@venue)} edit
 
   
-- ##Events list controls
-.row
-  .large-12
-    %hr
-    %ul.button-group.round
-      %li
-        %a.button{href: url_for(scope: 'upcoming'), class: class_if('disabled', scope == 'upcoming')} Upcoming
-      %li
-        %a.button{href: url_for(scope: 'past'), class: class_if('disabled', scope == 'past')} Past
-
-
+= render 'events/units/past_upcoming_control'
 = render 'events/units/events_list', events: @events

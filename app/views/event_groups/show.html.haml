@@ -1,6 +1,6 @@
 = content_for :title, "#{@event_group.sw_name}"
 
-= render 'event_groups/units/breadcrumbs', event_group: @event_group
+-#= render 'event_groups/units/breadcrumbs', event_group: @event_group
 
 
 - ##Billboard
@@ -9,21 +9,16 @@
     %img{src: @event_group.sw_image_url}
   .large-7.columns
     %h3= @event_group.sw_name
+      
     %h3.subheader= @event_group.city.full_name if @event_group.city
+    %p
+      %span.label.round= @event_group.genre.sw_name
+      %span.label.round= @event_group.category.sw_name
+    
     %p= @event_group.description
   .large-1.columns
     %a.button.small.expand.round{href: edit_event_group_url(@event_group)} edit
 
   
-- ##Events list controls
-.row
-  .large-12
-    %hr
-    %ul.button-group.round
-      %li
-        %a.button{href: url_for(scope: 'upcoming'), class: class_if('disabled', scope == 'upcoming')} Upcoming
-      %li
-        %a.button{href: url_for(scope: 'past'), class: class_if('disabled', scope == 'past')} Past
-
-
+= render 'events/units/past_upcoming_control'
 = render 'events/units/events_list', events: @events

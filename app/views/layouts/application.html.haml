@@ -29,9 +29,9 @@
           %a{href: '/'}TownEnt
     %section.top-bar-section
       %ul.right
-        - unless %w(cities status).include?(controller_name)
+        - if @city
           %li
-            %a{href: cities_path}= "#{current_city.name}, #{current_city.country.name}"
+            %a{href: cities_path}= @city.full_name
         %li
           %a{href: status_path} Status
 

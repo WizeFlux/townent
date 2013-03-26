@@ -1,0 +1,9 @@
+.row
+  .large-12
+    %hr
+    %ul.button-group.round
+      %li
+        %a.button{href: url_for(scope: 'upcoming'), class: class_if('disabled', scope == 'upcoming')} Upcoming
+      %li
+        %a.button{href: url_for(scope: 'past'), class: class_if('disabled', scope == 'past')} Past
+

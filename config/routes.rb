@@ -5,7 +5,7 @@ Townent::Application.routes.draw do
   
   
   ## Events CRUD
-  resources :events
+  resources :events, except: %w(index)
   
   
   ## Eventgroups CRUD
@@ -17,16 +17,18 @@ Townent::Application.routes.draw do
   
   
   ## City selection interface
-  resources :cities, only: %w(index show)
-  
-  
-  ## Events search interface
-  resources :genres, only: %w() do
+  resources :cities, only: %w(index) do
     resources :events, only: %w(index)
-    resources :categories, only: %w() do
+    resources :genres, only: %w() do
       resources :events, only: %w(index)
+      resources :categories, only: %w() do
+        resources :events, only: %w(index)
+      end
     end
   end
   
-  root to: 'events#index'
+  
+  ## Events search interface
+  
+  root to: 'cities#index'
 end

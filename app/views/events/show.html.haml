@@ -6,11 +6,27 @@
   .large-4.columns
     %img{src: @event.event_group.sw_image_url}
   .large-7.columns
-    %a{href: event_group_url(@event.event_group)}
-      %h3= @event.event_group.sw_name
-    %h5.subheader= @event.sw_date.strftime('%A, %B %-d, %Y, %I:%M %P')
-    %p
-      %a{href: venue_url(@event.venue)}= "#{@event.venue.sw_name}, #{@event.venue.sw_address.values.join(', ')}"
+    %h3
+      = @event.event_group.sw_name
+      %small 
+        %a{href: event_group_url(@event.event_group)} all events
+    
+    %dl
+      %dt
+        %a{href: venue_url(@event.venue)}= @event.venue.sw_name 
+      %dd= @event.venue.sw_address.values.join(', ')
+    %table
+      %thead
+        %tr
+          %th
+            = @event.sw_date.strftime('%-d %b %Y, %a')
+      %tbody
+        %tr
+          %td
+            %center
+              = @event.sw_date.strftime('%I:%M %P')
+    
+    
     %p= @event.description
   .large-1.columns
     %a.button.small.expand.round{href: edit_event_url(@event)} edit

@@ -2,7 +2,7 @@
   .large-12
     .ul.breadcrumbs
       %li
-        %a{href: '/'}= "#{current_city.name}, #{current_city.country.name}"
+        %a{href: city_events_path(sample_event.city)}= sample_event.city.full_name
       %li.current
-        %a{href: '#'}= "#{@venue.sw_name}"
+        %a{href: '#'}= venue.sw_name
 %br

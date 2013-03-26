@@ -2,11 +2,11 @@
   .large-12
     .ul.breadcrumbs
       %li
-        %a{href: '/'}= "#{current_city.name}, #{current_city.country.name}"
+        %a{href: city_events_path(event.city)}= event.city.full_name
       %li
-        %a{href: genre_events_path(event.genre)}= event.genre.sw_name
+        %a{href: city_genre_events_path(event.city, event.genre)}= event.genre.sw_name
       %li
-        %a{href: genre_category_events_path(event.genre, event.category)}= event.category.sw_name
+        %a{href: city_genre_category_events_path(event.city, event.genre, event.category)}= event.category.sw_name
       %li.current
         %a{href: '#'}= "#{event.event_group.sw_name} @ #{event.venue.sw_name}"
 %br
