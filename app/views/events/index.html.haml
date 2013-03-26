@@ -26,14 +26,15 @@
 
 = form_for :q, url: request.path, method: :get do |f|
   .row
-    .large-4.columns
+    .large-12
       %ul.button-group.round
         %li
-          %a.button.small{class: class_if('disabled', query_scope == 'all'), href: url_for(q: {scope: 'all'})} All dates
+          %a.button{class: class_if('disabled', query_scope == 'all'), href: url_for(q: {scope: 'all'})} All dates
         %li
-          %a.button.small{class: class_if('disabled', query_scope == 'weekend'), href: url_for(q: {scope: 'weekend'})} Weekend
+          %a.button{class: class_if('disabled', query_scope == 'weekend'), href: url_for(q: {scope: 'weekend'})} This weekend
         %li
-          %a.button.small#dates-trigger{href: '#', class: class_if('disabled', query_scope == nil)} Specify dates
+          %a.button#dates-trigger{href: '#', class: class_if('disabled', query_scope == nil)} Pick dates
+
   .row#dates-inputs{style: ('display: none' if query_scope != nil)}
     .small-1.columns
       = f.label :date_from, 'From:', class: 'right inline'

@@ -8,23 +8,13 @@
   .large-7.columns
     %h3
       = @event.event_group.sw_name
-      %small 
-        %a{href: event_group_url(@event.event_group)} all events
-    
     %dl
-      %dt
+      %dd= @event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
+      %dd
         %a{href: venue_url(@event.venue)}= @event.venue.sw_name 
-      %dd= @event.venue.sw_address.values.join(', ')
-    %table
-      %thead
-        %tr
-          %th
-            = @event.sw_date.strftime('%-d %b %Y, %a')
-      %tbody
-        %tr
-          %td
-            %center
-              = @event.sw_date.strftime('%I:%M %P')
+      %dd
+        %a{href: event_group_url(@event.event_group)}= @event.event_group.sw_name
+      
     
     
     %p= @event.description

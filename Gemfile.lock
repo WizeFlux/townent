@@ -65,6 +65,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    geocoder (1.1.6)
     haml (4.0.0)
       tilt
     haml-rails (0.4)
@@ -179,6 +180,7 @@ DEPENDENCIES
   daemons
   debugger
   delayed_job_mongoid
+  geocoder
   haml-rails
   httparty
   jquery-rails
