@@ -1,4 +1,4 @@
-= content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{current_city.name}, #{current_city.country.name}"
+= content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{@city.full_name}"
 
 .row
   .large-12
@@ -12,9 +12,8 @@
     - if @genre
       %dl.sub-nav
         %dt Category:
-        
         %dd{class: class_if('active', !@category)}
-          %a{href: city_genre_events_path(@city, @genre)}= "All (#{@genre.events.for_city(current_city).count})"
+          %a{href: city_genre_events_path(@city, @genre)}= "All (#{@genre.events.for_city(@city).count})"
         
         - @genre.categories.each do |category|
           - category_events_count = category.events.for_city(@city).count
