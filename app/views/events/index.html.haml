@@ -40,23 +40,22 @@
       = f.label :date_from, 'From:', class: 'right inline'
     .small-2.columns
       = f.text_field :date_from, class: 'datepicker', value: query_date_from
-
     .small-1.columns
       = f.label :date_to, 'To:', class: 'right inline'
     .small-2.columns
       = f.text_field :date_to, class: 'datepicker', value: query_date_to
-  
-    .small-1.columns
+    .small-1.columns.pull-3
       = f.submit 'Go', class: 'button round small secondary'
       
-    :javascript
-      $('.datepicker').datepicker({dateFormat: 'd MM yy'});
-      $('#dates-trigger').click(function(event){
-        event.preventDefault();
-        $('.disabled', $(this).parents('ul')).removeClass('disabled');
-        $(this).addClass('disabled');
-        $('#dates-inputs').show();
-      });
-        
-
 = render 'events/units/events_list', events: @events
+
+
+:javascript
+  $('.datepicker').datepicker({dateFormat: 'd MM yy'});
+  $('#dates-trigger').click(function(event){
+    event.preventDefault();
+    $('.disabled', $(this).parents('ul')).removeClass('disabled');
+    $(this).addClass('disabled');
+    $('#dates-inputs').show();
+  });
+    
