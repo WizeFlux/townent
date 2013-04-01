@@ -12,6 +12,6 @@ class ApplicationController < ActionController::Base
   end
   
   def log_request_location
-    logger.info request.location
+    logger.info request.location.inspect
   end
 end
