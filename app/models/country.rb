@@ -3,6 +3,9 @@ class Country
 
   field :_id, type: String, default: ->{name.parameterize}
   field :name, type: String
+
+  field :code, type: String
+  
   
   has_many :cities
   has_many :events

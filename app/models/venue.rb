@@ -1,6 +1,10 @@
 class Venue
   include Mongoid::Document
   
+  include Geocoder::Model::Mongoid
+  include Mongoid::Spacial::Document
+  
+
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
   
@@ -13,6 +17,9 @@ class Venue
   field :sw_url, type: String
   field :sw_image_url, type: String
   
+  
+  ## Geolocation
+  field :coordinates, :type => Array, spacial: true, default: ->{[sw_lng, sw_lat]}
   
   ## Realtions
   has_many :events

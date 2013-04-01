@@ -1,6 +1,13 @@
-sw_api = SeatWave.new
+# CSV.parse(File.open(Rails.root.join 'db/iso3166.csv')).each do |country|
+#   Country.create code: country[0], name: country[1]
+# end
+# 
+# 
+# CSV.parse(File.open(Rails.root.join 'db/worldcities.utf-8.csv'), quote_char: '@') do |city|
+#   City.create name: city[2], country: Country.find_by(code: city[0].upcase)
+# end
 
-sw_api.get_genres.each do |g|
+SeatWave.new.get_genres.each do |g|
   
   
   ## Fetching genres to database
@@ -11,7 +18,7 @@ sw_api.get_genres.each do |g|
   
   
   ## Fetching categories
-  sw_api.get_categories_for_genre(g['Id']).each do |c|
+  SeatWave.new.get_categories_for_genre(g['Id']).each do |c|
     category = Category.create({
       sw_id: c['Id'],
       sw_name: c['Name'],
@@ -21,7 +28,7 @@ sw_api.get_genres.each do |g|
 end
 
 
-## starting process of fetching huge things from api
+# starting process of fetching data from api
 Category.all.each do |category|
   category.fetch_event_groups
 end

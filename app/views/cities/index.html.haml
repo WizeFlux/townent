@@ -2,14 +2,15 @@
 
 .row#city-promt
   .large-12.columns
-    - city_sample = Country.find('uk').cities.sample
+    - detected_city = Country.find('uk').cities.sample
     %h2
-      = "You're in #{city_sample.full_name}?"
+      = "You're in #{detected_city.full_name}?"
       = raw '&nbsp&nbsp'
-      %a.round.button.tiny{href: city_events_url(city_sample)} Yes
+      %a.round.button.tiny{href: city_events_url(detected_city)} Yes
       %a.button.round.tiny#no-button{href: '#'} No
+      
     %h3.subheader Nearby cities
-    - Country.find('uk').cities.skip(rand(20)).limit(10).each do |city|
+    - City.near(detected_city.coordinates.values.reverse, 100).each do |city|
       %a.round.button.secondary.city{href: city_events_path(city)}= city.name
 
 .row#city-selector{style: 'display: none'}
