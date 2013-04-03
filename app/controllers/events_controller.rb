@@ -1,9 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
-  helper_method :query_date_from, :query_date_to, :query_scope
-
-
+  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :nearby_cities
 
   ## Search form params
   def query
@@ -37,22 +35,44 @@ class EventsController < ApplicationController
 
 
   ## Parents
-  def find_category
-    @category ||= params[:category_id] ? Category.find(params[:category_id]) : nil
-  end
-  
   def find_city
-    @city ||= params[:city_id] ? City.find(params[:city_id]) : nil
+    @city ||= if params[:city_id]
+                City.find(params[:city_id])
+              else
+                (!request_city.empty? && !request_country.empty?) ? request_city.first : nil
+              end
   end
   
   def find_genre
     @genre ||= params[:genre_id] ? Genre.find(params[:genre_id]) : nil
   end
-
+  
+  def find_category
+    @category ||= params[:category_id] ? Category.find(params[:category_id]) : nil
+  end
+  
   def find_event
     @event = Event.find params[:id]
   end
   
+  
+  
+  ## Fetched from request
+  def request_city
+    City.where geocoded_name: request.location.city, country: request_country.first
+  end
+
+  def request_country
+    Country.where geocoded_name: request.location.country
+  end
+
+  def request_coordinates
+    @request_coordinates ||= [request.location.latitude, request.location.longitude]
+  end
+
+  def nearby_cities(coordinates, distance)
+    City.near(coordinates, distance)
+  end
 
 
   ## Actions
@@ -72,6 +92,6 @@ class EventsController < ApplicationController
       to_date(query_date_to).
       for_category(@category).
       for_genre(@genre).
-      includes(:event_group, :venue, :category, :genre).limit(100)
+      includes(:event_group, :venue, :category, :genre).limit(100) ## Limit should be overerittent by pagination or lazy load
   end
 end

@@ -1,60 +1,91 @@
-= content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{@city.full_name}"
+= content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{@city.full_name if @city}"
 
-.row
-  .large-12
-    %ul.button-group.round
-      %li
-        %a.button.secondary{href: city_events_path(@city), class: class_if('disabled', !@genre)} All
-      - Genre.each do |genre|
-        %li
-          %a.button.secondary{href: city_genre_events_path(@city,genre), class: class_if('disabled', @genre == genre)}= genre.sw_name
+- if (@city && !params[:city_id] && !params[:q])
+  :coffeescript
+    $ ->
+      $("#city-promt, #countries-list").show()
 
-    - if @genre
-      %dl.sub-nav
-        %dt Category:
-        %dd{class: class_if('active', !@category)}
-          %a{href: city_genre_events_path(@city, @genre)}= "All (#{@genre.events.for_city(@city).count})"
-        
-        - @genre.categories.each do |category|
-          - category_events_count = category.events.for_city(@city).count
-          - if category_events_count > 0
-            %dd{class: class_if('active', @category == category)}
-              %a{href: city_genre_category_events_path(@city, @genre, category)}= "#{category.sw_name} (#{category_events_count})"
+- unless @city
+  :coffeescript
+    $ ->
+      $("#city-promt, #city-selector, #nearby-cities, #countries-list, #city-promt-panel").show()
 
-
-
-= form_for :q, url: request.path, method: :get do |f|
-  .row
-    .large-12
-      %ul.button-group.round
-        %li
-          %a.button{class: class_if('disabled', query_scope == 'all'), href: url_for(q: {scope: 'all'})} All dates
-        %li
-          %a.button{class: class_if('disabled', query_scope == 'weekend'), href: url_for(q: {scope: 'weekend'})} This weekend
-        %li
-          %a.button#dates-trigger{href: '#', class: class_if('disabled', query_scope == nil)} Pick dates
-
-  .row#dates-inputs{style: ('display: none' if query_scope != nil)}
-    .small-1.columns
-      = f.label :date_from, 'From:', class: 'right inline'
-    .small-2.columns
-      = f.text_field :date_from, class: 'datepicker', value: query_date_from
-    .small-1.columns
-      = f.label :date_to, 'To:', class: 'right inline'
-    .small-2.columns
-      = f.text_field :date_to, class: 'datepicker', value: query_date_to
-    .small-1.columns.pull-3
-      = f.submit 'Go', class: 'button round small secondary'
+// Promt about a city
+.panel#city-promt-panel{style: 'display: none'}
+  %a.tiny.button.round#close-panel{href: '#', style: 'float:right'}
+    %big ×
+  .row#city-promt{style: 'display: none'}
+    .large-12.columns
+      %h4
+        - if @city
+          = raw "You're in #{@city.full_name}?&nbsp&nbsp"
+          %a.round.button.tiny#yes-button{href: '#'} Yes
+          %a.button.round.tiny#no-button{href: '#'} No
+        - else
+          = raw "<i>#{request.location.city}, #{request.location.country}</i>? Sorry, but there are no events for this place, yet!"
       
-= render 'events/units/events_list', events: @events
+
+  // City selector
+  .row#city-selector{style: 'display: none'}
+    .large-3.columns
+      %h4 Find your city
+    .large-9.columns
+      %h4
+        %input{id: 'search-input', type: :text, placeholder: 'Just start typing...'}
+
+  // Or chouse from nearbys
+  .row#nearby-cities{style: 'display: none'}
+    .large-12.columns
+      %h4 Or chouse from nearby cities
+      - nearby_cities(request_coordinates, 10000).limit(15).each do |city| 
+        %a.round.button.secondary.city{href: city_events_path(city)}= "#{city.name} (#{city.distance_to(request_coordinates).to_i}mi)"
 
 
-:javascript
-  $('.datepicker').datepicker({dateFormat: 'd MM yy'});
-  $('#dates-trigger').click(function(event){
-    event.preventDefault();
-    $('.disabled', $(this).parents('ul')).removeClass('disabled');
-    $(this).addClass('disabled');
-    $('#dates-inputs').show();
-  });
-    
+  // Cities list for filtering    
+  .row#countries-list{style: 'display: none'}
+    .large-12.columns
+      - Country.all.each do |country|
+        .country{style: 'display: none'}
+          %h4.subheader= country.name
+          - country.cities.each do |city|
+            %a.round.button.secondary.city{href: city_events_path(city)}= city.name
+      
+
+- if @city  
+  = render 'events/units/index_breadcrumbs', city: @city, genre: @genre, category: @category
+  = render 'events/units/query_form'
+  = render 'events/units/events_list', events: @events
+  
+
+
+:coffeescript
+  $ ->
+    $('#close-panel').click (event) ->
+      $('#city-promt-panel, #city-selector, #nearby-cities').hide()
+  
+    $("#no-button").click (event) ->
+      event.preventDefault()
+      $("#city-promt, #index-breadcrumbs, #query-form").hide()
+      $("#city-selector, #nearby-cities").show()
+
+    $("#yes-button").click (event) ->
+      event.preventDefault()
+      $("#city-promt, #city-promt-panel").hide()
+
+    $("#search-input").keyup ->
+      if $(this).val().length > 1
+        expression = new RegExp(".*" + $(this).val() + ".*", "i")
+        $("#nearby-cities").hide()
+        $.each $(".country"), ->
+          country = $(this)
+          country.hide()
+          $.each $(".city", country), ->
+            city = $(this)
+            if expression.test(city.text())
+              city.show()
+              country.show()
+            else
+              city.hide()
+      else
+        $(".country").hide()
+        $("#nearby-cities").show()

@@ -1,10 +1,19 @@
 class Event
   include Mongoid::Document
+  include Geocoder::Model::Mongoid
   include SeatWaveDataMap
+
   
   ##Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
+  
+  
+  ## Geocoding
+  field :coordinates, :type => Array, default: ->{identify_venue.coordinates}
+  field :address, type: String
+  reverse_geocoded_by :coordinates
+  after_validation :reverse_geocode
   
   
   ## Obtained from Seatwave API
@@ -37,7 +46,7 @@ class Event
   
   ## Named scopes
   scope :for_date, ->(date){  where(:sw_date.gte => date.beginning_of_day, :sw_date.lte => date.end_of_day)  }
-  scope :for_city, ->(city){  where(city: city)  }
+  scope :for_city, ->(city){  city ? where(city: city) : all }
   scope :for_genre, ->(genre){  genre ? where(genre: genre) : all  }
   scope :for_category, ->(category){  category ? where(category: category) : all  }
   scope :from_date, ->(date_from){  date_from ? where(:sw_date.gte => date_from.to_date) : all  }
@@ -48,6 +57,9 @@ class Event
   after_create :initialize_relations
   
   
+  private
+
+
   ## Identify relations
   def initialize_relations
     update_attributes({ event_group: identify_event_group,

@@ -1,12 +1,7 @@
 Townent::Application.routes.draw do
   
   ## Server status
-  resource :status, only: %w(show), controller: 'status'
-  
-  
-  ## Events CRUD
-  resources :events, except: %w(index)
-  
+  resource :status, only: %w(show), controller: 'status'  
   
   ## Eventgroups CRUD
   resources :event_groups, except: %w(index)
@@ -15,6 +10,8 @@ Townent::Application.routes.draw do
   ## Venues CRUD
   resources :venues, except: %w(index)
   
+  ## Events CRUD
+  resources :events
   
   ## City selection interface
   resources :cities, only: %w(index) do
@@ -30,5 +27,5 @@ Townent::Application.routes.draw do
   
   ## Events search interface
   
-  root to: 'cities#index'
+  root to: 'events#index'
 end

@@ -1,13 +1,20 @@
 class Venue
   include Mongoid::Document
-  
   include Geocoder::Model::Mongoid
-  include Mongoid::Spacial::Document
   
 
-  field :_id, type: String, default: ->{sw_id}
+  ## Shared Things
+  field :_id, type: String, default: ->{sw_name.parameterize + '-' + sw_id.parameterize}
   field :description, type: String
+
+
+  ## Geolocation
+  field :coordinates, type: Array, default: ->{[sw_lng, sw_lat]}
+  field :address, type: String ## Obtained from externat geocoding
+  reverse_geocoded_by :coordinates
+  after_validation :reverse_geocode
   
+
   ## Obtained from seatwave API
   field :sw_id, type: String
   field :sw_name, type: String
@@ -17,9 +24,6 @@ class Venue
   field :sw_url, type: String
   field :sw_image_url, type: String
   
-  
-  ## Geolocation
-  field :coordinates, :type => Array, spacial: true, default: ->{[sw_lng, sw_lat]}
   
   ## Realtions
   has_many :events

@@ -31,7 +31,12 @@
       %ul.right
         - if @city
           %li
-            %a{href: cities_path}= @city.full_name
+            %a#city-change-link{href: root_path}= @city.full_name
+            :coffeescript
+              $ -> 
+                $('#city-change-link').click (event) ->
+                  event.preventDefault()
+                  $("#city-promt, #countries-list, #city-promt-panel").show()
         %li
           %a{href: status_path} Status
 

@@ -10,7 +10,7 @@
       %a.button.round.tiny#no-button{href: '#'} No
       
     %h3.subheader Nearby cities
-    - City.near(detected_city.coordinates.values.reverse, 100).each do |city|
+    - City.near(detected_city.coordinates, 100).each do |city|
       %a.round.button.secondary.city{href: city_events_path(city)}= city.name
 
 .row#city-selector{style: 'display: none'}
