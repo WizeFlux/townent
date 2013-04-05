@@ -39,7 +39,11 @@ class EventsController < ApplicationController
     @city ||= if params[:city_id]
                 City.find(params[:city_id])
               else
-                (!request_city.empty? && !request_country.empty?) ? request_city.first : nil
+                if request.location and !request_country.empty? and !request_city.empty?
+                  request_city.first
+                else
+                  nil
+                end
               end
   end
   
@@ -59,15 +63,15 @@ class EventsController < ApplicationController
   
   ## Fetched from request
   def request_city
-    City.where geocoded_name: request.location.city, country: request_country.first
+    City.where geocoded_name: request.location.city, country: request_country.first if request.location
   end
 
   def request_country
-    Country.where geocoded_name: request.location.country
+    Country.where geocoded_name: request.location.country if request.location
   end
 
   def request_coordinates
-    @request_coordinates ||= [request.location.latitude, request.location.longitude]
+    @request_coordinates ||= [request.location.latitude, request.location.longitude] if request.location
   end
 
   def nearby_cities(coordinates, distance)
@@ -86,12 +90,21 @@ class EventsController < ApplicationController
   
   
   def index
-    @events = Event.
-      for_city(@city).
-      from_date(query_date_from).
-      to_date(query_date_to).
-      for_category(@category).
-      for_genre(@genre).
-      includes(:event_group, :venue, :category, :genre).limit(100) ## Limit should be overerittent by pagination or lazy load
+    @events = if @city
+                Event.
+                for_city(@city).
+                from_date(query_date_from).
+                to_date(query_date_to).
+                for_category(@category).
+                for_genre(@genre).
+                includes(:event_group, :venue, :category, :genre).
+                limit(100)
+              else
+                if request.location
+                  Event.
+                  near(request_coordinates, 10000).
+                  limit(100)
+                end
+              end
   end
 end

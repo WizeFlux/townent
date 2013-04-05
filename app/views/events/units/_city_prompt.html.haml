@@ -1,0 +1,101 @@
+// Promt about a city
+.panel#city-prompt-panel{style: 'display: none'}
+  - if city
+    %a.tiny.button.round#close-panel{href: '#', style: 'float:right'}
+      %big ×
+  .row#city-prompt
+    .large-12.columns
+      %h4
+        - if city
+          = raw "You're in #{city.full_name}?&nbsp&nbsp"
+          %a.round.button.tiny#yes-button{href: '#'} Yes
+          %a.button.round.tiny#no-button{href: '#'} No
+        - else
+          - if request.location
+            = raw "<i>#{request.location.city}, #{request.location.country}</i>? Sorry, but there are no events for this place, yet!"
+          - else
+            We are unable to identify your location, please select it manually
+
+  // City selector
+  .row#city-selector{style: 'display: none'}
+    .large-3.columns
+      %h4 Find your city
+    .large-9.columns
+      %h4
+        %input{id: 'search-input', type: :text, placeholder: 'Just start typing...'}
+
+  // Or chouse from nearbys
+  .row#nearby-cities{style: 'display: none'}
+    .large-12.columns
+      %h4 Or chouse from nearby cities
+      - if city || request.location
+        - coordinates_to_look_nearby = (city ? city.to_coordinates : request_coordinates)
+        - City.near(coordinates_to_look_nearby, 10000).limit(15).each do |city| 
+          %a.round.button.secondary.city{href: city_events_path(city)}= "#{city.name}"
+
+
+  // Cities list for filtering    
+  .row#countries-list{style: 'display: none'}
+    .large-12.columns
+      - Country.all.each do |country|
+        .country{style: 'display: none'}
+          %h4.subheader= country.name
+          - country.cities.each do |city|
+            %a.round.button.secondary.city{href: city_events_path(city)}= city.name
+
+:coffeescript
+  (($) ->
+    $.widget "custom.cityPrompt",
+      _create: ->
+        self = @
+        
+        if #{!params[:city_id] && !params[:q]}
+          @selfCTRL 'show'
+          if #{!city} then @citySelectorCTRL 'show'
+          if #{!request.location} then @nearbyCitiesCTRL 'hide'
+      
+        @element.find('#yes-button, #close-panel').click (event)->
+          event.preventDefault()
+          self.selfCTRL 'hide'
+
+        @element.find('#no-button').click (event)->
+          event.preventDefault()
+          self.promptCTRL 'hide'
+          self.citySelectorCTRL 'show'
+          
+        @element.find('#search-input').keyup ->
+          if $(@).val().length > 1
+            expr = new RegExp(".*" + $(@).val() + ".*", "i")
+            
+            self.nearbyCitiesCTRL 'hide'
+            $.each self.element.find(".country"), ->
+              country = $(@).hide()
+              $.each $('.city', country), ->
+                if expr.test($(@).text()) then $(@).show(); country.show() else $(@).hide()
+                  
+          else
+            self.element.find(".country").hide()
+            self.nearbyCitiesCTRL 'show'
+          
+      selfCTRL: (method)->
+        @displayCTRL @element, method
+        @promptCTRL 'show'
+        @citySelectorCTRL 'hide'
+        
+      promptCTRL: (method)->
+        @displayCTRL @element.find('#city-prompt'), method
+
+      nearbyCitiesCTRL: (method)->
+        @displayCTRL @element.find('#nearby-cities'), method
+
+      citySelectorCTRL: (method)->
+        @displayCTRL @element.find('#nearby-cities, #city-selector, #countries-list'), method
+        
+      displayCTRL: (el, method)->
+        if method == 'show' then el.show() else el.hide()
+
+  ) jQuery
+
+  $ ->
+    $('#city-prompt-panel').cityPrompt()
+  

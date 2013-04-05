@@ -16,10 +16,10 @@
   
   %title= content_for?(:title) ? yield(:title) : "Untitled"
 
-  = stylesheet_link_tag "application"
-  = javascript_include_tag "vendor/custom.modernizr"
   = csrf_meta_tag
-  = javascript_include_tag "application"
+  = stylesheet_link_tag :application
+  
+  = javascript_include_tag :application
   
 %body
   %nav.top-bar
@@ -31,12 +31,11 @@
       %ul.right
         - if @city
           %li
-            %a#city-change-link{href: root_path}= @city.full_name
+            %a#city-change-link{href: "#city-prompt-panel"}= @city.full_name
             :coffeescript
               $ -> 
-                $('#city-change-link').click (event) ->
-                  event.preventDefault()
-                  $("#city-promt, #countries-list, #city-promt-panel").show()
+                $('#city-change-link').click ->
+                  $('#city-prompt-panel').cityPrompt('selfCTRL', 'show')
         %li
           %a{href: status_path} Status
 

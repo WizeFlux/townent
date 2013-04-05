@@ -1,91 +1,11 @@
 = content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{@city.full_name if @city}"
 
-- if (@city && !params[:city_id] && !params[:q])
-  :coffeescript
-    $ ->
-      $("#city-promt, #countries-list").show()
+= render 'events/units/city_prompt', city: @city
 
-- unless @city
-  :coffeescript
-    $ ->
-      $("#city-promt, #city-selector, #nearby-cities, #countries-list, #city-promt-panel").show()
-
-// Promt about a city
-.panel#city-promt-panel{style: 'display: none'}
-  %a.tiny.button.round#close-panel{href: '#', style: 'float:right'}
-    %big ×
-  .row#city-promt{style: 'display: none'}
-    .large-12.columns
-      %h4
-        - if @city
-          = raw "You're in #{@city.full_name}?&nbsp&nbsp"
-          %a.round.button.tiny#yes-button{href: '#'} Yes
-          %a.button.round.tiny#no-button{href: '#'} No
-        - else
-          = raw "<i>#{request.location.city}, #{request.location.country}</i>? Sorry, but there are no events for this place, yet!"
-      
-
-  // City selector
-  .row#city-selector{style: 'display: none'}
-    .large-3.columns
-      %h4 Find your city
-    .large-9.columns
-      %h4
-        %input{id: 'search-input', type: :text, placeholder: 'Just start typing...'}
-
-  // Or chouse from nearbys
-  .row#nearby-cities{style: 'display: none'}
-    .large-12.columns
-      %h4 Or chouse from nearby cities
-      - nearby_cities(request_coordinates, 10000).limit(15).each do |city| 
-        %a.round.button.secondary.city{href: city_events_path(city)}= "#{city.name} (#{city.distance_to(request_coordinates).to_i}mi)"
-
-
-  // Cities list for filtering    
-  .row#countries-list{style: 'display: none'}
-    .large-12.columns
-      - Country.all.each do |country|
-        .country{style: 'display: none'}
-          %h4.subheader= country.name
-          - country.cities.each do |city|
-            %a.round.button.secondary.city{href: city_events_path(city)}= city.name
-      
-
-- if @city  
+- if @city
   = render 'events/units/index_breadcrumbs', city: @city, genre: @genre, category: @category
   = render 'events/units/query_form'
+
+- if @events
   = render 'events/units/events_list', events: @events
-  
 
-
-:coffeescript
-  $ ->
-    $('#close-panel').click (event) ->
-      $('#city-promt-panel, #city-selector, #nearby-cities').hide()
-  
-    $("#no-button").click (event) ->
-      event.preventDefault()
-      $("#city-promt, #index-breadcrumbs, #query-form").hide()
-      $("#city-selector, #nearby-cities").show()
-
-    $("#yes-button").click (event) ->
-      event.preventDefault()
-      $("#city-promt, #city-promt-panel").hide()
-
-    $("#search-input").keyup ->
-      if $(this).val().length > 1
-        expression = new RegExp(".*" + $(this).val() + ".*", "i")
-        $("#nearby-cities").hide()
-        $.each $(".country"), ->
-          country = $(this)
-          country.hide()
-          $.each $(".city", country), ->
-            city = $(this)
-            if expression.test(city.text())
-              city.show()
-              country.show()
-            else
-              city.hide()
-      else
-        $(".country").hide()
-        $("#nearby-cities").show()
