@@ -9,7 +9,6 @@ class Event
   
   
   ## Geocoding
-  field :address, type: String
   field :location, type: Array, default: ->{ identify_venue.location }
   index({ location: "2d" }, { min: -200, max: 200 })
   
@@ -30,7 +29,7 @@ class Event
   
   ## Relations
   belongs_to :event_group, index: true
-  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ EventGroup.find_by sw_id: sw_event_group_id }
+  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ EventGroup.find_by(sw_id: sw_event_group_id).id }
   
   belongs_to :category, index: true
   field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.category.id }
@@ -51,7 +50,7 @@ class Event
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
 
   ## Defauly scopes
-  default_scope includes(:event_group, :venue, :category, :genre)
+  default_scope includes(:event_group, :venue, :category, :genre, :layout, :city, :country)
   
   
   ## Named scopes

@@ -29,7 +29,7 @@ class EventGroup
   
   ## Real one
   belongs_to :category, index: true
-  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ Category.find_by sw_id: sw_category_id }
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ Category.find_by(sw_id: sw_category_id).id }
 
   belongs_to :genre, index: true
   field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.genre.id }
