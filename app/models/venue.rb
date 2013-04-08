@@ -16,7 +16,7 @@ class Venue
   index({ location: "2d" }, { min: -200, max: 200 })
   
   after_validation do |venue|
-    venu.geocode if venue.location == [0.0, 0.0]
+    venue.geocode if venue.location == [0.0, 0.0]
   end
   
   

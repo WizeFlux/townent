@@ -10,10 +10,8 @@ class City
   ## Geolocation
   field :geocoded_name, type: String, default: ->{ geocoder_respond.city }
   field :location, type: Array, default: ->{ geocoder_respond.coordinates.reverse }
-
   index({ location: "2d" }, { min: -200, max: 200 })
   
-  after_validation :geocode
 
   ## Relations
   belongs_to :country, index: true

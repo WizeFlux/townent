@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
-  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :nearby_cities
+  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates
 
   ## Fetched form params
   def params_city
@@ -68,10 +68,6 @@ class EventsController < ApplicationController
 
   def request_coordinates
     @request_coordinates ||= [request.location.longitude, request.location.latitude] if request.location
-  end
-
-  def nearby_cities(coordinates, distance)
-    City.near(coordinates, distance)
   end
 
 
