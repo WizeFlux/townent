@@ -1,9 +1,11 @@
 class EventGroup
   include Mongoid::Document
   
+
   ## Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
+
   
   
   ## Obtained from Seatwave API
@@ -17,38 +19,28 @@ class EventGroup
   field :sw_category_id
   
 
+
   ## Relations
   has_many :events
   
-
   ## Thats just for editing purposes
   belongs_to :country
   belongs_to :city
   
-  
   ## Real one
-  belongs_to :category
-  belongs_to :genre
+  belongs_to :category, index: true
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ Category.find_by sw_id: sw_category_id }
+
+  belongs_to :genre, index: true
+  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.genre.id }
+
 
 
   ## Buiding relations
-  after_create :initialize_relations, :fetch_events
-  
+  after_create :fetch_events
   
   ## Fetch all nested events
   def fetch_events
     Delayed::Job.enqueue EventsFetcher.new(id), priority: 20, queue: 'events'
-  end
-  
-  def initialize_relations
-    update_attributes category: identify_category, genre: identify_genre
-  end
-
-  def identify_category
-    Category.find_by(sw_id: sw_category_id)
-  end
-  
-  def identify_genre
-    identify_category.genre
   end
 end

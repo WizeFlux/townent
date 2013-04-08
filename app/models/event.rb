@@ -1,6 +1,5 @@
 class Event
   include Mongoid::Document
-  include Geocoder::Model::Mongoid
   include SeatWaveDataMap
 
   
@@ -10,10 +9,9 @@ class Event
   
   
   ## Geocoding
-  field :coordinates, :type => Array, default: ->{identify_venue.coordinates}
   field :address, type: String
-  reverse_geocoded_by :coordinates
-  after_validation :reverse_geocode
+  field :location, type: Array, default: ->{ identify_venue.location }
+  index({ location: "2d" }, { min: -200, max: 200 })
   
   
   ## Obtained from Seatwave API
@@ -31,48 +29,44 @@ class Event
   
   
   ## Relations
-  belongs_to :event_group
-  belongs_to :category
-  belongs_to :genre
-  belongs_to :country
-  belongs_to :city
-  belongs_to :venue
-  belongs_to :layout  
+  belongs_to :event_group, index: true
+  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ EventGroup.find_by sw_id: sw_event_group_id }
   
+  belongs_to :category, index: true
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.category.id }
   
-  ## Default scopes
-  default_scope order_by([[:sw_date, :asc]])
+  belongs_to :genre, index: true
+  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.genre.id }
+  
+  belongs_to :country, index: true
+  field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_country.id }
+  
+  belongs_to :city, index: true
+  field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_city.id }
+  
+  belongs_to :venue, index: true
+  field :venue_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_venue.id }
+  
+  belongs_to :layout, index: true
+  field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
+
+  ## Defauly scopes
+  default_scope includes(:event_group, :venue, :category, :genre)
   
   
   ## Named scopes
+  scope :order_by_date, ->{ order_by([[:sw_date, :asc]]) }
   scope :for_date, ->(date){  where(:sw_date.gte => date.beginning_of_day, :sw_date.lte => date.end_of_day)  }
-  scope :for_city, ->(city){  city ? where(city: city) : all }
-  scope :for_genre, ->(genre){  genre ? where(genre: genre) : all  }
-  scope :for_category, ->(category){  category ? where(category: category) : all  }
+  scope :for_city, ->(city){  city ? where(city_id: city.id) : all }
+  scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }
+  scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }
   scope :from_date, ->(date_from){  date_from ? where(:sw_date.gte => date_from.to_date) : all  }
   scope :to_date, ->(date_to){  date_to ? where(:sw_date.lte => date_to.to_date) : all  }
-  
-  
-  ## Building relations
-  after_create :initialize_relations
-  
-  
+
   private
-
-
-  ## Identify relations
-  def initialize_relations
-    update_attributes({ event_group: identify_event_group,
-                        category: identify_category,
-                        genre: identify_genre,
-                        country: identify_country,
-                        city: identify_city,
-                        venue: identify_venue,
-                        layout: identify_layout })
-  end
   
   def identify_venue
-    if Venue.where(sw_id: sw_venue_id).exists?
+    @iv ||= if Venue.where(sw_id: sw_venue_id).exists?
       Venue.find_by(sw_id: sw_venue_id)
     else
       Venue.create venue_dmap(SeatWave.new.get_venue_by_id(sw_venue_id))
@@ -80,7 +74,7 @@ class Event
   end
     
   def identify_layout
-    if Layout.where(sw_id: sw_layout_id).exists?
+    @il ||= if Layout.where(sw_id: sw_layout_id).exists?
       Layout.find_by(sw_id: sw_layout_id)
     else
       Layout.create layout_dmap(SeatWave.new.get_layout_by_id(sw_layout_id))
@@ -88,22 +82,10 @@ class Event
   end
   
   def identify_city
-    City.find_or_create_by(name: sw_town, country: identify_country)
+    @ict ||= City.find_or_create_by name: sw_town, country: identify_country
   end
   
   def identify_country
-    Country.find_or_create_by(name: sw_country)
-  end
-  
-  def identify_genre
-    identify_event_group.genre
-  end
-  
-  def identify_category
-    identify_event_group.category
-  end
-  
-  def identify_event_group
-    EventGroup.find_by(sw_id: sw_event_group_id)
+    @icn ||= Country.find_or_create_by name: sw_country
   end
 end

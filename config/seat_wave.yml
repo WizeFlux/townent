@@ -3,15 +3,18 @@ production:
   api_secret: 'there are no one yet'
   base_url: 'http://api.seatwave.com/v2/discovery/'
   page_size: 1000
+  site_id: 12
 
 development:
   api_key: 'b37a2410e14b42d3b05271a56e27c111'
   api_secret: '0e33c2e557094234884fdd7290744731'
   base_url: 'http://api-sandbox.seatwave.com/v2/discovery/'
   page_size: 1000
+  site_id: 12
 
 test:
   api_key: 'b37a2410e14b42d3b05271a56e27c111'
   api_secret: '0e33c2e557094234884fdd7290744731'
   base_url: 'http://api-sandbox.seatwave.com/v2/discovery/'
   page_size: 1000
+  site_id: 12

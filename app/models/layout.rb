@@ -11,12 +11,6 @@ class Layout
   
   
   has_many :events
-  
-  belongs_to :venue
-  
-  
-  before_create :identify_venue
-  def identify_venue
-    venue = Venue.find_by(sw_id: sw_venue_id)
-  end
+  belongs_to :venue, index: true
+  field :venue_id, default: ->{ sw_venue_id }
 end

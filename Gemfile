@@ -7,11 +7,13 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'haml-rails'
 gem 'httparty'
+gem 'zurb-foundation'
 
 #delayed jobs handling
 gem 'daemons'
 gem 'delayed_job_mongoid'
-gem 'zurb-foundation'
+
+
 
 
 #deploy

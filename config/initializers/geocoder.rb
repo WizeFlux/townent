@@ -8,6 +8,6 @@ Geocoder.configure(
     lookup: :bing,
     api_key: 'AvyLaa9MUMvngGyn61ZfSVuhMmX35QAWCOrQ5heeYI2cahYPKhkBlV6JBUj7DY5L',
 
-    timeout: 5,
+    timeout: 10,
     units: :km
   )

@@ -4,6 +4,7 @@ class SeatWave
   JSON_PAGE_SIZE = CONFIG['page_size']
   API_KEY = CONFIG['api_key']
   API_SECRET = CONFIG['api_secret']
+  SITE_ID =  CONFIG['site_id']
 
   ## Single items
   def get_event_by_id(id)
@@ -72,6 +73,10 @@ class SeatWave
     DateTime.strptime("#{parsed_date[1].to_i/1000} #{parsed_date[2]}", '%s %z')
   end
   
+  def self.site_id
+    SITE_ID
+  end
+  
   def self.api_key
     API_KEY 
   end
@@ -83,7 +88,7 @@ class SeatWave
   private
   
   def item_fetcher(type, suffix)
-    fetch_json(suffix, {apikey: API_KEY}.to_query)[type]
+    fetch_json(suffix, {apikey: API_KEY, siteid: SITE_ID}.to_query)[type]
   end
   
   def index_fetcher(type, &block)
@@ -101,7 +106,8 @@ class SeatWave
     JSON.parse Net::HTTP.new(BASE_URI.host, BASE_URI.port).request(request).body
   end
   
+  
   def params(page)
-    {apikey: API_KEY, pgnumber: page, pgsize: JSON_PAGE_SIZE}.to_query
+    {apikey: API_KEY, pgnumber: page, pgsize: JSON_PAGE_SIZE, siteid: SITE_ID}.to_query
   end
 end

@@ -3,7 +3,11 @@ class EventsController < ApplicationController
   before_filter :find_event, except: %w(index)
   helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :nearby_cities
 
-  ## Search form params
+  ## Fetched form params
+  def params_city
+    City.find(params[:city_id]) if params[:city_id]
+  end
+  
   def query
     params[:q] if params[:q]
   end
@@ -36,42 +40,34 @@ class EventsController < ApplicationController
 
   ## Parents
   def find_city
-    @city ||= if params[:city_id]
-                City.find(params[:city_id])
-              else
-                if request.location and !request_country.empty? and !request_city.empty?
-                  request_city.first
-                else
-                  nil
-                end
-              end
+    @city ||=  params_city || request_city || nil
   end
   
   def find_genre
-    @genre ||= params[:genre_id] ? Genre.find(params[:genre_id]) : nil
+    @genre ||= (Genre.find(params[:genre_id]) if params[:genre_id])
   end
   
   def find_category
-    @category ||= params[:category_id] ? Category.find(params[:category_id]) : nil
+    @category ||= (Category.find(params[:category_id]) if params[:category_id])
   end
   
   def find_event
-    @event = Event.find params[:id]
+    @event ||= Event.find params[:id]
   end
   
   
   
   ## Fetched from request
   def request_city
-    City.where geocoded_name: request.location.city, country: request_country.first if request.location
+    @request_city ||= City.where(geocoded_name: request.location.city, country: request_country).first if request.location
   end
 
   def request_country
-    Country.where geocoded_name: request.location.country if request.location
+    @request_country ||= Country.where(geocoded_name: request.location.country).first if request.location
   end
 
   def request_coordinates
-    @request_coordinates ||= [request.location.latitude, request.location.longitude] if request.location
+    @request_coordinates ||= [request.location.longitude, request.location.latitude] if request.location
   end
 
   def nearby_cities(coordinates, distance)
@@ -90,21 +86,22 @@ class EventsController < ApplicationController
   
   
   def index
-    @events = if @city
-                Event.
-                for_city(@city).
-                from_date(query_date_from).
-                to_date(query_date_to).
-                for_category(@category).
-                for_genre(@genre).
-                includes(:event_group, :venue, :category, :genre).
-                limit(100)
-              else
-                if request.location
-                  Event.
-                  near(request_coordinates, 10000).
-                  limit(100)
-                end
-              end
+    if @city || request_coordinates
+      @events = Event.
+                  limit(100).
+                  for_city(@city).
+                  for_genre(@genre).
+                  for_category(@category).
+                  from_date(query_date_from).
+                  to_date(query_date_to).
+                  order_by_date
+      
+      @events = @events.
+                  geo_near(request_coordinates).
+                  max_distance(1).
+                  distance_multiplier(6371).
+                  spherical.
+                  sort_by{|e| e.sw_date} if !@city
+    end
   end
 end
