@@ -1,23 +1,27 @@
 class Venue
   include Mongoid::Document
-  include Geocoder::Model::Mongoid
 
   ## Shared Things
-  field :_id, type: String, default: ->{ sw_name.parameterize + '-' + sw_id.parameterize }
-  field :description, type: String
+  field :_id, type: String, default: ->{ (sw_name + '-' + sw_id).parameterize }
   field :full_address, type: String, default: -> { sw_address.values.join(', ') }
+  field :description, type: String
+
 
 
 
 
   ## Geolocation
-  field :location, type: Array, default: ->{ [sw_lng, sw_lat] }
-  geocoded_by :full_address, :coordinates => :location
+  field :location, type: Array, default: ->{ identify_location }
   index({ location: "2d" }, { min: -200, max: 200 })
   
-  after_validation do |venue|
-    venue.geocode if venue.location == [0.0, 0.0]
+  def identify_location
+    unless [sw_lng, sw_lat] == [0, 0]
+      [sw_lng, sw_lat]
+    else
+      Geocoder.search(full_address).first.coordinates.reverse
+    end
   end
+
   
   
 

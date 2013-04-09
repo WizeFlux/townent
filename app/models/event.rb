@@ -29,13 +29,13 @@ class Event
   
   ## Relations
   belongs_to :event_group, index: true
-  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ EventGroup.find_by(sw_id: sw_event_group_id).id }
+  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.id }
   
   belongs_to :category, index: true
-  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.category.id }
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.category.id }
   
   belongs_to :genre, index: true
-  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.genre.id }
+  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.genre.id }
   
   belongs_to :country, index: true
   field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_country.id }
@@ -81,10 +81,14 @@ class Event
   end
   
   def identify_city
-    @ict ||= City.find_or_create_by name: sw_town, country: identify_country
+    @ict ||= City.find_or_create_by sw_name: sw_town, sw_country_name: sw_country
   end
   
   def identify_country
-    @icn ||= Country.find_or_create_by name: sw_country
+    @icn ||= Country.find_or_create_by sw_name: sw_country
+  end
+  
+  def identify_event_group
+    @eg ||= EventGroup.find_by(sw_id: sw_event_group_id)
   end
 end
