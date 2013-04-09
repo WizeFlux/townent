@@ -3,7 +3,7 @@ class VenuesController < ApplicationController
   helper_method :scope
   
   def find_venue
-    @venue =  Venue.find params[:id]
+    @venue = Venue.find params[:id]
   end
   
   def scope
@@ -12,8 +12,8 @@ class VenuesController < ApplicationController
   
   def show 
     @events = case scope
-      when 'upcoming' then @venue.events.from_date Time.now
-      when 'past' then @venue.events.to_date Time.now
+      when 'upcoming' then @venue.events.order_by_date.from_date Time.now
+      when 'past' then @venue.events.order_by_date.to_date Time.now
     end
   end
   
