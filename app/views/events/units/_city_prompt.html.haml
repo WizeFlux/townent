@@ -29,7 +29,7 @@
     .large-12.columns
       %h4 Or chouse from nearby cities
       - if city || request.location
-        - coordinates_to_look_nearby = (city ? city.location : request_coordinates.reverse)
+        - coordinates_to_look_nearby = (city ? city.location : request_coordinates)
         - City.limit(10).geo_near(coordinates_to_look_nearby).max_distance(1).distance_multiplier(6371).spherical.each do |city|
           %a.round.button.secondary{href: city_events_path(city)}= "#{city.name}"
 
