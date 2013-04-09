@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
-  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates
+  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :request_location
 
   ## Fetched form params
   def params_city
@@ -59,17 +59,16 @@ class EventsController < ApplicationController
   
   ## Fetched from request
   def request_city
-    @request_city ||= City.where(geocoded_name: request.location.city, country: request_country).first if request.location
-  end
-
-  def request_country
-    @request_country ||= Country.where(geocoded_name: request.location.country).first if request.location
+    @request_city ||= City.where(geocoded_name: request_location.city, geocoded_country_name: request_location.country).first if request_location
   end
 
   def request_coordinates
-    @request_coordinates ||= [request.location.longitude, request.location.latitude] if request.location
+    @request_coordinates ||= [request_location.longitude, request_location.latitude] if request_location
   end
 
+  def request_location
+    @request_location ||= request.location || nil
+  end
 
   ## Actions
   def update
@@ -97,7 +96,7 @@ class EventsController < ApplicationController
                   max_distance(1).
                   distance_multiplier(6371).
                   spherical.
-                  sort_by{|e| e.sw_date} if !@city
+                  sort_by{|e| e.sw_date} unless @city
     end
   end
 end

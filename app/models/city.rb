@@ -14,24 +14,24 @@ class City
 
 
   ## Geolocation
-  field :geocoded_name, type: String, default: ->{ geocoder_respond.city }
-  field :location, type: Array, default: ->{ geocoder_respond.coordinates.reverse }
+  field :geocoded_name, type: String, default: ->{ geocoder_respond.city if geocoder_respond}
+  field :geocoded_country_name, type: String, default: ->{ geocoder_respond.country if geocoder_respond} 
+  field :location, type: Array, default: ->{ geocoder_respond.coordinates.reverse if geocoder_respond}
+  
   index({ location: "2d" }, { min: -200, max: 200 })
   
 
   ## Relations
-  belongs_to :country, index: true
-  field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_country.id }
+  belongs_to :country
+  field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ Country.find_or_create_by(sw_name: sw_country_name).id }
+
+  index({country_id: 1}, {unique: true, background: false})
   
   
   has_many :events
   has_many :event_groups
   
   private
-  
-  def identify_country
-    @co ||= Country.find_or_create_by sw_name: sw_country_name
-  end
   
   def geocoder_respond
     @gr ||= Geocoder.search(full_name).first

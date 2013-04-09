@@ -11,6 +11,9 @@ class Layout
   
   
   has_many :events
-  belongs_to :venue, index: true
-  field :venue_id, default: ->{ sw_venue_id }
+  belongs_to :venue
+  field :venue_id, type: Mongoid::Fields::ForeignKey, default: ->{ Venue.find_by(sw_id: sw_venue_id).id }
+  
+  index({venue_id: 1}, {unique: true, background: false})
+  
 end

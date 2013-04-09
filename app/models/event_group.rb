@@ -28,19 +28,17 @@ class EventGroup
   belongs_to :city
   
   ## Real one
-  belongs_to :category, index: true
+  belongs_to :category
   field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ Category.find_by(sw_id: sw_category_id).id }
 
-  belongs_to :genre, index: true
+  belongs_to :genre
   field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.genre.id }
-
+  
+  index({category_id: 1, genre_id: 1}, {unique: true, background: false})
 
 
   ## Buiding relations
-  after_create :fetch_events
-  
-  ## Fetch all nested events
-  def fetch_events
-    Delayed::Job.enqueue EventsFetcher.new(id), priority: 20, queue: 'events'
+  after_create do |event_group|
+    Delayed::Job.enqueue EventsFetcher.new(event_group.sw_id), priority: 20, queue: 'events'
   end
 end

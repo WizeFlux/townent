@@ -18,12 +18,14 @@ class Venue
     unless [sw_lng, sw_lat] == [0, 0]
       [sw_lng, sw_lat]
     else
-      Geocoder.search(full_address).first.coordinates.reverse
+      geocoder_respond.coordinates.reverse if geocoder_respond
     end
   end
 
-  
-  
+  def geocoder_respond
+    @gr ||= Geocoder.search(full_address).first
+  end
+
 
   ## Obtained from seatwave API
   field :sw_id, type: String
@@ -33,8 +35,7 @@ class Venue
   field :sw_lng, type: Float
   field :sw_url, type: String
   field :sw_image_url, type: String
-  
-  
+
 
 
   ## Realtions

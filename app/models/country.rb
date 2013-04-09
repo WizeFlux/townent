@@ -8,9 +8,6 @@ class Country
 
   field :sw_name, type: String
   
-  ## Geolocation
-  field :geocoded_name, type: String, default: ->{Geocoder.search(sw_name).first.country}
-  
   ## Relations
   has_many :cities
   has_many :events

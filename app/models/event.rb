@@ -7,11 +7,7 @@ class Event
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
   
-  
-  ## Geocoding
-  field :location, type: Array, default: ->{ identify_venue.location }
-  index({ location: "2d" }, { min: -200, max: 200 })
-  
+
   
   ## Obtained from Seatwave API
   field :sw_id, type: String
@@ -26,29 +22,43 @@ class Event
   field :sw_min_price, type: Float
   field :sw_ticket_count, type: Integer  
   
+
   
   ## Relations
-  belongs_to :event_group, index: true
-  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.id }
+  belongs_to :event_group
+  field :event_group_id, type: Mongoid::Fields::ForeignKey, default: ->{ EventGroup.find_by(sw_id: sw_event_group_id).id }
   
-  belongs_to :category, index: true
-  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.category.id }
+  belongs_to :category
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.category.id }
   
-  belongs_to :genre, index: true
-  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event_group.genre.id }
+  belongs_to :genre
+  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ event_group.genre.id }
   
-  belongs_to :country, index: true
-  field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_country.id }
+  belongs_to :city
+  field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ City.find_or_create_by(sw_name: sw_town, sw_country_name: sw_country).id }
+
+  belongs_to :country
+  field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ city.country.id }
   
-  belongs_to :city, index: true
-  field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_city.id }
-  
-  belongs_to :venue, index: true
+  belongs_to :venue
   field :venue_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_venue.id }
   
-  belongs_to :layout, index: true
+  belongs_to :layout
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
 
+
+
+  ## Indexing
+  index({event_group_id: 1, category_id: 1, genre_id: 1, country_id: 1, city_id: 1, venue_id: 1, layout_id: 1}, {unique: true, background: false})
+
+
+  ## Geocoding
+  field :location, type: Array, default: ->{ venue.location }
+  index({ location: "2d" }, { min: -200, max: 200 })
+
+
+
+  
   ## Defauly scopes
   default_scope includes(:event_group, :venue, :category, :genre, :layout, :city, :country)
   
@@ -65,7 +75,7 @@ class Event
   private
   
   def identify_venue
-    @iv ||= if Venue.where(sw_id: sw_venue_id).exists?
+    if Venue.where(sw_id: sw_venue_id).exists?
       Venue.find_by(sw_id: sw_venue_id)
     else
       Venue.create venue_dmap(SeatWave.new.get_venue_by_id(sw_venue_id))
@@ -73,22 +83,10 @@ class Event
   end
     
   def identify_layout
-    @il ||= if Layout.where(sw_id: sw_layout_id).exists?
+    if Layout.where(sw_id: sw_layout_id).exists?
       Layout.find_by(sw_id: sw_layout_id)
     else
       Layout.create layout_dmap(SeatWave.new.get_layout_by_id(sw_layout_id))
     end
-  end
-  
-  def identify_city
-    @ict ||= City.find_or_create_by sw_name: sw_town, sw_country_name: sw_country
-  end
-  
-  def identify_country
-    @icn ||= Country.find_or_create_by sw_name: sw_country
-  end
-  
-  def identify_event_group
-    @eg ||= EventGroup.find_by(sw_id: sw_event_group_id)
   end
 end

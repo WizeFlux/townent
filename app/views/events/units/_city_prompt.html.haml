@@ -11,8 +11,8 @@
           %a.round.button.tiny#yes-button{href: '#'} Yes
           %a.button.round.tiny#no-button{href: '#'} No
         - else
-          - if request.location
-            = raw "<i>#{request.location.city}, #{request.location.country}</i>? Sorry, but there are no events for this place, yet!"
+          - if request_location
+            = raw "<i>#{request_location.city}, #{request_location.country}</i>? Sorry, but there are no events for this place, yet!"
           - else
             We are unable to identify your location, please select it manually
 
@@ -29,7 +29,7 @@
     .large-12.columns
       %h4 Or chouse from nearby cities
       - if city || request.location
-        - coordinates_to_look_nearby = (city ? city.location : request_coordinates)
+        - coordinates_to_look_nearby = (city ? city.location : request_coordinates  )
         - City.limit(10).geo_near(coordinates_to_look_nearby).max_distance(1).distance_multiplier(6371).spherical.each do |city|
           %a.round.button.secondary{href: city_events_path(city)}= "#{city.name}"
 
@@ -37,8 +37,8 @@
   // Cities list for filtering    
   .row#cities-list{style: 'display: none'}
     .large-12.columns
-      - City.only(:id, :full_name).each do |city|
-        %a.round.button.secondary.city{href: city_events_path(city), style: 'display: none'}= city.full_name
+      - City.only(:id, :full_name).map{|c| {id: c.id, name: c.full_name}}.each do |city|
+        = raw("<a class=\"button secondary round city\" href=\"#{city_events_path(city[:id])}\" style=\"display: none\">#{city[:name]}</a>")
 
 :coffeescript
   (($) ->
