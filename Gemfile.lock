@@ -178,7 +178,7 @@ DEPENDENCIES
   bson_ext
   capistrano
   capistrano-unicorn
-  coffee-rails (~> 3.2.1)
+  coffee-rails
   daemons
   debugger
   delayed_job_mongoid
