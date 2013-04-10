@@ -14,6 +14,9 @@ gem 'daemons'
 gem 'delayed_job_mongoid'
 
 
+#pagination
+gem 'kaminari'
+
 
 
 #deploy
@@ -27,9 +30,6 @@ gem 'capistrano-unicorn'
 ## Geocoding
 gem 'geocoder'
 
-# Gems used only for assets and not required
-# in production environments by default.
-
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -42,4 +42,5 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+
 gem 'debugger'

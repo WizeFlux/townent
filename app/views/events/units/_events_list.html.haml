@@ -1,8 +1,28 @@
 .row#events-list
-  .large-12
-    - previous_event_date = nil
-    - events.each do |event|
-      - unless event.sw_date.to_date == previous_event_date
-        %h3= event.sw_date.strftime('%-d %B %Y')
-      - previous_event_date = event.sw_date.to_date
-      = render 'events/units/event', event: event
+  .large-12#container
+    = render 'events/units/events_set', events: events, previous_event_date: nil
+  .large-12#spinner{style: 'display: none'}
+    %center
+      %img{src: '/assets/spinner.gif'}
+    %hr
+
+:coffeescript
+  $ ->
+    nearBottomOfPage = ->
+      $(window).scrollTop() > $(document).height() - $(window).height() - 200
+    page = 1
+    loading = false
+    $(window).scroll ->
+      return if loading
+      if nearBottomOfPage() and !$('#last-page').size()
+        loading = true
+        $('#spinner').show()
+        page++
+        $.ajax
+          url: "#{request.path}?page=" + page + "&previous_event_date=" + $('#container .date').last().attr('data-date') + "&#{{q: query}.to_query if query}"
+          type: "get"
+          cache: true
+          dataType: "script"
+          success: ->
+            loading = false
+            $('#spinner').hide()

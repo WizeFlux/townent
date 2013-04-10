@@ -1,20 +1,23 @@
 class EventGroupsController < ApplicationController
   before_filter :find_event_group
-  helper_method :scope
+  helper_method :query, :query_scope
   
   def find_event_group
     @event_group = EventGroup.find params[:id]
   end
   
-  def scope
-    params[:scope] || 'upcoming'
+  def query
+    params[:q] if params[:q]
+  end
+  
+  def query_scope
+    query ? query[:scope] : 'all'
   end
   
   def show 
-    @events = case scope
-      when 'upcoming' then @event_group.events.order_by_date.from_date Time.now
-      when 'past' then @event_group.events.order_by_date.to_date Time.now
-    end
+    @events = @event_group.events.order_by_date.page(params[:page]).per(20)
+    @events = @events.from_date(Time.now) if query_scope == 'upcoming'
+    @events = @events.to_date(Time.now) if query_scope == 'past'
   end
   
   def update

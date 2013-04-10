@@ -25,7 +25,7 @@ class City
   belongs_to :country
   field :country_id, type: Mongoid::Fields::ForeignKey, default: ->{ Country.find_or_create_by(sw_name: sw_country_name).id }
 
-  index({country_id: 1}, {unique: true, background: false})
+  index({country_id: 1}, {background: false})
   
   
   has_many :events

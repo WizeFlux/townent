@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
-  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :request_location
+  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :request_location, :query
 
   ## Fetched form params
   def params_city
@@ -83,20 +83,24 @@ class EventsController < ApplicationController
   def index
     if @city || request_coordinates
       @events = Event.
-                  limit(100).
+                  order_by_date.
+                  page(params[:page]).
+                  per(20).
                   for_city(@city).
                   for_genre(@genre).
                   for_category(@category).
                   from_date(query_date_from).
-                  to_date(query_date_to).
-                  order_by_date
-      
-      @events = @events.
+                  to_date(query_date_to)
+
+      @events = Kaminari.paginate_array(
+                  @events.
+                  limit(1000).
                   geo_near(request_coordinates).
                   max_distance(1).
                   distance_multiplier(6371).
                   spherical.
-                  sort_by{|e| e.sw_date} unless @city
+                  sort_by{|e| e.sw_date}
+                ).page(params[:page]).per(10) unless @city
     end
   end
 end

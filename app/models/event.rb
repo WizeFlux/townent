@@ -49,14 +49,18 @@ class Event
 
 
   ## Indexing
-  index({event_group_id: 1, category_id: 1, genre_id: 1, country_id: 1, city_id: 1, venue_id: 1, layout_id: 1}, {unique: true, background: false})
-
-
+  index({location: "2d"}, {min: -200, max: 200})
+  index({category_id: 1, city_id: 1}, {background: false})
+  index({city_id: 1, genre_id: 1}, {background: false})
+  index({city_id: 1, genre_id: 1, category_id: 1}, {background: false})
+  index({city_id: 1, sw_date: 1}, {background: false})
+  index({city_id: 1, genre_id: 1, sw_date: 1}, {background: false})
+  index({city_id: 1, genre_id: 1, category_id: 1, sw_date: 1}, {background: false})
+  
+  
   ## Geocoding
   field :location, type: Array, default: ->{ venue.location }
-  index({ location: "2d" }, { min: -200, max: 200 })
-
-
+  
 
   
   ## Defauly scopes

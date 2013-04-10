@@ -37,9 +37,8 @@
   // Cities list for filtering    
   .row#cities-list{style: 'display: none'}
     .large-12.columns
-      - City.only(:id, :full_name).map{|c| {id: c.id, name: c.full_name}}.each do |city|
-        = raw("<a class=\"button secondary round city\" href=\"#{city_events_path(city[:id])}\" style=\"display: none\">#{city[:name]}</a>")
-
+      = raw City.only(:id, :full_name).map{|c| "<a class=\"button secondary round city\" href=\"/cities/#{c.id}/events\" style=\"display: none\">#{c.full_name}</a>"}.join('   ')
+      
 :coffeescript
   (($) ->
     $.widget "custom.cityPrompt",
@@ -49,7 +48,6 @@
         if #{!params[:city_id] && !params[:q]}
           @selfCTRL 'show'
           if #{!city} then @citySelectorCTRL 'show'
-          if #{!request.location} then @nearbyCitiesCTRL 'hide'
       
         @element.find('#yes-button, #close-panel').click (event)->
           event.preventDefault()

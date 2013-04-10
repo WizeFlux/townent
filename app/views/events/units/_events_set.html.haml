@@ -1,0 +1,13 @@
+- events.each do |event|
+  - unless event.sw_date.to_date == previous_event_date
+    %h3= event.sw_date.strftime('%-d %B %Y')
+  - previous_event_date = event.sw_date.to_date
+  
+  = render 'events/units/event', event: event
+
+- if events.last_page?
+  .row
+    .large-12#last-page
+      %center
+        %h4 There are no events more
+      %hr

@@ -10,7 +10,7 @@
           %small
             = "#{event.venue.sw_name}, #{event.city.full_name}"
             
-        %p= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
+        %p.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
         %p
           %span.label.round= event.genre.sw_name
           %span.label.round= event.category.sw_name
