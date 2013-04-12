@@ -18,8 +18,20 @@ class EventGroup
   field :sw_image_url, type: String
   field :sw_category_id
   
-
-
+  
+  ## Obtained from EchoNest API
+  ##field :en_biography, type: String, default: ->{ EchoNest.new.get_biography_by_sw_id(sw_id) }
+  
+  
+  
+  #Image
+  mount_uploader :avatar, BlobUploader
+  def avatar_url
+    avatar? ? super : sw_image_url
+  end
+  
+  
+  
   ## Relations
   has_many :events
   

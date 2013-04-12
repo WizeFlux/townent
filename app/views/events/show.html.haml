@@ -51,9 +51,39 @@
 
 :coffeescript
   $ ->
+    getJSONP = (url) ->
+      $.ajax
+        dataType: "jsonp"
+        url: url
+        cache: true
+    
+    event_url = "#{SeatWave.base_uri}event/#{@event.id}?apikey=#{SeatWave.api_key}"
     ticket_groups_url = "#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&siteid=#{SeatWave.site_id}&pgsize=1000&callback=?"
-    $.getJSON ticket_groups_url, null, (webResponse) ->
+    
+    getJSONP(ticket_groups_url).done (webResponse) ->
       $.each webResponse.TicketGroups, ->
         $("#tickets-entries").append $("<tr><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a class=\"button small expand round\" href=\"" + @SwURL + "\">Select</a></td></tr>")
       $("#tickets").show() if webResponse.TicketGroups.length > 0
       $("#spinner").hide()
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      

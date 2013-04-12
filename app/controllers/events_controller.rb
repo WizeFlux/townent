@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
+  
   helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :request_location, :query
 
   ## Fetched form params
@@ -70,6 +71,8 @@ class EventsController < ApplicationController
     @request_location ||= request.location || nil
   end
 
+
+
   ## Actions
   def update
     if @event.update_attributes(params[:event])
@@ -100,7 +103,7 @@ class EventsController < ApplicationController
                   distance_multiplier(6371).
                   spherical.
                   sort_by{|e| e.sw_date}
-                ).page(params[:page]).per(10) unless @city
+                ).page(params[:page]).per(20) unless @city
     end
   end
 end

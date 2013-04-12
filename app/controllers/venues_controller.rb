@@ -11,7 +11,7 @@ class VenuesController < ApplicationController
   end
   
   def query_scope
-    query ? query[:scope] : 'all'
+    query ? query[:scope] : 'upcoming'
   end
   
   def show 

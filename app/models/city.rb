@@ -19,7 +19,7 @@ class City
   field :location, type: Array, default: ->{ geocoder_respond.coordinates.reverse if geocoder_respond}
   
   index({ location: "2d" }, { min: -200, max: 200 })
-  
+  index({ full_name: 1}, {background: false})
 
   ## Relations
   belongs_to :country

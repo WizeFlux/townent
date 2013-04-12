@@ -1,0 +1,17 @@
+production:
+  api_key: KQHGOI1SPXM8AV0FO
+  consumer_key: 76c6aeab2c8ec3074c3ed2e822c6e8fc
+  shared_secret: TTHWfqZBQHqZk5CO58O5tQ
+  base_url: 'http://developer.echonest.com/api/v4/'
+
+development:
+  api_key: KQHGOI1SPXM8AV0FO
+  consumer_key: 76c6aeab2c8ec3074c3ed2e822c6e8fc
+  shared_secret: TTHWfqZBQHqZk5CO58O5tQ
+  base_url: 'http://developer.echonest.com/api/v4/'
+
+test:
+  api_key: KQHGOI1SPXM8AV0FO
+  consumer_key: 76c6aeab2c8ec3074c3ed2e822c6e8fc
+  shared_secret: TTHWfqZBQHqZk5CO58O5tQ
+  base_url: 'http://developer.echonest.com/api/v4/'

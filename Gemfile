@@ -5,10 +5,11 @@ gem 'rails', '3.2.13'
 
 gem 'mongoid'
 gem 'bson_ext'
+gem 'coffee-rails'
 gem 'haml-rails'
 gem 'httparty'
 gem 'zurb-foundation'
-gem 'coffee-rails'
+
 
 #delayed jobs handling
 gem 'daemons'
@@ -18,6 +19,11 @@ gem 'delayed_job_mongoid'
 #pagination
 gem 'kaminari'
 
+
+##uploads
+gem 'carrierwave'
+gem 'carrierwave-mongoid'
+gem 'mini_magick'
 
 
 #deploy

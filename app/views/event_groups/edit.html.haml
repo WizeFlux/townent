@@ -1,12 +1,23 @@
 = content_for :title, "#{@event_group.sw_name}"
 
-= render 'event_groups/units/breadcrumbs', event_group: @event_group
-
 = form_for @event_group do |f|
   .row
     .large-12
+      - if @event_group.avatar?
+        = image_tag(@event_group.avatar_url) 
+        = f.label :remove_avatar
+        = f.check_box :remove_avatar
+      
+      = f.label :remote_avatar_url
+      = f.text_field :remote_avatar_url
+      
+      = f.label :avatar
+      = f.file_field :avatar
+      = f.hidden_field :avatar_cache
+  .row
+    .large-12
       = f.label :city_id
-      = f.select :city_id, options_from_collection_for_select(City.all.order_by([[:name, :asc]]), :id, :full_name, (f.object.city.id if f.object.city)), {:include_blank => true}
+      = f.select :city_id, options_from_collection_for_select(City.only(:id, :full_name).order_by([[:full_name, :asc]]), :id, :full_name, (f.object.city.id if f.object.city)), {:include_blank => true}
   .row
     .large-12
       = f.label :description

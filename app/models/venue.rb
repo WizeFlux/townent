@@ -8,8 +8,6 @@ class Venue
 
 
 
-
-
   ## Geolocation
   field :location, type: Array, default: ->{ identify_location }
   index({ location: "2d" }, { min: -200, max: 200 })
@@ -25,6 +23,8 @@ class Venue
   def geocoder_respond
     @gr ||= Geocoder.search(full_address).first
   end
+
+
 
 
   ## Obtained from seatwave API
