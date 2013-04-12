@@ -25,10 +25,10 @@
         %input{id: 'search-input', type: :text, placeholder: 'Just start typing...'}
 
   // Or chouse from nearbys
-  .row#nearby-cities{style: 'display: none'}
-    .large-12.columns
-      %h4 Or chouse from nearby cities
-      - if city || request.location
+  - if city || request_location
+    .row#nearby-cities{style: 'display: none'}
+      .large-12.columns
+        %h4 Or chouse from nearby cities
         - coordinates_to_look_nearby = (city ? city.location : request_coordinates  )
         - City.limit(10).geo_near(coordinates_to_look_nearby).max_distance(1).distance_multiplier(6371).spherical.each do |city|
           %a.round.button.secondary{href: city_events_path(city)}= "#{city.name}"
@@ -36,14 +36,16 @@
 
   // Cities list for filtering    
   .row#cities-list{style: 'display: none'}
-    .large-12.columns
-      = raw City.only(:id, :full_name).map{|c| "<a class=\"button secondary round city\" href=\"/cities/#{c.id}/events\" style=\"display: none\">#{c.full_name}</a>"}.join('   ')
+    .large-12.columns.cities-links
+      = raw City.only(:id, :full_name).map{|c| "<a href=\"/cities/#{c.id}/events\">#{c.full_name}</a>"}.join('   ')
       
+
 :coffeescript
   (($) ->
     $.widget "custom.cityPrompt",
       _create: ->
         self = @
+        cities = self.element.find(".cities-links > a").hide()
         
         if #{!params[:city_id] && !params[:q]}
           @selfCTRL 'show'
@@ -59,16 +61,14 @@
           self.citySelectorCTRL 'show'
           
         @element.find('#search-input').keyup ->
-          if $(@).val().length > 1
+          if $(@).val().length > 2
             expr = new RegExp(".*" + $(@).val() + ".*", "i")
-            
             self.nearbyCitiesCTRL 'hide'
-            
-            $.each self.element.find(".city"), ->
+            $.each cities, ->
               if expr.test($(@).text()) then $(@).show() else $(@).hide()
                   
           else
-            self.element.find(".city").hide()
+            cities.hide()
             self.nearbyCitiesCTRL 'show'
           
       selfCTRL: (method)->

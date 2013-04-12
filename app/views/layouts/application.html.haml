@@ -34,10 +34,11 @@
             %a#city-change-link{href: "#city-prompt-panel"}= @city.full_name
             :coffeescript
               $ -> 
-                $('#city-change-link').click ->
+                $('#city-change-link').click (event) ->
+                  event.preventDefault()
                   $('#city-prompt-panel').cityPrompt('selfCTRL', 'show')
+                  
         %li
           %a{href: status_path} Status
-
   = yield
 
