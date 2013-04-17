@@ -14,10 +14,7 @@
       = f.label :avatar
       = f.file_field :avatar
       = f.hidden_field :avatar_cache
-  .row
-    .large-12
-      = f.label :city_id
-      = f.select :city_id, options_from_collection_for_select(City.only(:id, :full_name).order_by([[:full_name, :asc]]), :id, :full_name, (f.object.city.id if f.object.city)), {:include_blank => true}
+
   .row
     .large-12
       = f.label :description

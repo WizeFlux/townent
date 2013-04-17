@@ -11,6 +11,4 @@ class Country
   ## Relations
   has_many :cities
   has_many :events
-  has_many :event_groups
-  
 end

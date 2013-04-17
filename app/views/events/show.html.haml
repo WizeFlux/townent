@@ -56,8 +56,7 @@
         dataType: "jsonp"
         url: url
         cache: true
-    
-    event_url = "#{SeatWave.base_uri}event/#{@event.id}?apikey=#{SeatWave.api_key}"
+
     ticket_groups_url = "#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&siteid=#{SeatWave.site_id}&pgsize=1000&callback=?"
     
     getJSONP(ticket_groups_url).done (webResponse) ->

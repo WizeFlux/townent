@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
-  before_filter :find_category, :find_genre, :find_city
   before_filter :find_event, except: %w(index)
+  before_filter :find_category, :find_genre, :find_city
   
-  helper_method :query_date_from, :query_date_to, :query_scope, :request_coordinates, :request_location, :query
+  helper_method :query_date_from, :query_date_to, :query_scope, :query
 
   ## Fetched form params
   def params_city
@@ -36,41 +36,25 @@ class EventsController < ApplicationController
       query ? query[:date_to] : nil
     end
   end
-  
 
 
   ## Parents
   def find_city
-    @city ||=  params_city || request_city || nil
+    @city ||=  params_city || request_city || (@event.city if @event)
   end
   
   def find_genre
-    @genre ||= (Genre.find(params[:genre_id]) if params[:genre_id])
+    @genre ||= (Genre.find(params[:genre_id]) if params[:genre_id]) || (@event.genre if @event)
   end
   
   def find_category
-    @category ||= (Category.find(params[:category_id]) if params[:category_id])
+    @category ||= (Category.find(params[:category_id]) if params[:category_id]) || (@event.category if @event)
   end
   
   def find_event
     @event ||= Event.find params[:id]
   end
   
-  
-  
-  ## Fetched from request
-  def request_city
-    @request_city ||= City.where(geocoded_name: request_location.city, geocoded_country_name: request_location.country).first if request_location
-  end
-
-  def request_coordinates
-    @request_coordinates ||= [request_location.longitude, request_location.latitude] if request_location
-  end
-
-  def request_location
-    @request_location ||= request.location || nil
-  end
-
 
 
   ## Actions

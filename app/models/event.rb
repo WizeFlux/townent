@@ -1,14 +1,12 @@
 class Event
   include Mongoid::Document
   include SeatWaveDataMap
-
   
   ##Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
   
 
-  
   ## Obtained from Seatwave API
   field :sw_id, type: String
   field :sw_date, type: DateTime
@@ -22,7 +20,7 @@ class Event
   field :sw_min_price, type: Float
   field :sw_ticket_count, type: Integer  
   
-
+  
   
   ## Relations
   belongs_to :event_group
@@ -49,7 +47,7 @@ class Event
 
 
   ## Indexing
-  index({location: "2d"}, {min: -200, max: 200})
+  index({location: '2d'}, {min: -200, max: 200})
   index({category_id: 1, city_id: 1}, {background: false})
   index({city_id: 1, genre_id: 1}, {background: false})
   index({city_id: 1, genre_id: 1, category_id: 1}, {background: false})

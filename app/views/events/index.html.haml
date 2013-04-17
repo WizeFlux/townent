@@ -1,7 +1,5 @@
 = content_for :title, "TownEnt #{@genre.sw_name if @genre} #{@category.sw_name if @category} in #{@city.full_name if @city}"
 
-= render 'events/units/city_prompt', city: @city
-
 - if @city
   = render 'events/units/index_breadcrumbs', city: @city, genre: @genre, category: @category
   = render 'events/units/query_form'

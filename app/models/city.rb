@@ -29,7 +29,6 @@ class City
   
   
   has_many :events
-  has_many :event_groups
   
   private
   

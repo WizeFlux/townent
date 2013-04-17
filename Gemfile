@@ -20,6 +20,9 @@ gem 'delayed_job_mongoid'
 gem 'kaminari'
 
 
+gem 'stubhub'
+
+
 ##uploads
 gem 'carrierwave'
 gem 'carrierwave-mongoid'

@@ -18,7 +18,6 @@
 
   = csrf_meta_tag
   = stylesheet_link_tag :application
-  
   = javascript_include_tag :application
   
 %body
@@ -31,14 +30,12 @@
       %ul.right
         - if @city
           %li
-            %a#city-change-link{href: "#city-prompt-panel"}= @city.full_name
+            %a#ccl{href: "#city-prompt-panel"}= @city.full_name
             :coffeescript
-              $ -> 
-                $('#city-change-link').click (event) ->
-                  event.preventDefault()
-                  $('#city-prompt-panel').cityPrompt('selfCTRL', 'show')
-                  
+              $ -> $('#ccl').click (event) -> event.preventDefault(); $('#city-prompt-panel').show()
         %li
           %a{href: status_path} Status
+
+  = render 'shared/city_prompt', city: @city
   = yield
 
