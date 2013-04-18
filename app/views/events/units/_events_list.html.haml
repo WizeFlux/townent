@@ -6,23 +6,8 @@
       %img{src: '/assets/spinner.gif'}
     %hr
 
+
 :coffeescript
-  $ ->
-    nearBottomOfPage = ->
-      $(window).scrollTop() > $(document).height() - $(window).height() - 200
-    page = 1
-    loading = false
-    $(window).scroll ->
-      return if loading
-      if nearBottomOfPage() and !$('#last-page').size()
-        loading = true
-        $('#spinner').show()
-        page++
-        $.ajax
-          url: "#{request.path}?page=" + page + "&previous_event_date=" + $('#container .date').last().attr('data-date') + "&#{{q: query}.to_query if query}"
-          type: "get"
-          cache: true
-          dataType: "script"
-          success: ->
-            loading = false
-            $('#spinner').hide()
+  $ -> $("#events-list").endlessPage
+    query: "#{{q: query}.to_query if query}"
+    request_path: "#{request.path}"

@@ -1,0 +1,13 @@
+.row
+  .large-3.columns
+    %img{src: event_group.avatar_url}
+  .large-6.columns
+    .row
+      .large-12
+        %h4= event_group.sw_name
+        %p
+          %span.label.round= event_group.genre.sw_name
+          %span.label.round= event_group.category.sw_name
+        
+  .large-3.columns
+%hr

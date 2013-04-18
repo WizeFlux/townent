@@ -1,11 +1,15 @@
 class EventGroup
   include Mongoid::Document
+  include Mongoid::Search
   include StubHubDataMap  
 
   ## Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
 
+
+  #Text search
+  search_in :sw_name, category: :sw_name, genre: :sw_name
   
   
   ## Obtained from Seatwave API
@@ -20,7 +24,7 @@ class EventGroup
   
   
   
-  
+
   
   ## Obtained from EchoNest API
   ##field :en_biography, type: String, default: ->{ EchoNest.new.get_biography_by_sw_id(sw_id) }
@@ -29,9 +33,8 @@ class EventGroup
   
   #Image
   mount_uploader :avatar, BlobUploader
-  def avatar_url
-    avatar? ? super : sw_image_url
-  end
+  def avatar_url; avatar? ? super : sw_image_url; end
+  
   
   
   ## Relations
@@ -52,7 +55,9 @@ class EventGroup
   index({category_id: 1, genre_id: 1}, {unique: true, background: false})
   index({category_id: 1}, {unique: true, background: false})
 
-
+  
+  default_scope includes(:category, :genre)
+  
   ## Buiding relations
   after_create do |event_group|
     Delayed::Job.enqueue EventsFetcher.new(event_group.sw_id), priority: 20, queue: 'events'

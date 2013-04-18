@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 
 
 gem 'mongoid'
+gem 'mongoid_search'
 gem 'bson_ext'
 gem 'coffee-rails'
 gem 'haml-rails'

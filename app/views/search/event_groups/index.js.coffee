@@ -1,0 +1,1 @@
+$("#event-groups-list #container").append "<%= j(render 'search/event_groups/units/event_groups_set', event_groups: @event_groups) =%>"

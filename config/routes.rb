@@ -12,6 +12,9 @@ Townent::Application.routes.draw do
   ## Venues CRUD
   resources :venues, except: %w(index)
   
+  namespace :search do
+    resources :event_groups, only: %w(index)
+  end
   
   ## Events CRUD
   resources :events

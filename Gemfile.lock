@@ -71,6 +71,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fast-stemmer (1.0.2)
     geocoder (1.1.6)
     haml (4.0.2)
       tilt
@@ -113,6 +114,9 @@ GEM
     mongoid-grid_fs (1.8.0)
       mime-types (~> 1.19)
       mongoid (~> 3.0)
+    mongoid_search (0.3.1)
+      fast-stemmer (~> 1.0.0)
+      mongoid (>= 3.0.0)
     moped (1.4.5)
     multi_json (1.7.2)
     multi_xml (0.5.3)
@@ -206,6 +210,7 @@ DEPENDENCIES
   kaminari
   mini_magick
   mongoid
+  mongoid_search
   rails (= 3.2.13)
   rvm-capistrano
   sass-rails (~> 3.2.3)
