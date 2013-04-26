@@ -9,7 +9,7 @@ gem 'bson_ext'
 gem 'coffee-rails'
 gem 'haml-rails'
 gem 'httparty'
-gem 'zurb-foundation'
+
 
 
 #delayed jobs handling
@@ -22,6 +22,7 @@ gem 'kaminari'
 
 
 gem 'stubhub'
+
 
 
 ##uploads
@@ -42,6 +43,7 @@ gem 'capistrano-unicorn'
 gem 'geocoder'
 
 group :assets do
+  gem 'compass-rails'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
 end

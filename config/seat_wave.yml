@@ -1,5 +1,5 @@
 production:
-  api_key: 81df89bab5124f919f7bd9b83157372c
+  api_key: '81df89bab5124f919f7bd9b83157372c'
   api_secret: 'there are no one yet'
   base_url: 'http://api.seatwave.com/v2/discovery/'
   page_size: 1000
