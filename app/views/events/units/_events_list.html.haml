@@ -1,10 +1,8 @@
-.row#events-list
-  .large-12#container
+#events-list
+  #container
     = render 'events/units/events_set', events: events, previous_event_date: nil
-  .large-12#spinner{style: 'display: none'}
-    %center
-      %img{src: '/assets/spinner.gif'}
-    %hr
+  #spinner{style: 'display: none'}
+    %img{src: '/assets/spinner.gif'}
 
 
 :coffeescript

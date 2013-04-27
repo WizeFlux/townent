@@ -1,33 +1,28 @@
-= form_for :q, url: request.path, method: :get do |f|
-  .row#query-form
-    .large-12
-      %ul.button-group.round
+= form_for :q, url: request.path, method: :get, html: {class: 'menu buttons'} do |f|
+  %ul
+    %li
+      %a{class: class_if('active', query_scope == 'all'), href: url_for(q: {scope: 'all'})} All dates
+    %li
+      %a{class: class_if('active', query_scope == 'weekend'), href: url_for(q: {scope: 'weekend'})} This weekend
+    %li
+      %a#dates-trigger{href: '#', class: class_if('active', query_scope == nil)} Pick dates
+    %li
+      %ul#dates-inputs{style: ('display: none' if query_scope != nil)}
         %li
-          %a.button{class: class_if('disabled', query_scope == 'all'), href: url_for(q: {scope: 'all'})} All dates
+          = f.label :date_from, 'From:'
+          = f.text_field :date_from, class: 'datepicker', value: query_date_from
         %li
-          %a.button{class: class_if('disabled', query_scope == 'weekend'), href: url_for(q: {scope: 'weekend'})} This weekend
-        %li
-          %a.button#dates-trigger{href: '#', class: class_if('disabled', query_scope == nil)} Pick dates
-
-  .row#dates-inputs{style: ('display: none' if query_scope != nil)}
-    .small-1.columns
-      = f.label :date_from, 'From:', class: 'right inline'
-    .small-2.columns
-      = f.text_field :date_from, class: 'datepicker', value: query_date_from
-    .small-1.columns
-      = f.label :date_to, 'To:', class: 'right inline'
-    .small-2.columns
-      = f.text_field :date_to, class: 'datepicker', value: query_date_to
-    .small-1.columns.pull-3
-      = f.submit 'Go', class: 'button round small secondary'
+          = f.label :date_to, 'To:'
+          = f.text_field :date_to, class: 'datepicker', value: query_date_to
+        %li= f.submit 'Go'
   
   :coffeescript
     $ ->
       $("#dates-trigger").click (event) ->
         event.preventDefault()
         $(".datepicker").datepicker dateFormat: "d MM yy"
-        $(".disabled", $(this).parents("ul")).removeClass "disabled"
-        $(this).addClass "disabled"
+        $(".active", $(this).parents("ul")).removeClass "active"
+        $(this).addClass "active"
         $("#dates-inputs").show()
 
   

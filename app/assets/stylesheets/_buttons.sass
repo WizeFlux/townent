@@ -1,0 +1,35 @@
+=bright-button
+  border: 0px
+  padding: 13px 58px
+  color: #272727
+  cursor: pointer
+  +box-shadow(rgba(213, 213, 213, 1) 0px 2px 0)
+  +background-image(linear-gradient(center top, #fcdf2a, #efb310))
+  +border-radius(6px)
+  text-decoration: none
+  +text-shadow(rgba(white, 1) 0px 1px 0)
+  &:hover
+    color: #101010
+    +background-image(linear-gradient(center top, #fcdf2a, #f5b919))
+    +box-shadow(rgba(198, 198, 198, 1) 0px 1px 0)
+
+
+=my-button
+  border: 0px
+  padding: 9px 22px
+  color: #545455
+  cursor: pointer
+  +box-shadow(rgba(213, 213, 213, 1) 0px 2px 0)
+  +background-image(linear-gradient(center top, #fff, #eee))
+  +border-radius(20px)
+  text-decoration: none
+  &:hover
+    color: #424242
+    +box-shadow(rgba(198, 198, 198, 1) 0px 1px 0)
+  &.active
+    +background-image(linear-gradient(center top, #505050, #242424))
+    +single-box-shadow(#737373, 0px, 1px, 0, 0, true)
+    +link-colors(#d5d5d5)
+    &:hover
+      color: #ccc
+      +background-image(linear-gradient(center top, #565656, #303030))

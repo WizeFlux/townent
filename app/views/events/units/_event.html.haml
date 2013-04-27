@@ -1,24 +1,19 @@
-.row
-  .large-3.columns
-    %img{src: event.event_group.avatar_url}
-  .large-6.columns
-    .row
-      .large-12
-        %h4
-          = event.event_group.sw_name
-          %br
-          %small
-            = "#{event.venue.sw_name}, #{event.city.full_name}"
-            
-        %p.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
-        %p
-          %span.label.round= event.genre.sw_name
-          %span.label.round= event.category.sw_name
-  .large-3.columns
-    %a.success.round.button.expand{href: event_path(event)} View tickets
-    %center
-      = event.sw_ticket_count
-      tickets from
-      = event.sw_min_price
-      = event.sw_currency
-%hr
+.event<>
+  %img{src: event.event_group.avatar_url}<>
+  %div<>
+    %h4= event.event_group.sw_name
+    
+    .right
+      %a{href: event_path(event)} View tickets
+      %br
+      %p
+        = event.sw_ticket_count
+        tickets from
+        = event.sw_min_price
+        = event.sw_currency
+    
+    %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
+    %h5.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
+    %p
+      %span= event.genre.sw_name
+      %span= event.category.sw_name

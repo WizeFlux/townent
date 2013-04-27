@@ -24,7 +24,7 @@ class EventsController < ApplicationController
       if query and query[:date_from]
         query[:date_from]
       else
-        Date.today
+        Date.today + 1.day
       end
     end
   end

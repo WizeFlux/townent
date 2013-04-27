@@ -1,12 +1,10 @@
-.row
-  .large-12
-    .ul.breadcrumbs
-      %li
-        %a{href: city_events_path(event.city)}= event.city.full_name
-      %li
-        %a{href: city_genre_events_path(event.city, event.genre)}= event.genre.sw_name
-      %li
-        %a{href: city_genre_category_events_path(event.city, event.genre, event.category)}= event.category.sw_name
-      %li.current
-        %a{href: '#'}= "#{event.event_group.sw_name} @ #{event.venue.sw_name}"
-%br
+.breadcrumbs
+  %ul
+    %li
+      %a{href: city_events_path(event.city)}= event.city.full_name
+    %li
+      %a{href: city_genre_events_path(event.city, event.genre)}= event.genre.sw_name
+    %li
+      %a{href: city_genre_category_events_path(event.city, event.genre, event.category)}= event.category.sw_name
+    %li
+      %a.current{href: '#'}= "#{event.event_group.sw_name} @ #{event.venue.sw_name}"

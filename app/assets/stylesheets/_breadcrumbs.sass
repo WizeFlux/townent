@@ -1,0 +1,20 @@
+.breadcrumbs
+  background: url('bg/breadcrumbs.png') repeat-x
+  a
+    +link-colors(#b9b9b9, #535353, #535353, #b9b9b9, #535353)
+    font-size: 12px
+    text-transform: uppercase
+    +hover-link
+    &:after
+      content: ' /'
+    &.current
+      +link-colors(#535353, #b9b9b9, #b9b9b9, #535353, #b9b9b9)
+  
+  ul
+    +inline-block-list
+    +row
+    height: 36px
+    line-height: 36px
+    li:last-child > a
+      &:after
+        content: ''

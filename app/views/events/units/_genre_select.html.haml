@@ -1,0 +1,7 @@
+%menu#genres.buttons
+  %ul
+    %li
+      %a{href: city_events_path(city), class: class_if('active', !genre)} All
+    - Genre.each do |selected_genre|
+      %li
+        %a{href: city_genre_events_path(city, selected_genre), class: class_if('active',  genre == selected_genre)}= selected_genre.sw_name

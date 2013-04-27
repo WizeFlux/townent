@@ -1,9 +1,7 @@
-.row
-  .large-12
-    %hr
-    %ul.button-group.round
-      %li
-        %a.button{href: url_for(q: {scope: 'upcoming'}), class: class_if('disabled', query_scope == 'upcoming')} Upcoming
-      %li
-        %a.button{href: url_for(q: {scope: 'past'}), class: class_if('disabled', query_scope == 'past')} Past
+%menu.buttons.past-upcoming
+  %ul
+    %li
+      %a.button{href: url_for(q: {scope: 'upcoming'}), class: class_if('active', query_scope == 'upcoming')} Upcoming
+    %li
+      %a.button{href: url_for(q: {scope: 'past'}), class: class_if('active', query_scope == 'past')} Past
 

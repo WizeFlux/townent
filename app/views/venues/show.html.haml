@@ -2,18 +2,20 @@
 
 = content_for :title, "#{@venue.sw_name} @ #{sample_event.city.name}, #{sample_event.country.name}"
 
-= render 'venues/units/breadcrumbs', venue: @venue, sample_event: sample_event
-
-
-- ##Billboard
-.row
-  .large-11.columns
-    %h3= @venue.sw_name
-    %p= @venue.sw_address.values.join(', ')
-    %p= @venue.description
-  .large-1.columns
-    %a.button.small.expand.round{href: edit_venue_url(@venue)} edit
-
+.venue<>
+  %h4= @venue.sw_name
+  .right
+    %a{href: edit_venue_url(@venue)} edit
+  %p<>= @venue.description
   
+.information
+  .map<>
+    %h4
+      %b Adress:
+      = @venue.sw_address.values.join(', ')
+    - lng, lat = @venue.location
+    - options = {center: "#{lat},#{lng}", zoom: 13, size: '640x160', markers: "color:blue|#{lat},#{lng}", sensor: false}
+    %img{src: "http://maps.googleapis.com/maps/api/staticmap?#{options.to_query}"}
+
 = render 'events/units/past_upcoming_control'
 = render 'events/units/events_list', events: @events

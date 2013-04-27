@@ -1,41 +1,43 @@
 !!! 5
-/[if lt IE 7 ] <html class=\"ie6\" lang=\"en\">
-/[if IE 7 ]    <html class=\"ie7\" lang=\"en\">
-/[if IE 8 ]    <html class=\"ie8\" lang=\"en\">
-/[if IE 9 ]    <html class=\"ie9\" lang=\"en\">
-/[if (gt IE 9)|!(IE)] <!--> <html lang=\"en\">
-
 %head
   %meta{ :charset => "utf-8" }
-
-  -# Uncomment to make IE8 render like IE7
-  -# meta http-equiv="X-UA-Compatible" content="IE=7"
-
-  -# Set the viewport width to device width for mobile
-  %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
-  
   %title= content_for?(:title) ? yield(:title) : "Untitled"
-
   = csrf_meta_tag
   = stylesheet_link_tag :application
   = javascript_include_tag :application
   
 %body
-  %nav.top-bar
-    %ul.title-area
-      %li.name
+  %nav.top-bar<>
+    %ul<>
+      %li<>
         %h1
-          %a{href: '/'}TownEnt
-    %section.top-bar-section
-      %ul.right
-        - if @city
-          %li
-            %a#ccl{href: "#city-prompt-panel"}= @city.full_name
-            :coffeescript
-              $ -> $('#ccl').click (event) -> event.preventDefault(); $('#city-prompt-panel').show()
-        %li
-          %a{href: status_path} Status
-
-  = render 'shared/city_prompt', city: @city
+          %a{href: '/'}
+            %img{src: '/assets/logo.png', alt: 'Gdebilet'}
+      %li<>
+        %img{src: '/assets/events.png', alt: 'Events'}
+        %a{href: '#'}Events
+      %li<>
+        %img{src: '/assets/artists.png', alt: 'Artists'}
+        %a{href: '#'}Artists
+      %li.search<>
+        %input{type: 'text', placeholder: 'Search by artist, event or even more...'}
+        
   = yield
 
+  %nav#footer
+    %ul<>
+      %li<>
+        %h1
+          %a{href: '#', onclick: '$(window).scrollTop(0)'}
+            %img{src: '/assets/scroller.png', alt: 'Scroll top'}
+      %li<>
+        %img{src: '/assets/events.png', alt: 'Events'}
+        %a{href: '#'}Events
+      %li<>
+        %img{src: '/assets/artists.png', alt: 'Artists'}
+        %a{href: '#'}Artists
+      %li
+        %a{href: '#'}= image_tag 'social/vk.png'
+        %a{href: '#'}= image_tag 'social/twitter.png'
+        %a{href: '#'}= image_tag 'social/facebook.png'
+    

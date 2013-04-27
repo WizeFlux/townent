@@ -1,0 +1,12 @@
+%menu#categories
+  - if genre
+    %ul
+      %li
+        %a{class: class_if('active', !category), href: city_genre_events_path(city, genre)}
+          = "All (#{genre.events.for_city(city).count})"
+      - genre.categories.each do |selected_category|
+        - category_events_count = selected_category.events.for_city(city).count
+        - if category_events_count > 0
+          %li
+            %a{class: class_if('active', category == selected_category), href: city_genre_category_events_path(city, genre, selected_category)}
+              = "#{selected_category.sw_name} (#{category_events_count})"
