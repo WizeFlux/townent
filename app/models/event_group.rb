@@ -57,7 +57,10 @@ class EventGroup
 
   
   default_scope includes(:category, :genre)
-  
+  scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }
+  scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }
+  scope :for_symbol, ->(symbol){  symbol ? where(sw_name: /^#{symbol}/) : all  }
+
   ## Buiding relations
   after_create do |event_group|
     Delayed::Job.enqueue EventsFetcher.new(event_group.sw_id), priority: 20, queue: 'events'

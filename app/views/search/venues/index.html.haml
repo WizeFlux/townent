@@ -5,18 +5,18 @@
     %li
       %a{href: '/search'} search results
     %li
-      %a.current{href: '/search/event_groups'} artists
+      %a.current{href: '/search/venues'} venues
 
 = render 'search/search_input'
 
-#event-groups-list
+#venues-list
   #container<>
-    = render 'event_groups/units/event_groups_set', event_groups: @event_groups
+    = render 'venues/units/venues_set', venues: @venues
   #spinner{style: 'display: none'}
     %img{src: '/assets/spinner.gif'}
 
 
 :coffeescript
-  $ -> $("#event-groups-list").endlessPage
+  $ -> $("#venues-list").endlessPage
     query: "#{{q: params[:q]}.to_query if params[:q]}"
     request_path: "#{request.path}"

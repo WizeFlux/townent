@@ -1,0 +1,5 @@
+.event-group<>
+  %img{src: event_group.avatar_url}<>
+  %div<>
+    %h4= event_group.sw_name
+    %a{href: event_group_path(event_group)}= "Upcoming events (#{event_group.events.count})"

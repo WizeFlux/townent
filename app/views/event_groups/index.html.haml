@@ -3,11 +3,11 @@
     %li
       %a{href: '#'} home
     %li
-      %a{href: '/search'} search results
-    %li
       %a.current{href: '/search/event_groups'} artists
 
-= render 'search/search_input'
+= render 'event_groups/units/genre_select', genre: @genre, category: @category
+= render 'event_groups/units/category_select', genre: @genre, category: @category
+= render 'event_groups/units/alphabet_select'
 
 #event-groups-list
   #container<>
@@ -18,5 +18,5 @@
 
 :coffeescript
   $ -> $("#event-groups-list").endlessPage
-    query: "#{{q: params[:q]}.to_query if params[:q]}"
+    query: "#{{symbol: params[:symbol]}.to_query if params[:symbol]}"
     request_path: "#{request.path}"

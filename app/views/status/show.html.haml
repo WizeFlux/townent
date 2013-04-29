@@ -37,19 +37,6 @@
         = Event.all.count
 
 
-.row
-  .large-12
-    - Genre.each do |genre|
-      %ul
-        %li= genre.sw_name
-        %ul.panel
-          - genre.categories.each do |category|
-            %li= category.sw_name
-            %li
-              %ul.panel
-                - category.event_groups.each do |event_group|
-                  %li= event_group.sw_name
-            
 
 .row
   .large-12

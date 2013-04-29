@@ -1,0 +1,10 @@
+= form_for :q, url: request.path, method: :get, html: {id: 'content-search'} do |f|
+  = f.text_field :text, value: query_text
+  = f.submit 'Go'
+  
+- unless query_text.nil? or query_text.empty?
+  .notificator
+    %h4
+      Results for "
+      %span<>= query_text
+      "

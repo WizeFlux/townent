@@ -1,0 +1,1 @@
+$("#venues-list #container").append "<%= j(render 'venues/units/venues_set', venues: @venues) =%>"

@@ -71,6 +71,7 @@ class EventsController < ApplicationController
     if @city || request_coordinates
       @events = Event.
                   order_by_date.
+                  full!.
                   page(params[:page]).
                   per(20).
                   for_city(@city).

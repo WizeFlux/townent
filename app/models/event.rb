@@ -1,10 +1,17 @@
 class Event
   include Mongoid::Document
+  include Mongoid::Search
   include SeatWaveDataMap
+    
+  
   
   ##Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
+  
+  
+  #Text search
+  search_in category: :sw_name, genre: :sw_name, event_group: :sw_name
   
 
   ## Obtained from Seatwave API
@@ -54,7 +61,7 @@ class Event
   index({city_id: 1, sw_date: 1}, {background: false})
   index({city_id: 1, genre_id: 1, sw_date: 1}, {background: false})
   index({city_id: 1, genre_id: 1, category_id: 1, sw_date: 1}, {background: false})
-  
+  index({venue_id: 1}, {background: false})
   
   ## Geocoding
   field :location, type: Array, default: ->{ venue.location }
@@ -62,7 +69,7 @@ class Event
 
   
   ## Defauly scopes
-  default_scope includes(:event_group, :venue, :category, :genre, :layout, :city, :country)
+  scope :full!, includes(:event_group, :venue, :category, :genre, :layout, :city, :country)
   
   
   ## Named scopes

@@ -16,120 +16,61 @@ body
 @import notificator
 @import footer
 @import breadcrumbs
+@import venue
+@import billboard
 
 
+.inline-list
+  +inline-block-list
 
-.venue
-  +row
-  position: relative
-  h4, h5, h6
-    margin: 20px 0
-  h4
-    font-size: 24px
-  h5
+#content-search
+  width: 960px
+  margin: 30px auto 20px auto !important
+  input[type=text]
+    line-height: 26px
+    font-size: 14px
+    color: #b1b1b1
+    background: #fdfdfd
+    border: 1px #ccc solid
+    +border-radius(4px)
+    padding: 0 10px
+    width: 70%
+  input[type=submit]
+    +bright-button
+    font-size: 14px
     font-weight: bold
-    font-size: 16px
-  h6
-    font-size: 14px
-    color: #909090
-  p
-    font-size: 14px
-    color: #909090
-  .right
-    position: absolute
-    right: 0
-    a
-      +bright-button
-    p
-      text-align: center
-      font-size: 12px
-      color: #909090
-      padding-top: 20px
-  
+    padding: 5px 20px
+    margin-left: 20px
 
-
-.billboard
-  @extend .event
-  > div > h5
-    font-size: 14px
-    color: #404040
-  a
-    font-size: 14px
-    +link-colors(#000, #333, #333, #000, #333)
-  
-p.description
+#event-groups-list
+  font-size: 0
   +row
-  display: block
+
+  
+.event-group
   font-size: 14px
-  color: #909090
-  
-.information
-  vertical-align: top
-  +row
-  h3
-    font-size: 24px
-    margin: 40px 0
-    small
-      margin: 20px 0
-      display: block
-      font-size: 13px
-      color: #7b7b7b
-      span 
-        color: #deba34
-  #spinner
-  .tickets
-    +inline-block
-    vertical-align: top
-    width: 59%
-    table
-      width: 100%
-      th, td
-        padding: 0 10px
-      thead
-        background: #f1f1f1
-        border-bottom: 1px #f5d223 solid
-        > tr > th
-          color: #2b2b2b
-          font-size: 13px
-          font-weight: bold
-          line-height: 35px
-      tbody
-        > tr
-          border-bottom: 1px #dddddd solid
-          > td
-            font-size: 13px
-            line-height: 58px
-            > a
-              +bright-button
-              padding: 8px 18px
-              font-weight: bold
-      
-  .seatmap
-    +inline-block
-    width: 39%
-    margin-left: 2%
-    > img
-      width: 100%
-
-    h4
-      background: #f1f1f1
-      border-bottom: 1px #f5d223 solid
-      font-size: 13px
+  a
+    +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
+  padding: 10px
+  height: 67px
+  width: 300px
+  > div
+    margin-left: 20px
+    vertical-align: top !important
+    > h4  
+      width: 178px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+      font-size: 16px
       font-weight: bold
-      line-height: 35px
-      padding: 0 10px
-      margin-bottom: 12px
-      > a
-        color: #2b2b2b
-      
-  .map
-    margin-bottom: 20px
-    img 
-      width: 100%
-    h4
-      margin: 40px 0 15px 0
-      font-size: 14px
-      color: #909090
-      b
-        font-weight: bold
-        color: #000
+      margin: 10px 0
+  &, > img, > div
+    +inline-block
+  > img
+    height: 67px
+    width: 80px
+    +border-radius(3px)
+
+  &:hover
+    background: #f0f0f0

@@ -1,6 +1,5 @@
 class Search::EventGroupsController < ApplicationController
   helper_method :query_text
-  layout 'search' 
   
   def query_text
     params[:q] ? params[:q][:text] : nil
@@ -9,7 +8,7 @@ class Search::EventGroupsController < ApplicationController
   def index
     @event_groups = EventGroup.
                       page(params[:page]).
-                      per(20).
+                      per(30).
                       full_text_search(query_text)
   end
 end

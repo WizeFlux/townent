@@ -10,4 +10,5 @@ class Genre
   
   has_many :categories
   has_many :events
+  has_many :event_groups
 end

@@ -1,0 +1,8 @@
+%menu.alphabet
+  %ul
+    %li Alphabet:
+    %li
+      %a{class: class_if('active', params[:symbol].blank?), href: url_for(symbol: '')} All
+    - ['0-9', ('A'..'Z').to_a].flatten.each do |symbol|
+      %li
+        %a{class: class_if('active', params[:symbol] == symbol), href: url_for(symbol: symbol)}= symbol

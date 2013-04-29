@@ -1,0 +1,9 @@
+- event_groups.each do |event_group|
+  = render 'event_groups/units/event_group', event_group: event_group
+
+- if event_groups.last_page?
+  #last-page.notificator
+    %h4
+      There are
+      %span no
+      performers more
