@@ -50,7 +50,7 @@ class Venue
 
   ## Realtions
   belongs_to :city
-  field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ events.empty? nil : events.only(:city_id).first.city_id }
+  field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ events.empty? ? nil : events.only(:city_id).first.city_id }
   default_scope includes(:city)
   
     
