@@ -1,5 +1,5 @@
 .venue-list-item<>
   %h4= venue.sw_name
-  %p= venue.city.full_name
+  %p= venue.city.full_name if venue.city
   %a{href: venue_path(venue)}= "Upcoming events (#{venue.events.count})"
   %hr
