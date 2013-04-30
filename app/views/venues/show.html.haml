@@ -13,9 +13,11 @@
     %h4
       %b Adress:
       = @venue.sw_address.values.join(', ')
-    - lng, lat = @venue.location
-    - options = {center: "#{lat},#{lng}", zoom: 13, size: '640x160', markers: "color:blue|#{lat},#{lng}", sensor: false}
-    %img{src: "http://maps.googleapis.com/maps/api/staticmap?#{options.to_query}"}
+    :coffeescript
+      $ -> $('#map-canvas').gmap
+        lat: #{@venue.location[1]}
+        lng: #{@venue.location[0]}
+    #map-canvas
 
 = render 'events/units/past_upcoming_control'
 = render 'events/units/events_list', events: @events

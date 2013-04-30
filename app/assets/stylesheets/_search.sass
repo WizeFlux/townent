@@ -1,0 +1,47 @@
+.search-landing
+  a.bottom
+    margin: 20px 0
+    font-size: 14px
+    +link-colors(#262626, #555, #555, #262626, #555)
+    text-align: left
+    +inline-block
+    width: 100%
+  h2
+    margin: 20px 0
+    text-transform: uppercase
+    text-align: left
+    font-size: 14px
+    color: #616161
+  .notificator
+    display: none
+  +row
+  #events-list
+    width: 620px
+    +inline-block(top)
+    > #container > hr, > #container > h3
+      display: none
+  #venues-list
+    margin-top: 40px !important
+  #events-list > #container > .event
+    position: relative
+    width: 620px
+    height: 120px
+    margin-top: 30px !important
+    > img
+      width: 140px
+      height: 116px
+    > div
+      padding-left: 160px
+      > h4, > p, > h5, > h6 
+        margin: 10px 0
+      > .right
+        > a
+          padding: 13px 25px
+
+  .right
+    > div > h2, > div > a
+      padding-left: 10px
+    +inline-block(top)
+    > #event-groups-list, > #venues-list
+      width: 290px
+      padding-left: 20px

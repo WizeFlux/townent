@@ -23,6 +23,9 @@ Townent::Application.routes.draw do
     resources :event_groups, only: %w(index)
     resources :events, only: %w(index)
     resources :venues, only: %w(index)
+    resources :landing, only: %w(index)
+    
+    root to: 'landing#index'
   end
   
   ## Events CRUD

@@ -52,6 +52,9 @@ class Event
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
 
 
+  ## Geocoding
+  field :location, type: Array, default: ->{ venue.location }
+
 
   ## Indexing
   index({location: '2d'}, {min: -200, max: 200})
@@ -63,11 +66,9 @@ class Event
   index({city_id: 1, genre_id: 1, category_id: 1, sw_date: 1}, {background: false})
   index({venue_id: 1}, {background: false})
   
-  ## Geocoding
-  field :location, type: Array, default: ->{ venue.location }
-  
 
-  
+
+
   ## Defauly scopes
   scope :full!, includes(:event_group, :venue, :category, :genre, :layout, :city, :country)
   

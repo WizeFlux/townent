@@ -33,8 +33,6 @@ class Venue
   end
 
 
-
-
   ## Obtained from seatwave API
   field :sw_id, type: String
   field :sw_name, type: String

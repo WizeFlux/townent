@@ -1,0 +1,54 @@
+.inline-list
+  +inline-block-list
+
+#content-search
+  width: 960px
+  margin: 30px auto 20px auto !important
+  input[type=text]
+    line-height: 26px
+    font-size: 14px
+    color: #b1b1b1
+    background: #fdfdfd
+    border: 1px #ccc solid
+    +border-radius(4px)
+    padding: 0 10px
+    width: 70%
+  input[type=submit]
+    +bright-button
+    font-size: 14px
+    font-weight: bold
+    padding: 5px 20px
+    margin-left: 20px
+
+#event-groups-list
+  font-size: 0
+  +row
+
+  
+.event-group
+  font-size: 14px
+  a
+    +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
+  padding: 10px
+  height: 67px
+  width: 300px
+  > div
+    margin-left: 20px
+    vertical-align: top !important
+    > h4  
+      width: 178px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+      font-size: 16px
+      font-weight: bold
+      margin: 10px 0
+  &, > img, > div
+    +inline-block
+  > img
+    height: 67px
+    width: 80px
+    +border-radius(3px)
+
+  &:hover
+    background: #f0f0f0

@@ -1,5 +1,5 @@
-%menu#categories
-  - if genre
+- if genre
+  %menu#categories
     %ul
       %li
         %a{class: class_if('active', !category), href: city_genre_events_path(city, genre)}

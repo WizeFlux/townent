@@ -23,11 +23,8 @@
       %span= @event.sw_ticket_count
       ticket(s) avaiable
       
-      
-  #spinner<>
-    %img{src: '/assets/spinner.gif'}
   .tickets
-    %table#tickets{style: 'display: none'}<>
+    %table#tickets<>
       %thead
         %tr
           %th Block
@@ -36,20 +33,35 @@
           %th Price
           %th 
       %tbody#tickets-entries
+        %tr<>
+          %td{colspan: 5}
+            #spinner
+              %img{src: '/assets/spinner.gif'}
+        %tr
+          %td{colspan: 5}
+            .notificator
+              %h3 There are no tickets
+            
   .seatmap<>
     %h4
       %a{href: venue_path(@event.venue)}= @event.venue.sw_name
     - if @event.layout.sw_seat_map_url
       %img{src: @event.layout.sw_seat_map_url}
     - else
-      %p There are no seatmap avaiable!
+      .notificator
+        %h3 There are no seatmap
+      
   .map<>
     %h4
       %b Adress:
       = @event.venue.sw_address.values.join ', '
-    - lng, lat = @event.location
-    - options = {center: "#{lat},#{lng}", zoom: 13, size: '640x160', markers: "color:blue|#{lat},#{lng}", sensor: false}
-    %img{src: "http://maps.googleapis.com/maps/api/staticmap?#{options.to_query}"}
+    :coffeescript
+      $ -> $('#map-canvas').gmap
+        lat: #{@event.location[1]}
+        lng: #{@event.location[0]}
+    #map-canvas
+
+
 
 
 :coffeescript
@@ -59,14 +71,12 @@
         dataType: "jsonp"
         url: url
         cache: true
-
     ticket_groups_url = "#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&siteid=#{SeatWave.site_id}&pgsize=1000&callback=?"
-    
     getJSONP(ticket_groups_url).done (webResponse) ->
       $.each webResponse.TicketGroups, ->
         $("#tickets-entries").append $("<tr><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a class=\"button small expand round\" href=\"" + @SwURL + "\">Buy</a></td></tr>")
-      $("#tickets").show() if webResponse.TicketGroups.length > 0
-      $("#spinner").hide()
+      $("#tickets-entries .notificator").hide() if webResponse.TicketGroups.length > 0
+      $("#spinner").parent('td').parent('tr').hide()
       
       
       

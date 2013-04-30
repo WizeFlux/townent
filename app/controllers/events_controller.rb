@@ -19,19 +19,19 @@ class EventsController < ApplicationController
   
   def query_date_from
     if query_scope == 'weekend'
-      Date.today.at_end_of_week - 1.day
+      (Date.today.at_end_of_week - 1.day).strftime('%-d %B %Y')
     else
       if query and query[:date_from]
         query[:date_from]
       else
-        Date.today + 1.day
+        (Date.today + 1.day).strftime('%-d %B %Y')
       end
     end
   end
   
   def query_date_to
     if query_scope == 'weekend'
-      Date.today.at_end_of_week
+      (Date.today.at_end_of_week).strftime('%-d %B %Y')
     else
       query ? query[:date_to] : nil
     end

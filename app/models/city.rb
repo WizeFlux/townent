@@ -7,8 +7,6 @@ class City
   field :name, type: String, default: ->{ sw_name }
   
    
-
-
   field :sw_name, type: String
   field :sw_country_name, type: String
 

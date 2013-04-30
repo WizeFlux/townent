@@ -1,0 +1,26 @@
+.breadcrumbs
+  %ul
+    %li
+      %a{href: '#'} home
+    %li
+      %a.current{href: '/search'} search results
+
+= render 'search/search_input'
+
+.search-landing
+  #events-list
+    %h2 Events
+    #container<>
+      = render 'events/units/events_set', events: @events, previous_event_date: nil
+    %a.bottom{href: "search/events?#{params.to_query}"} View all events results
+  .right
+    #event-groups-list
+      %h2 Artists
+      #container<>
+        = render 'event_groups/units/event_groups_set', event_groups: @event_groups
+      %a.bottom{href: "search/event_groups?#{params.to_query}"} View all artists results
+    #venues-list
+      %h2 Venues
+      #container<>
+        = render 'venues/units/venues_set', venues: @venues
+      %a.bottom{href: "search/venues?#{params.to_query}"} View all venues results

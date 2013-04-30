@@ -5,6 +5,7 @@
   = csrf_meta_tag
   = stylesheet_link_tag :application
   = javascript_include_tag :application
+  = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyDNIzwBp4cCrFqwk-mZ6OIRSMuvP_Uc22U&sensor=true"
   
 %body
   %nav.top-bar<>
@@ -20,7 +21,8 @@
         %img{src: '/assets/artists.png', alt: 'Artists'}
         %a{href: '/event_groups'}Artists
       %li.search<>
-        %input{type: 'text', placeholder: 'Search by artist, event or even more...'}
+        = form_for :q, url: '/search', method: :get do |f|
+          = f.text_field :text, placeholder: 'Search by artist, event or even more...'
         
   = yield
 
