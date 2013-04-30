@@ -20,23 +20,30 @@
     +inline-block(top)
     > #container > hr, > #container > h3
       display: none
+    h3 + .event
+      margin-top: 0px !important
   #venues-list
     margin-top: 40px !important
   #events-list > #container > .event
-    position: relative
-    width: 620px
-    height: 120px
-    margin-top: 30px !important
-    > img
-      width: 140px
-      height: 116px
-    > div
-      padding-left: 160px
-      > h4, > p, > h5, > h6 
-        margin: 10px 0
-      > .right
-        > a
-          padding: 13px 25px
+    padding: 10px
+    > .inner
+      position: relative
+      width: 600px
+      height: 120px
+      > img
+        width: 140px
+        height: 116px
+      > div
+        padding-left: 160px
+        > h4
+          font-size: 20px
+        > h4, > p, > h5, > h6 
+          margin: 10px 0
+        > .right
+          > span
+            padding: 13px 15px
+          > p
+            width: 150px
 
   .right
     > div > h2, > div > a

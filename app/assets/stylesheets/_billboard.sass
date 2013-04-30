@@ -1,11 +1,14 @@
 .billboard
   @extend .event
-  > div > h5
-    font-size: 14px
-    color: #404040
-  a
-    font-size: 14px
-    +link-colors(#000, #333, #333, #000, #333)
+  &:hover
+    background: #fff
+  .inner
+    > div > h5
+      font-size: 14px
+      color: #404040
+    a
+      font-size: 14px
+      +link-colors(#000, #333, #333, #000, #333)
   
 p.description
   +row

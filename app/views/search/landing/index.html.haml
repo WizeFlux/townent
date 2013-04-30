@@ -12,15 +12,15 @@
     %h2 Events
     #container<>
       = render 'events/units/events_set', events: @events, previous_event_date: nil
-    %a.bottom{href: "search/events?#{params.to_query}"} View all events results
+    %a.bottom{href: "search/events?#{params.to_query}"}= "View all events results(#{@events_counter})"
   .right
     #event-groups-list
       %h2 Artists
       #container<>
         = render 'event_groups/units/event_groups_set', event_groups: @event_groups
-      %a.bottom{href: "search/event_groups?#{params.to_query}"} View all artists results
+      %a.bottom{href: "search/event_groups?#{params.to_query}"}= "View all artists results(#{@event_groups_counter})"
     #venues-list
       %h2 Venues
       #container<>
         = render 'venues/units/venues_set', venues: @venues
-      %a.bottom{href: "search/venues?#{params.to_query}"} View all venues results
+      %a.bottom{href: "search/venues?#{params.to_query}"}= "View all venues results(#{@venues_counter})"

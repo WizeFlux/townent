@@ -1,19 +1,19 @@
-.event<>
-  %img{src: event.event_group.avatar_url}<>
-  %div<>
-    %h4= event.event_group.sw_name
+%a.event{href: event_path(event)}<>
+  .inner
+    %img{src: event.event_group.avatar_url}<>
+    %div<>
+      %h4= event.event_group.sw_name
+      .right
+        %span{href: event_path(event)} View tickets
+        %br
+        %p
+          = event.sw_ticket_count
+          tickets from
+          = event.sw_min_price
+          = event.sw_currency
     
-    .right
-      %a{href: event_path(event)} View tickets
-      %br
+      %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
+      %h5.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
       %p
-        = event.sw_ticket_count
-        tickets from
-        = event.sw_min_price
-        = event.sw_currency
-    
-    %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
-    %h5.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
-    %p
-      %span= event.genre.sw_name
-      %span= event.category.sw_name
+        %span= event.genre.sw_name
+        %span= event.category.sw_name

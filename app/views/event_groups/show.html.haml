@@ -1,14 +1,15 @@
 = content_for :title, "#{@event_group.sw_name}"
 
 .billboard<>
-  %img{src: @event_group.sw_image_url}<>
-  %div<>
-    %h4= @event_group.sw_name
-    %p
-      %span= @event_group.genre.sw_name
-      %span= @event_group.category.sw_name
-    .right
-      %a{href: edit_event_group_url(@event_group)} edit
+  .inner
+    %img{src: @event_group.sw_image_url}<>
+    %div<>
+      %h4= @event_group.sw_name
+      %p
+        %span= @event_group.genre.sw_name
+        %span= @event_group.category.sw_name
+      .right
+        %a{href: edit_event_group_url(@event_group)} edit
       
 %p.description<>= @event_group.description
 

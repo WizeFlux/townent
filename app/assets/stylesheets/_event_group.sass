@@ -27,15 +27,17 @@
   
 .event-group
   font-size: 14px
-  a
-    +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
+  +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
   padding: 10px
   height: 67px
   width: 300px
+  &:hover span
+    text-decoration: underline
   > div
     margin-left: 20px
     vertical-align: top !important
     > h4  
+      color: #000
       width: 178px
       overflow: hidden
       white-space: nowrap
@@ -49,6 +51,6 @@
     height: 67px
     width: 80px
     +border-radius(3px)
-
   &:hover
     background: #f0f0f0
+    +border-radius

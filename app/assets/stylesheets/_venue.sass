@@ -32,6 +32,7 @@
 
   
 .venue-list-item
+  text-decoration: none
   +inline-block
   font-size: 14px !important
   padding: 10px
@@ -39,50 +40,23 @@
   width: 300px !important
   font-size: 0
   +row
-  a
-    +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
-  > p, > h4, > hr, > a
+  +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
+  > p, > h4
     margin: 6px 0
   > p
     font-size: 12px
-  > h4  
+  > h4 
+    color: #000
     width: 290px
     overflow: hidden
     white-space: nowrap
     text-overflow: ellipsis
     font-size: 16px
     font-weight: bold
+  &:hover > span
+    text-decoration: underline
   > hr
     background: #d9d9d9
   &:hover
     background: #f0f0f0
     +border-radius
-
-  
-.event-group
-  font-size: 14px
-  a
-    +link-colors(#7e7e7e, #555, #555, #7e7e7e, #555)
-  padding: 10px
-  height: 67px
-  width: 300px
-  > div
-    margin-left: 20px
-    vertical-align: top !important
-    > h4  
-      width: 178px
-      overflow: hidden
-      white-space: nowrap
-      text-overflow: ellipsis
-      font-size: 16px
-      font-weight: bold
-      margin: 10px 0
-  &, > img, > div
-    +inline-block
-  > img
-    height: 67px
-    width: 80px
-    +border-radius(3px)
-
-  &:hover
-    background: #f0f0f0
