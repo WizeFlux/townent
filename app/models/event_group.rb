@@ -6,7 +6,7 @@ class EventGroup
   ## Common things
   field :_id, type: String, default: ->{sw_name..parameterize}
   field :description, type: String
-
+  field :is_moderated, type: Boolean, default: false
 
   #Text search
   search_in :sw_name, category: :sw_name, genre: :sw_name
@@ -61,6 +61,10 @@ class EventGroup
 
   
   default_scope includes(:category, :genre)
+  
+  scope :moderated, where(is_moderated: true)
+  scope :awaiting_moderation, where(is_moderated: false)
+  
   scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }  
   scope :for_subcategory, ->(subcategory){  subcategory ? where(subcategory_id: subcategory.id) : all  }
   scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }

@@ -2,11 +2,14 @@
   - if genre
     %ul
       %li
-        %a{class: class_if('active', !category), href: genre_event_groups_path(genre)}
-          = "All (#{genre.event_groups.count})"
+        %a{class: class_if('active', !subcategory), href: genre_event_groups_path(genre)}
+          = "All (#{genre.event_groups.moderated.count})"
       - genre.subcategories.each do |selected_subcategory|
-        - subcategory_events_count = selected_subcategory.event_groups.count
+        - subcategory_events_count = if params[:scope] == 'moderation'
+          - selected_subcategory.event_groups.awaiting_moderation.count
+        - else
+          - selected_subcategory.event_groups.moderated.count
         - if subcategory_events_count > 0
           %li
-            %a{class: class_if('active', category == selected_subcategory), href: genre_subcategory_event_groups_path(genre, selected_subcategory)}
+            %a{class: class_if('active', subcategory == selected_subcategory), href: genre_subcategory_event_groups_path(genre, selected_subcategory, scope: params[:scope], symbol: params[:symbol])}
               = "#{selected_subcategory.name} (#{subcategory_events_count})"

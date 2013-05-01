@@ -21,7 +21,7 @@ class EventGroupsController < ApplicationController
   end
   
   def find_subcategory
-    @category ||= (Subcategory.find(params[:subcategory_id]) if params[:subcategory_id]) || (@event_group.subcategory if @event_group)
+    @subcategory ||= (Subcategory.find(params[:subcategory_id]) if params[:subcategory_id]) || (@event_group.subcategory if @event_group)
   end
   
   def query
@@ -54,5 +54,12 @@ class EventGroupsController < ApplicationController
                       for_symbol(params_symbol).
                       page(params[:page]).
                       per(30)
+    
+    if params[:scope] == 'moderation'                  
+      @event_groups = @event_groups.awaiting_moderation
+    else
+      @event_groups = @event_groups.moderated
+    end
+    
   end
 end

@@ -5,8 +5,8 @@
     %li
       %a.current{href: '/search/event_groups'} artists
 
-= render 'event_groups/units/genre_select', genre: @genre, category: @category
-= render 'event_groups/units/subcategory_select', genre: @genre, category: @category
+= render 'event_groups/units/genre_select', genre: @genre, subcategory: @subcategory
+= render 'event_groups/units/subcategory_select', genre: @genre, subcategory: @subcategory
 = render 'event_groups/units/alphabet_select'
 
 #event-groups-list

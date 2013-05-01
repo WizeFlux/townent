@@ -2,4 +2,11 @@
   %ul
     - Genre.all.to_a.first(2).each do |selected_genre|
       %li
-        %a{href: genre_event_groups_path(selected_genre), class: class_if('active',  genre == selected_genre)}= selected_genre.sw_name
+        %a{href: genre_event_groups_path(selected_genre, scope: params[:scope], symbol: params[:symbol]), class: class_if('active',  genre == selected_genre)}= selected_genre.sw_name
+    - if person_signed_in?
+      - if params[:scope] == 'moderation'
+        %li
+          %a{href: url_for(scope: "user", symbol: params[:symbol]), class: 'active'} Awaiting moderation
+      - else
+        %li
+          %a{href: url_for(scope: "moderation", symbol: params[:symbol])} Awaiting moderation
