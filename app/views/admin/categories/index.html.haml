@@ -1,0 +1,17 @@
+.notificator
+  %h3 Categories
+
+- @categories.each do |category|
+  = form_for category, url: admin_category_path(category), method: :put, remote: true, html: {class: 'cool'} do |f|
+    %fieldset<>
+      .input-holder<>
+        = f.label :subcategory_id, category.sw_name
+        = f.select :subcategory_id, options_from_collection_for_select(category.genre.subcategories, :id, :name, (category.subcategory.id if category.subcategory)), {:include_blank => true}
+      .controls
+        = f.submit 'save'
+  %hr
+  
+  
+:coffeescript
+  $ -> $('form.cool select').change ->
+    $(this).siblings().css("color", "red")

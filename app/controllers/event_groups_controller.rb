@@ -1,6 +1,6 @@
 class EventGroupsController < ApplicationController
   before_filter :find_event_group, except: %w(index)
-  before_filter :find_genre, :find_category
+  before_filter :find_genre, :find_subcategory
   helper_method :query, :query_scope, :params_symbol
   
   def params_symbol
@@ -17,11 +17,11 @@ class EventGroupsController < ApplicationController
   end
   
   def find_genre
-    @genre ||= (Genre.find(params[:genre_id]) if params[:genre_id]) || (@event_group.genre if @event_group)
+    @genre ||= (Genre.find(params[:genre_id]) if params[:genre_id]) || Genre.first
   end
   
-  def find_category
-    @category ||= (Category.find(params[:category_id]) if params[:category_id]) || (@event_group.category if @event_group)
+  def find_subcategory
+    @category ||= (Subcategory.find(params[:subcategory_id]) if params[:subcategory_id]) || (@event_group.subcategory if @event_group)
   end
   
   def query
@@ -50,7 +50,7 @@ class EventGroupsController < ApplicationController
   def index
     @event_groups = EventGroup.
                       for_genre(@genre).
-                      for_category(@category).
+                      for_subcategory(@subcategory).
                       for_symbol(params_symbol).
                       page(params[:page]).
                       per(30)

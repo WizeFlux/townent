@@ -1,0 +1,12 @@
+%menu#categories
+  - if genre
+    %ul
+      %li
+        %a{class: class_if('active', !category), href: genre_event_groups_path(genre)}
+          = "All (#{genre.event_groups.count})"
+      - genre.subcategories.each do |selected_subcategory|
+        - subcategory_events_count = selected_subcategory.event_groups.count
+        - if subcategory_events_count > 0
+          %li
+            %a{class: class_if('active', category == selected_subcategory), href: genre_subcategory_event_groups_path(genre, selected_subcategory)}
+              = "#{selected_subcategory.name} (#{subcategory_events_count})"

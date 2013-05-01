@@ -44,4 +44,6 @@
         %a{href: '#'}= image_tag 'social/facebook.png'
         - if person_signed_in?
           = link_to 'Logout', destroy_person_session_path, method: :delete
+          = link_to 'Categories', admin_categories_path
+          = link_to 'Subcategories', admin_subcategories_path
     

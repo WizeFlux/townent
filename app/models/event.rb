@@ -50,10 +50,10 @@ class Event
   
   belongs_to :layout
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
-
-
+  
+  
   ## Geocoding
-  field :location, type: Array, default: ->{ venue.location }
+  field :location, type: Array, default: ->{ venue.location if venue}
 
 
   ## Indexing

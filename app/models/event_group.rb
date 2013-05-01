@@ -4,7 +4,7 @@ class EventGroup
   include StubHubDataMap  
 
   ## Common things
-  field :_id, type: String, default: ->{sw_id}
+  field :_id, type: String, default: ->{sw_name..parameterize}
   field :description, type: String
 
 
@@ -52,12 +52,17 @@ class EventGroup
   belongs_to :genre
   field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.genre.id }
   
+  belongs_to :subcategory
+  field :subcategory_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.subcategory.id if category.subcategory}
+  
+  
   index({category_id: 1, genre_id: 1}, {unique: true, background: false})
   index({category_id: 1}, {unique: true, background: false})
 
   
   default_scope includes(:category, :genre)
-  scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }
+  scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }  
+  scope :for_subcategory, ->(subcategory){  subcategory ? where(subcategory_id: subcategory.id) : all  }
   scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }
   scope :for_symbol, ->(symbol){  symbol ? where(sw_name: /^#{symbol}/) : all  }
 

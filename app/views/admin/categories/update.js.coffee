@@ -1,0 +1,1 @@
+$('#edit_category_<%= @category.id %> label').css("color", "green")

@@ -1,0 +1,1 @@
+$('#subcategories').append "<%= j(render 'admin/subcategories/units/list_unit', subcategory: @subcategory) =%>"

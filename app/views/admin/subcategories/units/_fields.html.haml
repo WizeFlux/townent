@@ -1,0 +1,8 @@
+%fieldset<>
+  .input-holder<>
+    = f.label :name
+    = f.text_field :name
+    
+  .input-holder<>
+    = f.label :genre_id
+    = f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :sw_name, (f.object.genre.id if f.object.genre))

@@ -18,6 +18,7 @@ class Category
   has_many :event_groups
   has_many :events
   
+  belongs_to :subcategory
   belongs_to :genre
   index({genre_id: 1}, {unique: true, background: false})
 end

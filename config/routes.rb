@@ -12,7 +12,7 @@ Townent::Application.routes.draw do
   
   resources :genres, only: %w() do
     resources :event_groups, only: %w(index)
-    resources :categories, only: %w() do
+    resources :subcategories, only: %w() do
       resources :event_groups, only: %w(index)
     end
   end
@@ -43,6 +43,12 @@ Townent::Application.routes.draw do
         resources :events, only: %w(index)
       end
     end
+  end
+  
+  
+  namespace :admin do
+    resources :categories
+    resources :subcategories
   end
   
   root to: 'events#index'
