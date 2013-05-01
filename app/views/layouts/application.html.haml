@@ -42,4 +42,6 @@
         %a{href: '#'}= image_tag 'social/vk.png'
         %a{href: '#'}= image_tag 'social/twitter.png'
         %a{href: '#'}= image_tag 'social/facebook.png'
+        - if person_signed_in?
+          = link_to 'Logout', destroy_person_session_path, method: :delete
     

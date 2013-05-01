@@ -4,10 +4,12 @@
 
 = render 'venues/units/breadcrumbs', venue: @venue, sample_event: sample_event
 
-= form_for @venue do |f|
-  .row
-    .large-12
+= form_for @venue, html: {class: 'cool'} do |f|
+  %fieldset<>
+    .legend<>= "Edit Venue #{@venue.sw_name}"
+    .input-holder<>
       = f.label :description
-      = f.text_area :description, style: 'resize: vertical'
-      = f.submit 'Save', class: 'button round'
-      %a.button.round{href: venue_path(@venue)} Cancel
+      = f.text_area :description
+    .controls<>
+      = f.submit 'Save', class: 'active'
+      %a{href: venue_path(@venue)} Cancel

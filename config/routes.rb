@@ -1,6 +1,8 @@
 Townent::Application.routes.draw do
   
   
+  devise_for :people
+
   ## Server status
   resource :status, only: %w(show), controller: 'status'  
   
@@ -42,7 +44,6 @@ Townent::Application.routes.draw do
       end
     end
   end
-  
   
   root to: 'events#index'
 end

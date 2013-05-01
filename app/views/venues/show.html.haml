@@ -4,8 +4,9 @@
 
 .venue<>
   %h4= @venue.sw_name
-  .right
-    %a{href: edit_venue_url(@venue)} edit
+  - if person_signed_in?
+    .right
+      %a{href: edit_venue_url(@venue)} edit
   %p<>= @venue.description
   
 .information

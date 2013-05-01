@@ -21,8 +21,12 @@ gem 'delayed_job_mongoid'
 gem 'kaminari'
 
 
-gem 'stubhub'
 
+#authenticcation
+gem 'devise'
+
+
+gem 'stubhub'
 
 
 ##uploads

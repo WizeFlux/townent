@@ -7,6 +7,10 @@
 #   City.create name: city[2], country: Country.find_by(code: city[0].upcase)
 # end
 
+
+Person.create(email: 'fear.ru@gmail.com', password: 'holylaser')
+
+
 SeatWave.new.get_genres.each do |g|
   
   

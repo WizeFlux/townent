@@ -2,10 +2,13 @@
 
 = render 'events/units/breadcrumbs', event: @event
 
-= form_for @event do |f|
-  .row
-    .large-12
+= form_for @event, html: {class: 'cool  '} do |f|
+  %fieldset<>
+    .legend<>= "Edit Event #{@event.event_group.sw_name}"
+    .input-holder<>
       = f.label :description
       = f.text_area :description, style: 'resize: vertical'
-      = f.submit 'Save', class: 'button round'
-      %a.button.round{href: event_path(@event)} Cancel
+    
+    .controls<>
+      = f.submit 'Save', class: 'active'
+      %a{href: event_path(@event)} Cancel

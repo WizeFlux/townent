@@ -8,8 +8,9 @@
       %p
         %span= @event_group.genre.sw_name
         %span= @event_group.category.sw_name
-      .right
-        %a{href: edit_event_group_url(@event_group)} edit
+      - if person_signed_in?
+        .right
+          %a{href: edit_event_group_url(@event_group)} edit
       
 %p.description<>= @event_group.description
 

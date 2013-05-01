@@ -7,11 +7,11 @@
     %img{src: @event.event_group.sw_image_url}<>
     %div<>
       %h4= @event.event_group.sw_name
-      .right
-        %a{href: edit_event_url(@event)} edit
+      - if person_signed_in?
+        .right
+          %a{href: edit_event_url(@event)} edit
       %h6
         %a{href: venue_path(@event.venue)}= @event.venue.sw_name
-        @
         %a{href: city_events_path(@event.city)}= @event.city.full_name
       %h5= @event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
       %a{href: event_group_url(@event.event_group)}= @event.event_group.sw_name

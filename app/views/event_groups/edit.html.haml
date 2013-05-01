@@ -1,23 +1,30 @@
 = content_for :title, "#{@event_group.sw_name}"
 
-= form_for @event_group do |f|
-  .row
-    .large-12
-      - if @event_group.avatar?
+= form_for @event_group, html: {class: 'cool  '} do |f|
+  %fieldset<>
+    .legend= "Edit Eventgroup #{@event_group.sw_name}"
+    
+    - if @event_group.avatar?
+      .input-holder<>
         = image_tag(@event_group.avatar_url) 
+    
+      .input-holder<>
         = f.label :remove_avatar
         = f.check_box :remove_avatar
-      
+    
+    .input-holder<>
       = f.label :remote_avatar_url
       = f.text_field :remote_avatar_url
-      
+    
+    .input-holder<>
       = f.label :avatar
       = f.file_field :avatar
       = f.hidden_field :avatar_cache
-
-  .row
-    .large-12
+    
+    .input-holder<>
       = f.label :description
-      = f.text_area :description, style: 'resize: vertical'
-      = f.submit 'Save', class: 'button round'
+      = f.text_area :description
+      
+    .controls<>
+      = f.submit 'Save', class: 'active'
       %a.button.round{href: event_group_path(@event_group)} Cancel
