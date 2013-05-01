@@ -55,10 +55,10 @@ class EventGroupsController < ApplicationController
                       page(params[:page]).
                       per(30)
     
-    if params[:scope] == 'moderation'                  
-      @event_groups = @event_groups.awaiting_moderation
+    @event_groups = if params[:scope] == 'moderation'                  
+      @event_groups.awaiting_moderation
     else
-      @event_groups = @event_groups.moderated
+      @event_groups.moderated
     end
     
   end
