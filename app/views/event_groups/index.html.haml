@@ -18,5 +18,5 @@
 
 :coffeescript
   $ -> $("#event-groups-list").endlessPage
-    query: "#{{symbol: params[:symbol]}.to_query if params[:symbol]}"
+    query: "#{{symbol: (params[:symbol] if params[:symbol]), scope: (params[:scope] if params[:scope])}.to_query }"
     request_path: "#{request.path}"

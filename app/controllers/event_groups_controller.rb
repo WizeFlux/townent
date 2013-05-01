@@ -48,18 +48,18 @@ class EventGroupsController < ApplicationController
   
   
   def index
-    @event_groups = EventGroup.
+    @event_groups = if params[:scope] == 'moderation'                  
+      EventGroup.awaiting_moderation
+    else
+      EventGroup.moderated
+    end
+    
+    @event_groups = @event_groups.
                       for_genre(@genre).
                       for_subcategory(@subcategory).
                       for_symbol(params_symbol).
                       page(params[:page]).
                       per(30)
-    
-    @event_groups = if params[:scope] == 'moderation'                  
-      @event_groups.awaiting_moderation
-    else
-      @event_groups.moderated
-    end
     
   end
 end
