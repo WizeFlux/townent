@@ -25,10 +25,3 @@ set :rails_env, 'production'
 set :unicorn_env, rails_env
 
 set :delayed_job_args, "-n 1"
-
-
-
-before 'deploy', 'unicorn:stop'
-before 'deploy', 'delayed_job:stop'
-
-after 'deply', 'delayed_job:start'
