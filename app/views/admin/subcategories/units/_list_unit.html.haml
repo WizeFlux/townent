@@ -1,6 +1,7 @@
 = form_for subcategory, url: admin_subcategory_path(subcategory), method: :put, remote: true, html: {class: 'cool'} do |f|
   = render 'admin/subcategories/units/fields', f: f
-  .controls
-    = f.submit 'update'
-    = link_to 'delete', admin_subcategory_path(f.object.id), method: :delete, remote: true
-  %hr
+  %fieldset
+    .controls
+      = f.submit 'update'
+      = link_to 'delete', admin_subcategory_path(f.object.id), method: :delete, remote: true, confirm: 'Are you shure?'
+    %hr

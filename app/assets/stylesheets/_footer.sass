@@ -1,14 +1,44 @@
++sticky-footer(190px, "#layout", "#layout-footer", "#footer")
+
 #footer
-  @extend .top-bar
-  border-bottom: 0px !important
-  &:after
-    display: none !important
-  &, *
-    overflow: visible !important
-  ul > li > h1
-    position: relative
-    img
-      position: absolute
-      bottom: -30px
-  ul > li:last-child > a
-    margin: 0 10px
+  background: #fff url("bg/footer.png") repeat-x
+  font-size: 13px
+  color: #999999
+
+  .scroller
+    position: absolute
+    top: -75px
+    left: 10%
+  input
+    width: 70%
+    +inline-block
+    line-height: 26px
+    font-family: Arial, Helvetica, sans-serif
+    background: #333333 url('glass.png') no-repeat 98% 50%
+    border: 1px black solid
+    +border-radius(3px)
+    padding: 0 24px
+    color: #999999
+    font-size: 13px
+
+  
+  a
+    +link-colors(#f9d320, #ffe310, #ffe310, #f9d320, #ffe310)
+    &:hover
+      text-decoration: none
+    
+  > ul
+    +inline-block-list
+    +row
+    padding-top: 40px
+    > li
+      width: 6%
+    > li:last-child
+      width: 88%
+      text-align: right
+  ul:first-child + ul:last-child
+    padding-top: 80px
+  ul + ul + ul
+    padding-top: 12px
+  ul:last-child a
+    text-decoration: none

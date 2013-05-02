@@ -4,7 +4,7 @@ class EventGroup
   include StubHubDataMap  
 
   ## Common things
-  field :_id, type: String, default: ->{sw_name..parameterize}
+  field :_id, type: String, default: ->{sw_name.parameterize}
   field :description, type: String
   field :is_moderated, type: Boolean, default: false
 

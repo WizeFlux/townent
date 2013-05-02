@@ -21,6 +21,8 @@
     $ ->
       $(".datepicker").datepicker
         dateFormat: "d MM yy"
+        showAnim: 'slideDown'
+        firstDay: 1
       $("#dates-trigger").click (event) ->
         event.preventDefault()
         $(".active", $(this).parents("ul")).removeClass "active"

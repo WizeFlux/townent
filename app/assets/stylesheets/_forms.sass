@@ -1,0 +1,34 @@
+form.cool
+  +row(20px)
+  input[type=email], textarea, input[type=password], input[type=text], select
+    line-height: 28px
+    color: #555
+    border: 1px #656565 solid
+    +border-radius
+    width: 80%
+    +inline-block(top)
+    box-sizing: border-box
+    font-size: 14px
+    padding: 0 10px
+    background: #f9f9f9
+  select
+    height: 28px
+  label
+    line-height: 28px
+    font-size: 14px
+    padding-right: 20px
+    box-sizing: border-box
+    +inline-block(top)
+    width: 20%
+  fieldset
+    .legend
+      font-size: 24px
+      text-align: center
+      margin: 20px 0
+    .input-holder
+      margin: 20px 0
+    .controls
+      > *
+        +my-button
+        +inline-block
+      text-align: justify

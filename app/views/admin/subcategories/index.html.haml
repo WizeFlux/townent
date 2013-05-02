@@ -1,7 +1,11 @@
+.notificator
+  %h3 New Subcategory
+
 = form_for @subcategory, url: admin_subcategories_path, method: :post, remote: true, html: {class: 'cool'} do |f|
   = render 'admin/subcategories/units/fields', f: f
-  .controls
-    = f.submit 'create'
+  %fieldset
+    .controls
+      = f.submit 'create'
   
 %hr
 

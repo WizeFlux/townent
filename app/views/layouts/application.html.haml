@@ -5,45 +5,57 @@
   = csrf_meta_tag
   = stylesheet_link_tag :application
   = javascript_include_tag :application
-  = javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyDNIzwBp4cCrFqwk-mZ6OIRSMuvP_Uc22U&sensor=true"
+  =# javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyDNIzwBp4cCrFqwk-mZ6OIRSMuvP_Uc22U&sensor=true"
   
 %body
-  %nav.top-bar<>
+  #layout
+    %nav.top-bar<>
+      %ul<>
+        %li<>
+          %h1
+            %a{href: '/'}
+              %img{src: '/assets/logo.png', alt: 'Gdebilet'}
+        %li<>
+          %img{src: '/assets/events.png', alt: 'Events'}
+          %a{href: '/'}Events
+        %li<>
+          %img{src: '/assets/artists.png', alt: 'Artists'}
+          %a{href: '/event_groups'}Artists
+        %li.search<>
+          = form_for :q, url: '/search', method: :get do |f|
+            = f.text_field :text, placeholder: 'Search by artist, event or even more...'
+        
+    = yield
+    #layout-footer
+    
+
+  %footer#footer
+    .scroller
+      %a{href: '#', onclick: '$(window).scrollTop(0)'}
+        %img{src: '/assets/scroller.png', alt: 'Scroll top'}
     %ul<>
-      %li<>
-        %h1
-          %a{href: '/'}
-            %img{src: '/assets/logo.png', alt: 'Gdebilet'}
-      %li<>
-        %img{src: '/assets/events.png', alt: 'Events'}
-        %a{href: '/'}Events
-      %li<>
-        %img{src: '/assets/artists.png', alt: 'Artists'}
-        %a{href: '/event_groups'}Artists
+      %li<>= link_to 'Events', '/'
+      %li<>= link_to 'Artists', event_groups_url
       %li.search<>
         = form_for :q, url: '/search', method: :get do |f|
           = f.text_field :text, placeholder: 'Search by artist, event or even more...'
-        
-  = yield
-
-  %nav#footer
+          
+    - if person_signed_in?
+      %ul<>
+        %li<>= link_to 'Logout', destroy_person_session_path, method: :delete
+        %li<>= link_to 'Categ', admin_categories_path
+        %li<>= link_to 'Subcat', admin_subcategories_path
+        %li<>
+      
+    
     %ul<>
       %li<>
-        %h1
-          %a{href: '#', onclick: '$(window).scrollTop(0)'}
-            %img{src: '/assets/scroller.png', alt: 'Scroll top'}
+        = link_to '©', new_person_session_path
+        «Gdebilet», 2012—2013
       %li<>
-        %img{src: '/assets/events.png', alt: 'Events'}
-        %a{href: '#'}Events
       %li<>
-        %img{src: '/assets/artists.png', alt: 'Artists'}
-        %a{href: '#'}Artists
-      %li<>
-        %a{href: '#'}= image_tag 'social/vk.png'
-        %a{href: '#'}= image_tag 'social/twitter.png'
-        %a{href: '#'}= image_tag 'social/facebook.png'
-        - if person_signed_in?
-          = link_to 'Logout', destroy_person_session_path, method: :delete
-          = link_to 'Categories', admin_categories_path
-          = link_to 'Subcategories', admin_subcategories_path
+        Дизайн сайта — 
+        %a NewCult
+
+      
     
