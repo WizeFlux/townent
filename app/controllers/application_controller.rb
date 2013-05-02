@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def nearby_cities
-    @nearby_cities ||= City.limit(12).
+    @nearby_cities ||= City.limit(8).
                             geo_near(@city ? @city.location : request_coordinates).
                             max_distance(1.2).
                             distance_multiplier(6371).

@@ -1,0 +1,15 @@
+%nav.top-bar<>
+  %ul<>
+    %li<>
+      %h1
+        %a{href: '/'}
+          %img{src: '/assets/logo.png', alt: 'Gdebilet'}
+    %li<>
+      %img{src: '/assets/events.png', alt: 'Events'}
+      %a{href: '/'}Events
+    %li<>
+      %img{src: '/assets/artists.png', alt: 'Artists'}
+      %a{href: '/event_groups'}Artists
+    %li.search<>
+      = form_for :q, url: '/search', method: :get do |f|
+        = f.text_field :text, placeholder: 'Search by artist, event or even more...'

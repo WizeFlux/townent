@@ -1,0 +1,27 @@
+%footer#footer
+  .scroller
+    %a{href: '#', onclick: '$(window).scrollTop(0)'}
+      %img{src: '/assets/scroller.png', alt: 'Scroll top'}
+  %ul<>
+    %li<>= link_to 'Events', '/'
+    %li<>= link_to 'Artists', event_groups_url
+    %li.search<>
+      = form_for :q, url: '/search', method: :get do |f|
+        = f.text_field :text, placeholder: 'Search by artist, event or even more...'
+        
+  - if person_signed_in?
+    %ul<>
+      %li<>= link_to 'Logout', destroy_person_session_path, method: :delete
+      %li<>= link_to 'Categ', admin_categories_path
+      %li<>= link_to 'Subcat', admin_subcategories_path
+      %li<>
+    
+  
+  %ul<>
+    %li<>
+      = link_to '©', new_person_session_path
+      «Gdebilet», 2012—2013
+    %li<>
+    %li<>
+      Дизайн сайта — 
+      %a NewCult

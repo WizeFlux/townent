@@ -1,0 +1,63 @@
+#city-select
+  .inner 
+    .text-selector
+      %span= 'Your city:'
+      %a#city-name{href: '#'}= (@city.full_name if @city) || request_location.city
+      %input{type: 'text', placeholder: (@city.full_name if @city) || request_location.city, style: 'display: none'}
+      - unless params[:city_id]
+        %a.button.active#yes{href: (city_events_url(@city) if @city)} Yes
+        %a.button.active#no{href: '#'} No
+      
+      :coffeescript
+        $ ->
+          $('#city-name, #no').click (event) ->
+            event.preventDefault()
+            $("#city-select input").show().focus()
+            $('#city-name, #no, #yes').hide()
+            
+          $('#yes').click (event) -> 
+            $('#yes, #no').hide()
+            
+          $("#city-select input").autocomplete
+            source: [#{City.only(:full_name, :_id).map{|c| {label: c.full_name, value: c._id}.to_json}.join(', ')}]
+            focus: (event, ui) -> event.preventDefault()
+            select: (event, el) -> window.location = ('/cities/' + el['item']['value'] + '/events')
+      
+
+    
+    - if !@city and request_location
+      %h3
+        There are no events in
+        = request_location.city
+      %h4 Find out events in nearby cities:
+      .nearby
+        = raw nearby_cities.map{|c| "<a href=\"/cities/#{c.id}/events\">#{c.full_name}</a>"}.join(' ')
+    
+- if !@city and request_location
+  .notificator
+    %h3
+      There are
+      %span= @counter
+      events in nearby cities
+
+- if @city
+  %h3.hh
+    There are
+    %span= @counter
+    events in #{@city.full_name}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

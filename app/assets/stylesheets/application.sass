@@ -9,6 +9,7 @@
 body
   font-family: Arial, Helvetica, sans-serif
 
+@import autocomplete
 @import datepicker
 @import buttons
 @import top_bar
@@ -23,3 +24,44 @@ body
 @import search
 @import forms
 
+
+#city-select
+  .inner
+    +row
+  +single-box-shadow(rgba(230, 230, 230, 1), 0, -12px, 9px, 2px, true)
+  background: #f7f6f4
+  line-height: 70px
+  font-size: 14px
+  h3
+    font-size: 18px
+    line-height: 18px
+  h4
+    font-size: 16px
+    line-height: 40px
+    color: #aaa
+  span[role=status]
+    display: none
+  input
+    width: 400px
+    color: #b1b1b1
+    border: 1px #f6d52e solid
+    +border-radius
+    height: 26px
+    font-size: 14px
+    padding: 0 10px
+  .nearby
+    line-height: 18px
+    a
+      +my-button
+      margin: 10px 20px 10px 0
+      +inline-block
+  .text-selector
+    > *
+      margin-right: 20px
+    
+    a:not(.button)
+      font-weight: bold
+      +link-colors(black)
+    a.button
+      +my-button
+      padding: 6px 13px

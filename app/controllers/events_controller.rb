@@ -67,28 +67,29 @@ class EventsController < ApplicationController
   end
   
   
-  def index
+  def index    
     if @city || request_coordinates
       @events = Event.
-                  order_by_date.
                   full!.
-                  page(params[:page]).
-                  per(20).
+                  order_by_date.                  
                   for_city(@city).
                   for_genre(@genre).
+                  to_date(query_date_to).
                   for_category(@category).
-                  from_date(query_date_from).
-                  to_date(query_date_to)
+                  from_date(query_date_from)
+                  
 
       @events = Kaminari.paginate_array(
                   @events.
-                  limit(1000).
+                  limit(10000).
                   geo_near(request_coordinates).
                   max_distance(1).
                   distance_multiplier(6371).
                   spherical.
                   sort_by{|e| e.sw_date}
-                ).page(params[:page]).per(20) unless @city
+                ) unless @city
     end
+    @counter = @events.count
+    @events = @events.page(params[:page]).per(20)
   end
 end
