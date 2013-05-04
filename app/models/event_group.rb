@@ -69,7 +69,6 @@ class EventGroup
   ## Buiding relations
   after_create do |event_group|
     event_group.fetch_sw_events
-    event_group.fetch_sh_events
   end
 
   def fetch_sw_events
