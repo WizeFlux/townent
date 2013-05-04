@@ -72,7 +72,7 @@ class EventGroup
   end
 
   def fetch_sw_events
-    Delayed::Job.enqueue EventsFetcher.new(id), priority: 20, queue: 'events'
+    Delayed::Job.enqueue EventsFetcher.new(sw_id), priority: 20, queue: 'events'
   end
   
   def fetch_sh_events
