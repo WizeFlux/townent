@@ -116,6 +116,19 @@ class StubHub::Event
   field :ancestorGeoDescriptions, type: Array
   field :ancestorGenreDescriptions, type: Array 
   
+  field :location, type: Array, default: ->{ [longitude, latitude] }
+  index({ location: "2d" }, { min: -200, max: 200 })
+  
+  
+  field :date, type: DateTime, default: ->{ DateTime.strptime("#{event_date_time_local} #{timezone}", '%Y-%m-%dT%TZ %Z') }
   
   belongs_to :event_group, class_name: 'EventGroup', inverse_of: :stub_hub_events
+  
+  
+  belongs_to :assigned_event, class_name: 'Event', inverse_of: :stub_hub_event
+  field :assigned_event_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event.id if identify_event}
+
+  def identify_event
+    @c ||= Event.where(sw_date: date).geo_near(location).max_distance(0.0001).first
+  end
 end

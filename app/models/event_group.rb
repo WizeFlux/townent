@@ -40,10 +40,6 @@ class EventGroup
   ## Relations
   has_many :stub_hub_events, class_name: 'StubHub::Event', inverse_of: :event_group
   
-  def fetch_events_from_stub_hub
-    Stubhub::Event.search("\"#{sw_name}\"").each {|event| StubHub::Event.create(stub_hub_event_dmap event, self)}
-  end
-  
   has_many :events
   
   belongs_to :category
@@ -72,6 +68,15 @@ class EventGroup
 
   ## Buiding relations
   after_create do |event_group|
-    Delayed::Job.enqueue EventsFetcher.new(event_group.sw_id), priority: 20, queue: 'events'
+    event_group.fetch_sw_events
+    event_group.fetch_sh_events
+  end
+
+  def fetch_sw_events
+    Delayed::Job.enqueue EventsFetcher.new(id), priority: 20, queue: 'events'
+  end
+  
+  def fetch_sh_events
+    Delayed::Job.enqueue StubHub::EventsFetcher.new(sw_name), priority: 20, queue: 'events'
   end
 end

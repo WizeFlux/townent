@@ -31,20 +31,30 @@
     %table#tickets<>
       %thead
         %tr
+          %th Broker
           %th Block
           %th Row
           %th Qty
           %th Price
           %th 
       %tbody#tickets-entries
+        - if @event.stub_hub_event
+          %tr
+            %td= image_tag '/assets/ops/sh.png', class: 'broker'
+            %td
+            %td
+            %td= @event.stub_hub_event.totalTickets.to_i
+            %td= "#{@event.stub_hub_event.minPrice.to_i} - #{@event.stub_hub_event.maxPrice.to_i} #{@event.stub_hub_event.currency_code}"
+            %td= link_to 'Buy', "http://stubhub.com/#{@event.stub_hub_event.urlpath}/"
         %tr<>
-          %td{colspan: 5}
+          %td{colspan: 6}
             #spinner
               %img{src: '/assets/spinner.gif'}
-        %tr
-          %td{colspan: 5}
-            .notificator
-              %h3 There are no tickets
+        - unless @event.stub_hub_event
+          %tr
+            %td{colspan: 6}
+              .notificator
+                %h3 There are no tickets
             
   .seatmap<>
     %h4
@@ -78,7 +88,7 @@
     ticket_groups_url = "#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&siteid=#{SeatWave.site_id}&pgsize=1000&callback=?"
     getJSONP(ticket_groups_url).done (webResponse) ->
       $.each webResponse.TicketGroups, ->
-        $("#tickets-entries").append $("<tr><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a class=\"button small expand round\" href=\"" + @SwURL + "\">Buy</a></td></tr>")
+        $("#tickets-entries").append $("<tr><td>" + "<img src='/assets/ops/sw.jpg' class='broker'/>" + "</td><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a href=\"" + @SwURL + "\">Buy</a></td></tr>")
       $("#tickets-entries .notificator").hide() if webResponse.TicketGroups.length > 0
       $("#spinner").parent('td').parent('tr').hide()
       

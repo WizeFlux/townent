@@ -54,4 +54,15 @@ class Venue
     
   has_many :events
   has_many :layouts
+  
+  
+  ## Buiding relations
+  after_create do |venue|
+    venue.fetch_sh_events
+  end
+
+  
+  def fetch_sh_events
+    Delayed::Job.enqueue StubHub::EventsFetcher.new(sw_name), priority: 20, queue: 'events'
+  end
 end

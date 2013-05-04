@@ -1,5 +1,5 @@
 module StubHubDataMap
-  def stub_hub_event_dmap(params, parent)
+  def stub_hub_event_dmap(params)
     {
       stubhubDocumentId: params.stubhubDocumentId,
       stubhubDocumentType: params.stubhubDocumentType,
@@ -113,8 +113,7 @@ module StubHubDataMap
       allowedViewingDomain: params.allowedViewingDomain,
       locale: params.locale,
       ancestorGeoDescriptions: params.ancestorGeoDescriptions,
-      ancestorGenreDescriptions: params.ancestorGenreDescriptions,
-      event_group: parent
+      ancestorGenreDescriptions: params.ancestorGenreDescriptions
     }
   end
   

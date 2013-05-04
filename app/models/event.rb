@@ -50,6 +50,8 @@ class Event
   
   belongs_to :layout
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
+
+  has_one :stub_hub_event, class_name: 'StubHub::Event', inverse_of: :assigned_event
   
   
   ## Geocoding

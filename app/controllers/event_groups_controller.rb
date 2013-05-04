@@ -43,7 +43,6 @@ class EventGroupsController < ApplicationController
       redirect_to @event_group
     else
       render 'edit'
-    end
   end
   
   

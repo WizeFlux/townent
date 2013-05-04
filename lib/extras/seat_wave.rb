@@ -69,7 +69,7 @@ class SeatWave
   
   ## Helpful things
   def parse_date(date_string)
-    parsed_date = /(\d{13})(\+\d{4})/.match(date_string)
+    parsed_date = /(\d{13})(.{5})\)\/$/.match(date_string)
     DateTime.strptime("#{parsed_date[1].to_i/1000} #{parsed_date[2]}", '%s %z')
   end
   
