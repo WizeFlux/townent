@@ -8,7 +8,7 @@
 # end
 
 
-Person.create(email: 'fear.ru@gmail.com', password: 'holylaser')
+Person.create(email: 'admin@gdebilet.com', password: 'holylaser')
 
 
 SeatWave.new.get_genres.each do |g|

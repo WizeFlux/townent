@@ -8,7 +8,7 @@ class Event
   ##Common things
   field :_id, type: String, default: ->{sw_id}
   field :description, type: String
-  
+  field :local_date_time, type: DateTime, default: ->{  SeatWave.new.parse_date(sw_date) if sw_date  }
   
   #Text search
   search_in category: :sw_name, genre: :sw_name, event_group: :sw_name
@@ -16,7 +16,7 @@ class Event
 
   ## Obtained from Seatwave API
   field :sw_id, type: String
-  field :sw_date, type: DateTime
+  field :sw_date, type: String
   field :sw_town, type: String
   field :sw_country, type: String
   field :sw_venue_id, type: String
@@ -51,6 +51,7 @@ class Event
   belongs_to :layout
   field :layout_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_layout.id }
 
+
   has_one :stub_hub_event, class_name: 'StubHub::Event', inverse_of: :assigned_event
   
   
@@ -76,13 +77,13 @@ class Event
   
   
   ## Named scopes
-  scope :order_by_date, ->{ order_by([[:sw_date, :asc]]) }
-  scope :for_date, ->(date){  where(:sw_date.gte => date.beginning_of_day, :sw_date.lte => date.end_of_day)  }
+  scope :order_by_date, ->{ order_by([[:local_date_time, :asc]]) }
+  scope :for_date, ->(date){  where(:local_date_time.gte => date.beginning_of_day, :local_date_time.lte => date.end_of_day)  }
   scope :for_city, ->(city){  city ? where(city_id: city.id) : all }
   scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }
   scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }
-  scope :from_date, ->(date_from){  date_from ? where(:sw_date.gte => date_from.to_date) : all  }
-  scope :to_date, ->(date_to){  date_to ? where(:sw_date.lte => date_to.to_date) : all  }
+  scope :from_date, ->(date_from){  date_from ? where(:local_date_time.gte => date_from.to_date.beginning_of_day) : all  }
+  scope :to_date, ->(date){  date ? where(:local_date_time.lte => date.to_date.end_of_day) : all  }
 
   private
   

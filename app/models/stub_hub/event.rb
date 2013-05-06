@@ -120,15 +120,19 @@ class StubHub::Event
   index({ location: "2d" }, { min: -200, max: 200 })
   
   
-  field :date, type: DateTime, default: ->{ DateTime.strptime("#{event_date_time_local} #{timezone}", '%Y-%m-%dT%TZ %Z') }
+  field :local_date_time, type: DateTime, default: ->{ DateTime.strptime(event_date_time_local, '%Y-%m-%dT%TZ') }
   
   belongs_to :event_group, class_name: 'EventGroup', inverse_of: :stub_hub_events
   
   
   belongs_to :assigned_event, class_name: 'Event', inverse_of: :stub_hub_event
+  
   field :assigned_event_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event.id if identify_event}
-
+  
   def identify_event
-    @c ||= Event.where(sw_date: date).geo_near(location).max_distance(0.0001).first
+    self.assigned_event = Event.
+                            where(local_date_time: local_date_time).
+                            geo_near(location).max_distance(0.0005).
+                            first
   end
 end

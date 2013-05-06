@@ -28,7 +28,11 @@
     .input-holder<>
       = f.label :description
       = f.text_area :description
-      
+    
+    .input-holder<>
+      = f.label :category_id
+      = f.select :category_id, options_from_collection_for_select(@event_group.genre.categories, :id, :sw_name, f.object.category_id)
+    
     .controls<>
       = f.submit 'Save', class: 'active'
       %a.button.round{href: event_group_path(@event_group)} Cancel

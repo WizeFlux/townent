@@ -24,7 +24,7 @@ class EventsController < ApplicationController
       if query and query[:date_from]
         query[:date_from]
       else
-        (Date.today + 1.day).strftime('%-d %B %Y')
+        (Date.today).strftime('%-d %B %Y')
       end
     end
   end
@@ -77,7 +77,7 @@ class EventsController < ApplicationController
                   to_date(query_date_to).
                   for_category(@category).
                   from_date(query_date_from)
-                  
+
 
       @events = Kaminari.paginate_array(
                   @events.
@@ -90,6 +90,6 @@ class EventsController < ApplicationController
                 ) unless @city
     end
     @counter = @events.count
-    @events = @events.page(params[:page]).per(20)
+    @events = @events.page(params[:page]).per(20) if @events
   end
 end

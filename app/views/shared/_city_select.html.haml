@@ -26,9 +26,6 @@
 
     
     - if !@city and request_location
-      %h3
-        There are no events in
-        = request_location.city
       %h4 Find out events in nearby cities:
       .nearby
         = raw nearby_cities.map{|c| "<a href=\"/cities/#{c.id}/events\">#{c.full_name}</a>"}.join(' ')
@@ -36,15 +33,18 @@
 - if !@city and request_location
   .notificator
     %h3
-      There are
+      There are no events in
+      = request_location.city + ','
+      check out
       %span= @counter
       events in nearby cities
 
 - if @city
-  %h3.hh
-    There are
-    %span= @counter
-    events in #{@city.full_name}
+  .notificator
+    %h3
+      There are
+      %span= @counter
+      events in #{@city.full_name}
 
 
 

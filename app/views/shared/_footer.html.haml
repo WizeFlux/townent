@@ -1,8 +1,8 @@
 %footer#footer
-  .scroller
-    %a{href: '#', onclick: '$(window).scrollTop(0)'}
-      %img{src: '/assets/scroller.png', alt: 'Scroll top'}
   %ul<>
+    %li
+      %a{href: '#', onclick: '$(window).scrollTop(0)'}
+        %img{src: '/assets/scroller.png', alt: 'Scroll top'}
     %li<>= link_to 'Events', '/'
     %li<>= link_to 'Artists', event_groups_url
     %li.search<>

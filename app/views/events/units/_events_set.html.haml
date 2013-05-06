@@ -1,16 +1,16 @@
 - events.each do |event|
   %hr
-  - unless event.sw_date.to_date == previous_event_date
-    - if event.sw_date.to_date == Date.today
+  - unless event.local_date_time.to_date == previous_event_date
+    - if event.local_date_time.to_date == Date.today
       %h3 Today
     - else
-      - if event.sw_date.to_date == (Date.today + 1.day)
+      - if event.local_date_time.to_date == (Date.today + 1.day)
         %h3 Tomorrow
       - else
-        %h3= event.sw_date.strftime('%-d %B %Y')
+        %h3= event.local_date_time.strftime('%-d %B %Y')
     
 
-  - previous_event_date = event.sw_date.to_date
+  - previous_event_date = event.local_date_time.to_date
   = render 'events/units/event', event: event
 
 - if events.last_page?

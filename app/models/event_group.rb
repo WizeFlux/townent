@@ -43,14 +43,13 @@ class EventGroup
   has_many :events
   
   belongs_to :category
-  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{ Category.find_by(sw_id: sw_category_id).id }
+  field :category_id, type: Mongoid::Fields::ForeignKey, default: ->{  Category.find_by(sw_id: sw_category_id).id  }
 
   belongs_to :genre
-  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.genre.id }
+  field :genre_id, type: Mongoid::Fields::ForeignKey, default: ->{  category.genre.id  }
   
   belongs_to :subcategory
-  field :subcategory_id, type: Mongoid::Fields::ForeignKey, default: ->{ category.subcategory.id if category.subcategory}
-  
+  before_save {  |event_group| event_group.subcategory_id = category.subcategory.id if category.subcategory  }
   
   index({category_id: 1, genre_id: 1}, {unique: true, background: false})
   index({category_id: 1}, {unique: true, background: false})
@@ -69,6 +68,7 @@ class EventGroup
   ## Buiding relations
   after_create do |event_group|
     event_group.fetch_sw_events
+    event_group.fetch_sh_events
   end
 
   def fetch_sw_events

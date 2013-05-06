@@ -24,7 +24,7 @@ module SeatWaveDataMap
   def event_dmap(params)
     {
       sw_id: params['Id'],
-      sw_date: SeatWave.new.parse_date(params['Date']),
+      sw_date: params['Date'],
       sw_town: params['Town'],
       sw_country: params['Country'],
       sw_venue_id: params['VenueId'],

@@ -13,7 +13,7 @@
           = event.sw_currency
     
       %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
-      %h5.date{:"data-date" => event.sw_date.strftime('%-d %B %Y')}= event.sw_date.strftime('%a, %-d %b %Y at %I:%M %P')
+      %h5.date{:"data-date" => event.local_date_time.strftime('%-d %B %Y')}= event.local_date_time.strftime('%a, %-d %b %Y at %I:%M %P')
       %p
         %span= event.genre.sw_name
         %span= event.category.sw_name

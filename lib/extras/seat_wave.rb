@@ -70,7 +70,7 @@ class SeatWave
   ## Helpful things
   def parse_date(date_string)
     parsed_date = /(\d{13})(.{5})\)\/$/.match(date_string)
-    DateTime.strptime("#{parsed_date[1].to_i/1000} #{parsed_date[2]}", '%s %z')
+    DateTime.strptime("#{parsed_date[1].to_i/1000}", "%s").new_offset(parsed_date[2]).change(offset: '+0000')
   end
   
   def self.site_id
