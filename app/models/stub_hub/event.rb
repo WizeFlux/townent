@@ -127,8 +127,6 @@ class StubHub::Event
   
   belongs_to :assigned_event, class_name: 'Event', inverse_of: :stub_hub_event
   
-  field :assigned_event_id, type: Mongoid::Fields::ForeignKey, default: ->{ identify_event.id if identify_event}
-  
   def identify_event
     self.assigned_event = Event.
                             where(local_date_time: local_date_time).
