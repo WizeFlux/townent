@@ -64,7 +64,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    daemons (1.1.9)
+    daemons (1.0.10)
     debugger (1.5.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -218,7 +218,7 @@ DEPENDENCIES
   carrierwave-mongoid
   coffee-rails
   compass-rails
-  daemons
+  daemons (= 1.0.10)
   debugger
   delayed_job_mongoid
   devise
