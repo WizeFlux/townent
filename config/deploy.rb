@@ -1,5 +1,5 @@
 set :application, "townent"
-server 'photo-mast.remote', :app, :web, :db
+server 'gdebilet.com', :app, :web, :db
 
 set :user, 'deploy'
 set :use_sudo, false
