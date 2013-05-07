@@ -13,7 +13,7 @@ require 'delayed/recipes'
 load 'deploy/assets'
 
 set :rvm_path, "/home/deploy/.rvm"
-set :rvm_ruby_string, 'ruby-1.9.3-p327@global'
+set :rvm_ruby_string, 'ruby-1.9.3-p392@global'
 set :rvm_type, :user
 
 set :scm, :git
