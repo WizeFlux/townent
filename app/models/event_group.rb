@@ -36,10 +36,7 @@ class EventGroup
   def avatar_url; avatar? ? super : sw_image_url; end
   
   
-  
   ## Relations
-  has_many :stub_hub_events, class_name: 'StubHub::Event', inverse_of: :event_group
-  
   has_many :events
   
   belongs_to :category
