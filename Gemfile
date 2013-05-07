@@ -13,7 +13,7 @@ gem 'httparty'
 
 
 #delayed jobs handling
-gem 'daemons'
+gem 'daemons', '1.0.10'
 gem 'delayed_job'
 gem 'delayed_job_mongoid'
 
