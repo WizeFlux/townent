@@ -218,8 +218,9 @@ DEPENDENCIES
   carrierwave-mongoid
   coffee-rails
   compass-rails
-  daemons (= 1.0.10)
+  daemons
   debugger
+  delayed_job
   delayed_job_mongoid
   devise
   geocoder
