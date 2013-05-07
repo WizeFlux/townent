@@ -24,4 +24,4 @@ set :branch, 'stable'
 set :rails_env, 'production'
 set :unicorn_env, rails_env
 
-set :delayed_job_args, "-n 1"
+set :delayed_job_args, "-n 2"

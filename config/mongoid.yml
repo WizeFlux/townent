@@ -30,3 +30,4 @@ production:
         identity_map_enabled: true
   options:
     preload_models: true
+    identity_map_enabled: true
