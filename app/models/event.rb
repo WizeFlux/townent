@@ -102,4 +102,9 @@ class Event
       Layout.create layout_dmap(SeatWave.new.get_layout_by_id(sw_layout_id))
     end
   end
+  
+  def fetch_sh_events
+    Delayed::Job.enqueue StubHub::EventsFetcher.new(event_group.sw_name + ' ' + venue.sw_name), priority: 20, queue: 'events'
+  end
+  
 end
