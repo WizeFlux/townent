@@ -13,7 +13,7 @@ require 'delayed/recipes'
 load 'deploy/assets'
 
 set :rvm_path, "/home/deploy/.rvm"
-set :rvm_ruby_string, 'ruby-1.9.3-p392@global'
+set :rvm_ruby_string, 'ruby-1.9.3-p429@global'
 set :rvm_type, :user
 
 set :scm, :git
@@ -24,4 +24,4 @@ set :branch, 'stable'
 set :rails_env, 'production'
 set :unicorn_env, rails_env
 
-set :delayed_job_args, "-n 2"
+set :delayed_job_args, "-n 4"
