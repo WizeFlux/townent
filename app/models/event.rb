@@ -103,10 +103,10 @@ class Event
     end
   end
   
-  after_create {|e| e.fetch_stubhub_events}
+  after_create {|e| Delayed::Job.enqueue(StubHub::EventsFetcher.new(e.sh_search_string), priority: 20, queue: 'stubhub_events')}
   
-  def fetch_stubhub_events
-    Delayed::Job.enqueue StubHub::EventsFetcher.new(event_group.sw_name + ' ' + venue.sw_name), priority: 20, queue: 'stubhub_events'
+  def sh_search_string
+    event_group.sw_name + ' ' + venue.sw_name
   end
   
 end
