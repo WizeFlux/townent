@@ -85,6 +85,17 @@ class Event
   scope :from_date, ->(date_from){  date_from ? where(:local_date_time.gte => date_from.to_date.beginning_of_day) : all  }
   scope :to_date, ->(date){  date ? where(:local_date_time.lte => date.to_date.end_of_day) : all  }
 
+
+  after_create :fetch_sh_events
+  
+  def fetch_sh_events
+    Delayed::Job.enqueue StubHub::EventsFetcher.new(sh_search_string), priority: 20, queue: 'stubhub_events'
+  end
+  
+  def sh_search_string
+    event_group.sw_name + ' ' + venue.sw_name
+  end
+
   private
   
   def identify_venue
@@ -103,10 +114,6 @@ class Event
     end
   end
   
-  after_create {|e| Delayed::Job.enqueue(StubHub::EventsFetcher.new(e.sh_search_string), priority: 20, queue: 'stubhub_events')}
-  
-  def sh_search_string
-    event_group.sw_name + ' ' + venue.sw_name
-  end
+
   
 end
