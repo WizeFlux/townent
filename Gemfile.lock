@@ -128,7 +128,7 @@ GEM
     mongoid-grid_fs (1.8.0)
       mime-types (~> 1.19)
       mongoid (~> 3.0)
-    mongoid_search (0.3.1)
+    mongoid_search (0.3.2)
       fast-stemmer (~> 1.0.0)
       mongoid (>= 3.0.0)
     moped (1.4.5)
@@ -231,7 +231,7 @@ DEPENDENCIES
   kaminari
   mini_magick
   mongoid
-  mongoid_search
+  mongoid_search (= 0.3.2)
   rails (= 3.2.13)
   rvm-capistrano
   sass-rails (~> 3.2.3)
