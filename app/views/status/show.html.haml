@@ -22,7 +22,7 @@
         = @jobs.where(:queue => 'event_groups_updates').count
       %li
         records:
-        = EventGroup.all.count
+        = EventGroup.count
         
     %ul.inline-list
       %li Events -->
@@ -34,9 +34,16 @@
         = @jobs.where(:queue => 'events_updates').count
       %li
         records:
-        = Event.all.count
+        = Event.count
 
-
+    %ul.inline-list
+      %li SH Events -->
+      %li
+        fetch jobs:
+        = @jobs.where(:queue => 'stubhub_events').count
+      %li
+        records:
+        = StubHub::Event.count
 
 .row
   .large-12
@@ -51,11 +58,12 @@
           %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
           %pre= job.last_error
 
-.row
-  .large-12
-    %h3 Problems
-    %ul.circle
-      - @jobs.where(:attempts.gt => 0).each do |job|
-        %li
-          %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
-          %pre= job.last_error
+- if Rails.env != 'production'
+  .row
+    .large-12
+      %h3 Problems
+      %ul.circle
+        - @jobs.where(:attempts.gt => 0).each do |job|
+          %li
+            %small= "id: #{job._id}, created_at: #{job.created_at}, updated_at: #{job.updated_at}, priority: #{job.priority}, attempts: #{job.attempts}, queue: #{job.queue}, run_at: #{job.run_at}"
+            %pre= job.last_error

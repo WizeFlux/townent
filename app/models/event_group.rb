@@ -63,16 +63,5 @@ class EventGroup
   scope :for_symbol, ->(symbol){  symbol ? where(sw_name: /^#{symbol}/) : all  }
 
   ## Buiding relations
-  after_create do |event_group|
-    event_group.fetch_sw_events
-    event_group.fetch_sh_events
-  end
-
-  def fetch_sw_events
-    Delayed::Job.enqueue EventsFetcher.new(sw_id), priority: 20, queue: 'events'
-  end
-  
-  def fetch_sh_events
-    Delayed::Job.enqueue StubHub::EventsFetcher.new(sw_name), priority: 20, queue: 'events'
-  end
+  after_create {|eg| Delayed::Job.enqueue EventsFetcher.new(eg.sw_id), priority: 20, queue: 'events'}
 end

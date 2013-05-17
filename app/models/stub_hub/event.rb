@@ -125,9 +125,12 @@ class StubHub::Event
   belongs_to :assigned_event, class_name: 'Event', inverse_of: :stub_hub_event
   
   def identify_event
-    self.assigned_event = Event.
-                            where(local_date_time: local_date_time).
-                            geo_near(location).max_distance(0.0005).
-                            first
+    self.update_attribute(
+      :assigned_event,
+      Event.
+        where(local_date_time: local_date_time).
+        geo_near(location).max_distance(0.0005).
+        first
+    )
   end
 end
