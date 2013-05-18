@@ -24,7 +24,11 @@
     Buy tickets for
     = @event.event_group.sw_name
     %small
-      %span= @event.sw_ticket_count
+      %span#ticket-counter
+        - if @event.stub_hub_event
+          = @event.stub_hub_event.totalTickets.to_i
+        - else 
+          0
       ticket(s) avaiable
       
   .tickets
@@ -89,6 +93,8 @@
     getJSONP(ticket_groups_url).done (webResponse) ->
       $.each webResponse.TicketGroups, ->
         $("#tickets-entries").append $("<tr><td>" + "<img src='/assets/ops/sw.jpg' class='broker'/>" + "</td><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a href=\"" + @SwURL + "\">Buy</a></td></tr>")
+        counter = $("#ticket-counter")
+        counter.text(parseInt(counter.text()) + @Qty)
       $("#tickets-entries .notificator").hide() if webResponse.TicketGroups.length > 0
       $("#spinner").parent('td').parent('tr').hide()
       
