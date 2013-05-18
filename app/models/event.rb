@@ -113,7 +113,5 @@ class Event
       Layout.create layout_dmap(SeatWave.new.get_layout_by_id(sw_layout_id))
     end
   end
-  
 
-  
 end

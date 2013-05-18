@@ -123,6 +123,8 @@ class StubHub::Event
   field :local_date_time, type: DateTime, default: ->{ DateTime.strptime(event_date_time_local, '%Y-%m-%dT%TZ') }
   
   belongs_to :assigned_event, class_name: 'Event', inverse_of: :stub_hub_event
+  index({assigned_event_id: 1}, {background: false})
+  
   
   def identify_event
     self.update_attribute(

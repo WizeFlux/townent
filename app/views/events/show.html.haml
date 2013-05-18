@@ -38,7 +38,7 @@
           %th Price
           %th 
       %tbody#tickets-entries
-        - if @event.stub_hub_event_id
+        - if @event.stub_hub_event
           %tr
             %td= image_tag '/assets/ops/sh.png', class: 'broker'
             %td
@@ -50,7 +50,7 @@
           %td{colspan: 6}
             #spinner
               %img{src: '/assets/spinner.gif'}
-        - else
+        - unless @event.stub_hub_event
           %tr
             %td{colspan: 6}
               .notificator
