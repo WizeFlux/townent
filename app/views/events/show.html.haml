@@ -23,7 +23,7 @@
   %h3<>
     Buy tickets for
     = @event.event_group.sw_name
-    %small
+    %small#ticket-counter-conteiner{style: class_if('display: none', !@event.stub_hub_event)}
       %span#ticket-counter
         - if @event.stub_hub_event
           = @event.stub_hub_event.totalTickets.to_i
@@ -96,6 +96,7 @@
         counter = $("#ticket-counter")
         counter.text(parseInt(counter.text()) + @Qty)
       $("#tickets-entries .notificator").hide() if webResponse.TicketGroups.length > 0
+      $("#ticket-counter-conteiner").show() if webResponse.TicketGroups.length > 0
       $("#spinner").parent('td').parent('tr').hide()
       
       
