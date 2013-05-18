@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     if query_scope == 'weekend'
       (Date.today.at_end_of_week).strftime('%-d %B %Y')
     else
-      query ? query[:date_to] : nil
+      query ? query[:date_to] : (Date.today + 10.years).strftime('%-d %B %Y')
     end
   end
 
