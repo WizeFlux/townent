@@ -7,21 +7,21 @@
       - unless params[:city_id]
         %a.button.active#yes{href: (city_events_url(@city) if @city)} Yes
         %a.button.active#no{href: '#'} No
-      
-      :coffeescript
-        $ ->
-          $('#city-name, #no').click (event) ->
-            event.preventDefault()
-            $("#city-select input").show().focus()
-            $('#city-name, #no, #yes').hide()
+      - cache do
+        :coffeescript
+          $ ->
+            $('#city-name, #no').click (event) ->
+              event.preventDefault()
+              $("#city-select input").show().focus()
+              $('#city-name, #no, #yes').hide()
             
-          $('#yes').click (event) -> 
-            $('#yes, #no').hide()
+            $('#yes').click (event) -> 
+              $('#yes, #no').hide()
             
-          $("#city-select input").autocomplete
-            source: [#{City.only(:full_name, :_id).map{|c| {label: c.full_name, value: c._id}.to_json}.join(', ')}]
-            focus: (event, ui) -> event.preventDefault()
-            select: (event, el) -> window.location = ('/cities/' + el['item']['value'] + '/events')
+            $("#city-select input").autocomplete
+              source: [#{City.only(:full_name, :_id).map{|c| {label: c.full_name, value: c._id}.to_json}.join(', ')}]
+              focus: (event, ui) -> event.preventDefault()
+              select: (event, el) -> window.location = ('/cities/' + el['item']['value'] + '/events')
       
 
     
