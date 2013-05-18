@@ -4,7 +4,7 @@
       %span= 'Your city:'
       %a#city-name{href: '#'}= (@city.full_name if @city) || request_location.city
       %input{type: 'text', placeholder: (@city.full_name if @city) || request_location.city, style: 'display: none'}
-      - unless params[:city_id]
+      - unless params[:city_id] || session[:city_id]
         %a.button.active#yes{href: (city_events_url(@city) if @city)} Yes
         %a.button.active#no{href: '#'} No
       - cache do

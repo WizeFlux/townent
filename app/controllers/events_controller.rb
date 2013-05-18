@@ -1,12 +1,16 @@
 class EventsController < ApplicationController
   before_filter :find_event, except: %w(index)
   before_filter :find_category, :find_genre, :find_city
-  
+  before_filter :set_session_city, only: %w(index)
   helper_method :query_date_from, :query_date_to, :query_scope, :query
 
   ## Fetched form params
   def params_city
     City.find(params[:city_id]) if params[:city_id]
+  end
+  
+  def session_city
+    City.find(session[:city_id]) if session[:city_id]
   end
   
   def query
@@ -38,9 +42,14 @@ class EventsController < ApplicationController
   end
 
 
+  def set_session_city
+    session[:city_id] = @city.id if @city
+  end
+
+
   ## Parents
   def find_city
-    @city ||=  params_city || request_city || (@event.city if @event)
+    @city ||=  params_city || session_city || request_city || (@event.city if @event)
   end
   
   def find_genre
@@ -77,7 +86,6 @@ class EventsController < ApplicationController
                   to_date(query_date_to).
                   for_category(@category).
                   from_date(query_date_from)
-
 
       @events = Kaminari.paginate_array(
                   @events.

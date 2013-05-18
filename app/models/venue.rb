@@ -50,9 +50,9 @@ class Venue
   belongs_to :city
   field :city_id, type: Mongoid::Fields::ForeignKey, default: ->{ events.empty? ? nil : events.only(:city_id).first.city_id }
   default_scope includes(:city)
-  
+  index({city_id: 1}, {background: false})
     
-  has_many :events
+  has_many :events, :counter_cache => true
   has_many :layouts
  
 end

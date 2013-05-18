@@ -6,11 +6,7 @@
       .right
         %span{href: event_path(event)} View tickets
         %br
-        %p
-          = event.sw_ticket_count
-          tickets from
-          = event.sw_min_price
-          = event.sw_currency
+
     
       %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
       %h5.date{:"data-date" => event.local_date_time.strftime('%-d %B %Y')}= event.local_date_time.strftime('%a, %-d %b %Y at %I:%M %P')
