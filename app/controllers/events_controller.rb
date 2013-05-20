@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_filter :find_event, except: %w(index)
-  before_filter :find_category, :find_genre, :find_city
+  before_filter :find_category, :find_genre, :find_city, :find_timezone
   before_filter :set_session_city, only: %w(index)
   helper_method :query_date_from, :query_date_to, :query_scope, :query
 
@@ -28,7 +28,7 @@ class EventsController < ApplicationController
       if query and query[:date_from]
         Date.parse(query[:date_from]).beginning_of_day
       else
-        DateTime.now + 10.hours
+        @timezone.time Time.now
       end
     end
   end
@@ -46,6 +46,14 @@ class EventsController < ApplicationController
     session[:city_id] = @city.id if @city
   end
 
+
+  def find_timezone
+    @timezone ||= if @city 
+      Timezone::Zone.new(:latlon => @city.location.reverse)
+    else
+      Timezone::Zone.new(:latlon => request_coordinates.reverse)
+    end
+  end
 
   ## Parents
   def find_city

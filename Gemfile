@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'httparty'
 
 
+gem "timezone"
 
 #delayed jobs handling
 gem 'daemons', '1.0.10'
