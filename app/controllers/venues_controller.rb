@@ -16,8 +16,8 @@ class VenuesController < ApplicationController
   
   def show 
     @events = @venue.events.order_by_date.page(params[:page]).per(20)
-    @events = @events.from_date(Time.now) if query_scope == 'upcoming'
-    @events = @events.to_date(Time.now - 1.day) if query_scope == 'past'
+    @events = @events.from_date(DateTime.now + 10.hours) if query_scope == 'upcoming'
+    @events = @events.to_date(DateTime.now + 10.hours) if query_scope == 'past'
   end
   
   def update

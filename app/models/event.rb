@@ -82,8 +82,9 @@ class Event
   scope :for_city, ->(city){  city ? where(city_id: city.id) : all }
   scope :for_genre, ->(genre){  genre ? where(genre_id: genre.id) : all  }
   scope :for_category, ->(category){  category ? where(category_id: category.id) : all  }
-  scope :from_date, ->(date_from){  date_from ? where(:local_date_time.gte => date_from.to_date.beginning_of_day) : all  }
-  scope :to_date, ->(date){  date ? where(:local_date_time.lte => date.to_date.end_of_day) : all  }
+  
+  scope :from_date, ->(date){  date ? where(:local_date_time.gt => date) : all  }
+  scope :to_date, ->(date){  date ? where(:local_date_time.lt => date) : all  }
 
 
   after_create :fetch_sh_events

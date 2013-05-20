@@ -11,10 +11,10 @@
         %ul#dates-inputs{style: ('display: none' if query_scope != nil)}
           %li
             = f.label :date_from, 'From:'
-            = f.text_field :date_from, class: 'datepicker', value: query_date_from
+            = f.text_field :date_from, class: 'datepicker', value: query_date_from.strftime('%-d %B %Y')
           %li
             = f.label :date_to, 'To:'
-            = f.text_field :date_to, class: 'datepicker', value: query_date_to
+            = f.text_field :date_to, class: 'datepicker', value: query_date_to.strftime('%-d %B %Y')
           %li= f.submit 'Go'
   
   :coffeescript
