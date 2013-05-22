@@ -28,7 +28,7 @@ class EventsController < ApplicationController
       if query and query[:date_from]
         Date.parse(query[:date_from]).beginning_of_day
       else
-        @timezone.time Time.now
+        @timezone.time Time.now if @timezone
       end
     end
   end
@@ -51,7 +51,9 @@ class EventsController < ApplicationController
     @timezone ||= if @city 
       Timezone::Zone.new(:latlon => @city.location.reverse)
     else
-      Timezone::Zone.new(:latlon => request_coordinates.reverse)
+      if Rails.env == 'production' && request_coordinates != [0, 0]
+        Timezone::Zone.new(:latlon => request_coordinates.reverse)
+      end
     end
   end
 

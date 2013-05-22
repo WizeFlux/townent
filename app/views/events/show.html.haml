@@ -89,7 +89,7 @@
         dataType: "jsonp"
         url: url
         cache: true
-    ticket_groups_url = "#{seatwave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{seatwave.api_key}&pgnumber=1&siteid=#{seatwave.site_id}&pgsize=1000&callback=?"
+    ticket_groups_url = "#{SeatWave.base_uri}event/#{@event.id}/ticketgroups?apikey=#{SeatWave.api_key}&pgnumber=1&siteid=#{SeatWave.site_id}&pgsize=1000&callback=?"
     getJSONP(ticket_groups_url).done (webResponse) ->
       $.each webResponse.TicketGroups, ->
         $("#tickets-entries").append $("<tr><td>" + "<img src='/assets/ops/sw.jpg' class='broker'/>" + "</td><td>" + @Block + "</td><td>" + @Row + "</td><td>" + @Qty + "</td><td>" + @Price + " " + @Currency + "</td><td><a href=\"" + @SwURL + "\">Buy</a></td></tr>")
