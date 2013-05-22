@@ -1,7 +1,7 @@
 rails_root = `pwd`.gsub("\n", "")
 
 worker_processes 2
-preload_app false
+preload_app true
 timeout 30
 working_directory rails_root
 
