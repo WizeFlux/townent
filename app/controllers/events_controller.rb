@@ -86,7 +86,10 @@ class EventsController < ApplicationController
   end
   
   
-  def index    
+  def index
+    if !params_city && session_city
+      redirect_to city_events_path(session_city)
+    end
     if @city || request_coordinates
       @events = Event.
                   full!.
@@ -99,7 +102,7 @@ class EventsController < ApplicationController
 
       @events = Kaminari.paginate_array(
                   @events.
-                  limit(10000).
+                  limit(100).
                   geo_near(request_coordinates).
                   max_distance(1).
                   distance_multiplier(6371).

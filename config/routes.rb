@@ -51,5 +51,9 @@ Townent::Application.routes.draw do
     resources :subcategories
   end
   
-  root to: 'events#index'
+  
+  match 'sitemap' => 'static#sitemap'
+  match 'robots' => 'static#robots'
+  
+  root to: 'events#index'  
 end

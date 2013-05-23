@@ -131,7 +131,9 @@ class StubHub::Event
       :assigned_event,
       Event.
         where(local_date_time: local_date_time).
-        geo_near(location).max_distance(0.0005).
+        limit(1).
+        geo_near(location).
+        max_distance(0.0005).
         first
     )
   end
