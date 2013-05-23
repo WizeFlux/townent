@@ -128,13 +128,14 @@ class StubHub::Event
   
   def identify_event
     self.update_attribute(
-      :assigned_event,
+      :assigned_event_id,
       Event.
         where(local_date_time: local_date_time).
         limit(1).
         geo_near(location).
-        max_distance(0.0005).
-        first
+        max_distance(0.001).
+        first.
+        id
     )
   end
 end

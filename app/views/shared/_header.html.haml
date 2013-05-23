@@ -12,4 +12,4 @@
       %a{href: '/event_groups'}Artists
     %li.search<>
       = form_for :q, url: '/search', method: :get do |f|
-        = f.text_field :text, placeholder: 'Search by artist, event or even more...'
+        = f.text_field :text, placeholder: 'Search by artist, event or even more...', id: Time.now.to_i
