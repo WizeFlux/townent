@@ -68,6 +68,7 @@ class Event
   index({city_id: 1, genre_id: 1, sw_date: 1}, {background: false})
   index({city_id: 1, genre_id: 1, category_id: 1, sw_date: 1}, {background: false})
   index({venue_id: 1}, {background: false})
+  index({event_group_id: 1}, {background: false})
   
 
 
