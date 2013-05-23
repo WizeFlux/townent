@@ -1,10 +1,10 @@
 %a.event{href: event_path(event)}<>
   .inner
-    %img{src: event.event_group.avatar_url}<>
+    %img{src: event.event_group.avatar_url, alt: event.event_group.sw_name}<>
     %div<>
       %h4= event.event_group.sw_name
       .right
-        %span{href: event_path(event)} View tickets
+        %span View tickets
         %br
 
     

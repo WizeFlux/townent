@@ -9,7 +9,7 @@ Townent::Application.routes.draw do
   
   ## Eventgroups CRUD
   resources :event_groups
-  
+    
   resources :genres, only: %w() do
     resources :event_groups, only: %w(index)
     resources :subcategories, only: %w() do
@@ -50,10 +50,6 @@ Townent::Application.routes.draw do
     resources :categories
     resources :subcategories
   end
-  
-  
-  match 'sitemap' => 'static#sitemap'
-  match 'robots' => 'static#robots'
-  
+
   root to: 'events#index'  
 end
