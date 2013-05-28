@@ -13,27 +13,59 @@ def map_url(xml, url, changefreq = 'weekly', priority = '1')
   end
 end
 
+def map_sitemap(xml, url)
+  xml.sitemap { xml.loc url }
+end
+
+def sitemap_file(filename, &block)
+  file = File.new(Rails.root.join("public/sitemap-#{filename}.xml"), "w")
+  xml = Builder::XmlMarkup.new :target => file; xml.instruct!
+  xml.urlset :xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9" do
+    yield xml
+  end
+  file.close
+end
+
+
 namespace :sitemap do
   desc "Generate sitemap.xml"
   task :generate => :environment do
-    file = File.new(Rails.root.join("public/sitemap.xml"), "w")
-    xml = Builder::XmlMarkup.new :target => file
-    xml.instruct!
-
-    xml.urlset :xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9" do
-      City.each do |city|
-        map_url xml, city_events_url(city)
-        Genre.each do |genre|
-          map_url xml, city_genre_events_url(city, genre)
-          genre.categories.each  { |category| map_url xml, city_genre_category_events_url(city, genre, category) }
+    File.open("public/robots.txt", 'w') do |robots|
+      robots.puts "User-Agent: *"
+      
+      index_file = File.new(Rails.root.join("public/sitemap.xml"), "w")
+      index_xml = Builder::XmlMarkup.new :target => index_file; index_xml.instruct!
+      index_xml.sitemapindex :xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9" do
+      
+        sitemap_file 'event-indexes' do |xml|
+          City.each{|city| map_url xml, city_events_url(city)} 
         end
-      end
-      Event.each { |event| map_url xml, event_url(event) }
-      EventGroup.each { |event_group| map_url xml, event_group_url(event_group) }
-      Venue.each { |venue| map_url xml, venue_url(venue) }
-    end
+        map_sitemap index_xml, "http://gdebilet.com/sitemap-event-indexes.xml"
+        robots.puts "Sitemap: http://gdebilet.com/sitemap-event-indexes.xml"
+    
+        sitemap_file 'event-groups' do |xml|
+          EventGroup.each{ |event_group| map_url xml, event_group_url(event_group) }
+        end
+        map_sitemap index_xml, "http://gdebilet.com/sitemap-event-groups.xml"
+        robots.puts "Sitemap: http://gdebilet.com/sitemap-event-groups.xml"
+        
+        sitemap_file 'venues' do |xml|
+          Venue.each{ |venue| map_url xml, venue_url(venue) }
+        end
+        map_sitemap index_xml, "http://gdebilet.com/sitemap-venues.xml"
+        robots.puts "Sitemap: http://gdebilet.com/sitemap-venues.xml"
+      
+        1.upto Event.page(1).per(2500).num_pages do |i|
+          sitemap_file "events-#{i}" do |xml|
+            Event.page(i).per(2500).each{ |event| map_url xml, event_url(event) }
+          end
+          map_sitemap index_xml, "http://gdebilet.com/sitemap-events-#{i}.xml"
+          robots.puts "Sitemap: http://gdebilet.com/sitemap-events-#{i}.xml"
+        end
 
-    file.close
+      end
+      index_file.close
+    end
   end
 end
 
