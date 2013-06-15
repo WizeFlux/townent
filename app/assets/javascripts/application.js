@@ -5,4 +5,4 @@
 //= require jquery.ui.widget
 //= require endless_page
 //= require gmap
-
+//= require ga

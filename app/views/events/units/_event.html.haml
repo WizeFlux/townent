@@ -1,16 +1,13 @@
-- cache "event-#{event.id}"
-  %a.event{href: event_path(event)}<>
-    .inner
-      %img{src: event.event_group.avatar_url, alt: event.event_group.sw_name}<>
-      %div<>
-        %h4= event.event_group.sw_name
-        .right
-          %span View tickets
-          %br
-
-    
-        %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
-        %h5.date{:"data-date" => event.local_date_time.strftime('%-d %B %Y')}= event.local_date_time.strftime('%a, %-d %b %Y at %I:%M %P')
-        %p
-          %span= event.genre.sw_name
-          %span= event.category.sw_name
+%a.event{href: event_path(event)}<>
+  .inner
+    %img{src: event.event_group.avatar_url, alt: event.event_group.sw_name}<>
+    %div<>
+      %h4= event.event_group.sw_name
+      .right
+        %span View tickets
+        %br
+      %h6= "#{event.venue.sw_name}, #{event.city.full_name}"
+      %h5.date{:"data-date" => event.local_date_time.strftime('%-d %B %Y')}= event.local_date_time.strftime('%a, %-d %b %Y at %I:%M %P')
+      %p
+        %span= event.genre.sw_name
+        %span= event.category.sw_name
