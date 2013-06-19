@@ -4,6 +4,8 @@
   %title= content_for?(:title) ? yield(:title) : "Untitled, yet"
   %meta{name: 'description', content: (content_for?(:description) ? yield(:description) : "Undescripted, sorry")}
   %meta{name: 'keywords', content: (content_for?(:keywords) ? yield(:keywords) : "Unkeyworded, sorry")}
+  %meta{name: "verification", content: "fb7e260f5b5c3104d8c66191e651c2cd"}
+  
   = csrf_meta_tag
   = stylesheet_link_tag :application
   = javascript_include_tag :application
