@@ -4,7 +4,7 @@
 
 .billboard<>
   .inner
-    %img{src: @event.event_group.sw_image_url}<>
+    %img{src: @event.event_group.avatar_url}<>
     %div<>
       %h4= @event.event_group.sw_name
       - if person_signed_in?

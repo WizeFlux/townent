@@ -11,7 +11,7 @@
       .input-holder<>
         = f.label :remove_avatar
         = f.check_box :remove_avatar
-    
+        
     .input-holder<>
       = f.label :remote_avatar_url
       = f.text_field :remote_avatar_url
@@ -19,6 +19,7 @@
     .input-holder<>
       = f.label :avatar
       = f.file_field :avatar
+      %span Image will be resized to fill 320px x 250px rectangle.
       = f.hidden_field :avatar_cache
     
     .input-holder<>
