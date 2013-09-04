@@ -1,4 +1,11 @@
-= content_for :title, "#{@event_group.sw_name}"
+= content_for :title do
+  Buy the cheapest tickets on #{@event_group.sw_name}
+  
+= content_for :description do
+  The page where you can easily get cheap tickets online for #{@event_group.sw_name}
+
+= content_for :keywords do
+  #{@event_group.sw_name}, tickets on #{@event_group.sw_name}, buy tickets, online tickets, get tickets, tickets and prices, prices on tickets, online tickets for.
 
 .billboard<>
   .inner

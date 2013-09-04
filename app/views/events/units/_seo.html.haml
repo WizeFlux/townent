@@ -1,0 +1,39 @@
+= content_for :title do
+  - if @category
+    Buy the cheapest ticket for: #{@category.sw_name} in #{@city.sw_name}
+  - elsif @genre
+    Buy the cheapest ticket for: #{@genre.sw_name} in #{@city.sw_name}
+  - elsif @city
+    Buy the cheapest ticket for: concerts, sport, theatre events in #{@city.sw_name}
+  - else
+    Buy the cheapest ticket on: concerts, sport, theatre events
+
+= content_for :description do
+  - if @category
+    The ideal place where you can get tickets for the #{@category.sw_name} in #{@city.sw_name} by the best price. We analyze hundreds of ticket web sites and rate the best offers. Therefore all cheap tickets for the #{@category.sw_name} you are searching for are available on our web site.
+  - elsif @genre
+    The ideal place where you can get tickets for the concerts in #{@city.sw_name} by the best price. We analyze  hundreds of ticket web sites and rate the best offers. Therefore all cheap tickets for the concerts you are searching for are available on our web site
+  - elsif @city
+    #{@city.sw_name} concerts, sport, theatre and other events at reasonable prices are represented in this topic. Here you can find ticket prices for concerts, sport and theatre events in #{@city.sw_name}, schedules of events in #{@city.sw_name}. Book and buy cheap tickets for cultural events in #{@city.sw_name} on «Gdebilet.com»
+  - else
+    Find best and cheap tickets for concerts, sport, theatre events on 1598 events in 83 cities across the world. We propose you best prices for the tickets for the #{Category.where(:genre_id.in => %w(theater concerts)).only(:sw_name).map(:sw_name).join(', ')} You can find tickets for the all kind of sport events Category.where(:genre_id.in => %w(sport)).only(:sw_name).map(:sw_name).join(', ') and others.
+
+
+
+= content_for :keywords do
+  - if @category
+    #{@category.sw_name} schedule, cheap #{@category.sw_name} tickets, sell #{@category.sw_name} tickets, selling #{@category.sw_name} tickets, online #{@category.sw_name} tickets, ticket sales, ticket for sale, find tickets, concert tickets for sale, events tickets, buying #{@category.sw_name} tickets, buy #{@category.sw_name} tickets, online #{@category.sw_name} tickets , tickets half price, tickets cheap price
+    
+
+  - elsif @genre
+    #{@genre.sw_name} schedule, cheap #{@genre.sw_name} tickets, sell #{@genre.sw_name} tickets, selling #{@genre.sw_name} tickets, online #{@genre.sw_name} tickets, ticket sales, ticket for sale, find tickets, concert tickets for sale, events tickets, buying #{@genre.sw_name} tickets, buy #{@genre.sw_name} tickets, online #{@genre.sw_name} tickets , tickets half price, tickets cheap price
+    
+  - elsif @city
+    #{@city.sw_name} musical tickets, #{@city.sw_name} show tickets, #{@city.sw_name} theatre tickets discount, cheap London theatre tickets, #{@city.sw_name} tickets shows, cheap #{@city.sw_name} theater tickets, #{@city.sw_name} tickets half price, musical in #{@city.sw_name}, theater in #{@city.sw_name}, concerts in #{@city.sw_name}, #{@city.sw_name} nightlife, #{@city.sw_name} concerts, #{@city.sw_name} gigs, #{@city.sw_name} gigs listings, upcoming #{@city.sw_name} concerts, #{@city.sw_name} classical concerts, #{@city.sw_name} live concerts , live music in #{@city.sw_name}, tickets for concerts in #{@city.sw_name}, football tickets in #{@city.sw_name}, #{@city.sw_name} sport events, #{@city.sw_name} sporting events, sports in #{@city.sw_name}, sports events in #{@city.sw_name}, cheap sport tickets
+  - else
+    buy tickets, concert tickets, sport tickets, theatre tickets, event tickets, buy tickets online,  buy a ticket, ticket prices to, ticket prices for, where to get tickets, tickets low cost, tikets online, prices on tickets, online tickets for, tickets rates, tickets and prices, to book tickets, admission prices, buy tickets on line, how to buy tickets online, tickets ticket, how to purchase tickets online,  tickets on sale, tickets for sale, permit, low price tickets, purchase tickets, see tickets, get tickets, concert schedule, concert tour, hard-to-get tickets, tickets to the concert, tickets to , tour dates, tickets for gigs, hot concert tickets, tickets half price, tickets sale, tickets for sale, find tickets
+
+  
+
+
+

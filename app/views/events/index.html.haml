@@ -1,14 +1,4 @@
-= content_for :title do
-  Buy the cheapest ticket on: concerts, sport, theatre events
-  - if @city
-    in #{@city.full_name}
-
-= content_for :description do
-  Find best and cheap tickets to concerts, sport, theatre events on 1598 events in 83 cities across the world.
-  
-= content_for :keywords do
-  buy tickets, concert tickets, sport tickets, theatre tickets
-
+= render 'events/units/seo'
 
 = render 'shared/city_select'
 
@@ -21,5 +11,3 @@
 
 - if @events
   = render 'events/units/events_list', events: @events
-  
-  

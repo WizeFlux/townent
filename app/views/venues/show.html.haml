@@ -1,6 +1,13 @@
 - sample_event = @venue.events.sample
 
-= content_for :title, "#{@venue.sw_name} @ #{sample_event.city.name}, #{sample_event.country.name}"
+= content_for :title do
+  Buy the cheapest ticket on #{@venue.sw_name}
+
+= content_for :description do
+  The page where you can easily get cheap tickets online on #{@venue.sw_name}
+  
+= content_for :keywords do
+  #{@venue.sw_name}, buy tickets, event tickets, buy tickets online,  buy a ticket, ticket prices to, ticket prices for, where to get tickets, tickets low cost, tikets online, prices on tickets, online tickets for, tickets and prices, to book tickets, buy tickets on line, how to purchase tickets online,  tickets on sale, tickets for sale, low price tickets, purchase tickets, see tickets, get tickets, hard-to-get tickets, tickets to, tickets half price, tickets sale, tickets for sale, find tickets
 
 .venue<>
   %h4= @venue.sw_name
