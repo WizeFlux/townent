@@ -11,3 +11,41 @@
 
 - if @events
   = render 'events/units/events_list', events: @events
+
+- unless @city
+  %p.seo
+    We are glad to meet  you on the our web site specialized in tickets for concert, sport and theatre events.   «Gdebilet.com» is a ticket search engine that finds tickets for the cultural and sport events all over the world. We analyze hundreds of ticket web sites and rate the best offers.
+
+  %p.seo
+    We have prepared a convenient service where you can find, book and get the cheapest tickets for 12233344  cultural events in 100 cities all over the world. We do our best to propose you the cheapest tickets for the concerts of the interesting artists, singers, bands and other stars. For example you can easily find and buy Justin Bieber Tickets, Selena Gomez Tickets, One Direction Tickets, Madonna Ticket???. It is such a pleasure to look at your favorite artist!
+
+  %p.seo
+    We try to make your life better by offering you high sought-after tickets. No more long lines for the hot tickets! And you don’t need to sleep next to the box-office anymore in the hope of getting the last tickets. All you need to do is just open your laptop and visit our website. Buying tickets online is very simple way to purchase tickets.
+
+  %p.seo
+    Don’t know worry if you are buying online tickets the first time in your life. We will explain you in detail how to buy online tickets. So, just relax and find the concert you want to visit. And other work «Gdebilet.com» will do for you.
+
+- else
+  - if @category
+    %p.seo It happens often: you dream to visit some #{@category.sw_name.downcase} which is held in the other city or even a country and you don' t know where to buy a ticket for that #{@category.sw_name.downcase}.
+
+    %p.seo Another situation: you plan to buy a ticket for a #{@category.sw_name.downcase} you like, but you always put off the visit to a box office till the next day. When finally you have free time to get it, there’s no available ticket for the #{@category.sw_name.downcase}. 
+
+    %p.seo For exclude these unpleasant situations from your life we have made our web site. The cheapest tickets for the #{@category.sw_name.downcase} in #{City.count} cities all over the world are collected on one place for convenient and quick booking tickets online. We analyze thousands of web sites which sell tickets for the #{@category.sw_name.downcase} and rate the best offers on our platform. Owing to this fact the cheapest tickets for #{@category.sw_name.downcase} are presented on the one page.
+
+    %p.seo What you need to do now - is just click to #{@category.sw_name.downcase} you want to go and buy a ticket for this #{@category.sw_name.downcase} online, straight from your home. Our mission is to enable you quickly find, compare and buy tickets for #{@category.sw_name.downcase} online. Get a ticket for #{@category.sw_name.downcase} of your dream on «Gdebilet.com»!
+  - elsif @genre
+    %p.seo It happens often: you dream to visit some #{@genre.sw_name.downcase} which is held in the other city or even a country and you don’t know where to buy a ticket for that #{@genre.sw_name.downcase} event.
+
+    %p.seo Another situation: you plan to buy a ticket for #{@genre.sw_name.downcase} you like, but you always put off the visit to a box office till the next day. When finally you have free time to get it, there’s no available ticket for the #{@genre.sw_name.downcase}. 
+
+    %p.seo For exclude these unpleasant situations from your life we have made our web site. The cheapest tickets for the #{@genre.sw_name.downcase} in #{City.count} cities all over the world are collected on one place for convenient and quick booking tickets online. We analyze hundreds of web sites which sell tickets for the #{@genre.sw_name.downcase} and rate the best offers on our platform. Owing to this fact the cheapest tickets for #{@genre.sw_name.downcase} are presented on the one page.
+    
+    %p.seo What you need to do now - is just click to #{@genre.sw_name.downcase} you want to go and buy a ticket for this #{@genre.sw_name.downcase} online, straight from your home. Our mission is to enable you quickly find, compare and buy tickets for #{@genre.sw_name.downcase} online. Get a ticket for a #{@genre.sw_name.downcase} of your dream on «Gdebilet.com»!
+  - else
+    %p.seo
+      We are glad to present you a new effective service containing full information about cultural life in #{@city.full_name}. If you are searching cheap tickets for concerts ,sport and theatre events in #{@city.full_name} - you are on a right web site! All the events - from musicals and shows in #{@city.full_name} till gigs and football games in #{@city.full_name} are collected in one place for convenient booking of the tickets. All you need to do is to click on the event you want to visit in #{@city.full_name} and choose the way you are going to pay for the ticket.
+    %p.seo
+      Our mission is to enable you quickly find, compare and buy tickets for #{@city.full_name} events online. No more long lines! Get tickets to Upcoming #{@city.full_name} concerts virtually. Get all kind of tickets in #{@city.full_name} on «Gdebilet.com»!
+    
+  %br

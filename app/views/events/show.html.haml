@@ -27,9 +27,8 @@
     
 
 .information<>
-  %h3<>
-    Buy tickets for
-    = @event.event_group.sw_name
+  %h1<>
+    Buy tickets for #{@event.event_group.sw_name} in #{@city.full_name}
     %small#ticket-counter-conteiner{style: class_if('display: none', !@event.stub_hub_event)}
       %span#ticket-counter
         - if @event.stub_hub_event
@@ -87,6 +86,7 @@
     #map-canvas
 
 
+%p.seo You have visited our web site to find cheap tickets for the #{@event.event_group.sw_name} in #{@event.venue.sw_name} on #{@event.local_date_time.strftime('%-d %B')}. We are glad that you have chosen our service. Our search engine finds the best proposals of the leading ticket services and rates them especially for you. Here you can also find different information about Beyonce - description of the event and prices for the tickets. All that you need to know before buying we collect on one page for your convenience, so purchasing process of the tickets for #{@event.event_group.sw_name} in #{@event.venue.sw_name}  wouldn't take you a lot of time.
 
 
 :coffeescript

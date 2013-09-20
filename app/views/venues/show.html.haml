@@ -10,13 +10,13 @@
   #{@venue.sw_name}, buy tickets, event tickets, buy tickets online,  buy a ticket, ticket prices to, ticket prices for, where to get tickets, tickets low cost, tikets online, prices on tickets, online tickets for, tickets and prices, to book tickets, buy tickets on line, how to purchase tickets online,  tickets on sale, tickets for sale, low price tickets, purchase tickets, see tickets, get tickets, hard-to-get tickets, tickets to, tickets half price, tickets sale, tickets for sale, find tickets
 
 .venue<>
-  %h4= @venue.sw_name
   - if person_signed_in?
     .right
       %a{href: edit_venue_url(@venue)} edit
   %p<>= @venue.description
   
 .information
+  %h1 Buy tickets to #{@venue.sw_name}
   .map<>
     %h4
       %b Adress:
@@ -29,3 +29,5 @@
 
 = render 'events/units/past_upcoming_control'
 = render 'events/units/events_list', events: @events
+
+%p.seo Tired of searching timetable of the events in #{@venue.sw_name}? Or just want to buy a ticket for the event held in #{@venue.sw_name}? «Gdebilet.com» explores carefully the Internet for the all information about tickets to #{@venue.sw_name} and gives the best results in convenient order. Our search engine analyzes the leading ticket services and gives only the most relevant proposals. That is why it is convenient to search and choose the best offer for the events in #{@venue.sw_name} indeed on our web site.

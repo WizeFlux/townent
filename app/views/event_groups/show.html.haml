@@ -18,7 +18,9 @@
       - if person_signed_in?
         .right
           %a{href: edit_event_group_url(@event_group)} edit
-      
+
+.notificator
+  %h1 #{@event_group.sw_name} tickets #{Date.today.year}
 %p.description<>= @event_group.description
 
 
@@ -26,3 +28,7 @@
 = render 'events/units/past_upcoming_control'
 
 = render 'events/units/events_list', events: @events
+
+
+%p.seo No doubt, #{@event_group.sw_name} is worth seeing, that’s why the tickets for it are sold out immediately after the appearance in box- offices. But you don’t need to stand in long lines anymore. Get a ticket for #{@event_group.sw_name} straight from your home! 
+%p.seo «Gdebilet.com» — is the convenient online mediator between sellers and buyers. Our search engine finds the best proposals of the leading ticket services and rates all the tickets for #{@event_group.sw_name} especially for you. You can also find different information about #{@event_group.sw_name} on this page —the description of the events and prices for the tickets. All that you need to know before buying the ticket we collect on one page for your convenience, so purchasing process of the tickets for #{@event_group.sw_name} wouldn’t take you a lot of time. So don’t miss the chance to see #{@event_group.sw_name}, get the ticket right now!

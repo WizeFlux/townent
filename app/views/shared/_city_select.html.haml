@@ -29,22 +29,33 @@
       %h4 Find out events in nearby cities:
       .nearby
         = raw nearby_cities.map{|c| "<a href=\"/cities/#{c.id}/events\">#{c.full_name}</a>"}.join(' ')
-    
-- if !@city and request_location
-  .notificator
-    %h3
-      There are no events in
-      = request_location.city + ','
-      check out
-      %span= @counter
-      events in nearby cities
 
-- if @city
-  .notificator
-    %h3
-      There are
-      %span= @counter
-      events in #{@city.full_name}
+
+.notificator
+  %h1
+    - if !@city and request_location
+      Find the cheapest ticket for
+      %span= Event.count
+      events in
+      %span= City.count
+      cities
+
+    - if @city
+      - if @category
+        Find tickets for
+        %span= @counter
+        #{@category.sw_name.downcase} events in #{@city.full_name}
+
+      - elsif @genre
+        Find tickets for 
+        %span= @counter
+        #{@genre.sw_name.downcase} events in #{@city.full_name}
+
+
+      - else
+        Find tickets for 
+        %span= @counter
+        events in #{@city.full_name}
 
 
 
