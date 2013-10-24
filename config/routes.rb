@@ -52,8 +52,4 @@ Townent::Application.routes.draw do
   end
 
   root to: 'events#index'  
-  
-  match 'sitemap' => 'static#sitemap'
-  match 'robots' => 'static#robots'
-  
 end
